@@ -1,0 +1,7 @@
+---
+import Action from './Action.astro';
+import { program } from '../content';
+---
+<section id="contact" class="final section"><div class="wrap"><h2>YOUR NEXT STEP<br/>STARTS WITH<br/><em>a conversation.</em></h2><div class="final-bottom"><p>Let’s talk about your goals and whether medical weight management may be appropriate for you.</p><div><Action/><Action kind="assessment" label="Start my assessment" variant="text"/></div></div><noscript><p>To inquire about a GLP-1 consultation, <a href={`mailto:${program.email}`}>email BodyFactory</a> or visit the <a href={program.generalBookingUrl}>general booking page</a>. Confirm GLP-1 availability directly with the team.</p><p>The online assessment needs JavaScript. A provider can discuss your questions directly.</p></noscript></div></section>
+<footer class="footer wrap"><div class="footer-top"><a href="#top" aria-label="BodyFactory, back to top"><img src="/assets/logo.png" width="180" height="62" alt="BodyFactory Skin Care"/></a><p>PERSONALIZED CARE.<br/>UNMISTAKABLY BODYFACTORY.</p><a href={`mailto:${program.email}`}>{program.email}</a></div><div class="footer-bottom"><span>© {new Date().getFullYear()} BodyFactory Skin Care</span><nav aria-label="Legal"><a href="https://www.bodyfactoryskincare.com/privacy-policy">Privacy</a><a href="https://www.bodyfactoryskincare.com/terms-and-conditions">Terms</a><a href="#safety">Important information</a></nav><a href="#top">BACK TO TOP ↑</a></div></footer>
+<div class="mobile-booking" hidden><Action label="Book a GLP-1 consultation"/></div>

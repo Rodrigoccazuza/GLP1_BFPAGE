@@ -1,0 +1,14 @@
+---
+import Action from './Action.astro';
+import Photo from './Photo.astro';
+import { program } from '../content';
+---
+<section class="treatment section wrap" id="treatment">
+  <div class="treatment-photo"><Photo name="product" alt="BodyFactory GLP-1 campaign vial artwork; not a specific prescribed medication"/><small>Campaign imagery. Treatment and packaging may vary.</small></div>
+  <div class="treatment-copy"><h2>YOUR BODY.<br/><em>Your options.</em></h2><p class="lead">The right treatment begins with the right evaluation.</p><p>Your provider will discuss appropriate treatment options following your medical evaluation, including potential benefits, risks, and alternatives.</p>{program.treatments.map(t=><article><h3>{t.name}</h3><p>{t.description}</p><a href={t.safetyUrl}>Important safety information</a></article>)}<a class="text-link" href="#safety">Read important information <span aria-hidden="true">↗</span></a></div>
+</section>
+<section id="pricing" class="pricing section">
+  <div class="wrap pricing-grid"><div><h2>A PERSONAL PLAN.<br/><em>A clear next step.</em></h2><p>Understand your care and its costs<br/>before you commit.</p></div>
+    <div class="pricing-panel"><h3>Your GLP-1 program</h3><p class="price">{program.monthlyPrice === null ? 'Let’s talk details.' : `From $${program.monthlyPrice} / month`}</p><p>Ask BodyFactory for a personalized overview of the program and a complete cost breakdown.</p><dl><div><dt>Consultation & planning</dt><dd>Discuss your needs</dd></div><div><dt>Medication</dt><dd>{program.medicationIncluded === null ? 'Confirm options & costs' : program.medicationIncluded ? 'Included' : 'Separate cost'}</dd></div><div><dt>Labs & follow-ups</dt><dd>Confirm your care schedule</dd></div></dl><Action/><small>Medication, testing, and follow-up fees may be separate. Confirm all inclusions, fees, and terms before enrolling.</small></div>
+  </div>
+</section>

@@ -1,0 +1,20 @@
+---
+import Action from './Action.astro';
+---
+<section class="hero" id="top" aria-labelledby="hero-title">
+  <div class="hero-media">
+    <picture><source media="(max-width: 767px)" srcset="/assets/glp1/hero/mobile.webp"/><img class="hero-poster" src="/assets/glp1/hero/poster-1800.webp" width="1672" height="941" alt="BodyFactory wellness campaign model in aqua activewear" fetchpriority="high" /></picture>
+    <video class="hero-video" muted loop playsinline preload="none" poster="/assets/glp1/hero/poster-1800.webp" aria-hidden="true" tabindex="-1" data-src="/assets/glp1/video/hero.mp4"></video>
+  </div>
+  <div class="hero-copy wrap">
+    <p class="hero-category">BODYFACTORY MEDICAL WEIGHT MANAGEMENT</p>
+    <h1 id="hero-title">WEIGHT LOSS.<br/>BACKED BY<br/>MEDICINE.<br/><em>Built around you.</em></h1>
+    <p class="hero-description">Personalized, medically supervised weight management.<br class="desktop"/> GLP-1 treatment when clinically appropriate.</p>
+    <div class="hero-actions"><Action/><Action kind="assessment" variant="text"/></div>
+  </div>
+  <button class="video-toggle" type="button" hidden aria-label="Pause background video">Pause film <span aria-hidden="true">Ⅱ</span></button>
+  <div class="hero-foot wrap"><span>YOUR BODY. YOUR JOURNEY.</span><a href="#program">EXPLORE THE PROGRAM <span aria-hidden="true">↓</span></a></div>
+</section>
+<div class="trust-strip" aria-label="Program approach">
+  <span>Provider-led care</span><span>Personalized treatment</span><span>Ongoing monitoring</span><span>Rooted in NYC</span>
+</div>

@@ -1,0 +1,5 @@
+---
+import { locations } from '../content';
+import Photo from './Photo.astro';
+---
+<section id="locations" class="locations section wrap"><div class="locations-heading"><h2>NEW YORK.<br/><em>Our kind of home.</em></h2><p>Discover our BodyFactory studios.<br/>Contact us to confirm GLP-1 consultation locations and availability.</p></div><div class="locations-grid"><Photo name="studio" alt="The real BodyFactory West Village skincare studio"/><div class="location-list">{locations.map((location,i)=><a href={`https://www.bodyfactoryskincare.com/studios/${location.slug}`} target="_blank" rel="noopener noreferrer"><span class="location-index">NYC / 0{i+1}</span><h3>{location.name}</h3><p>{location.address}<br/>{location.zip}</p><span class="location-arrow" aria-hidden="true">↗</span><span class="sr-only">View studio details, opens a new tab</span></a>)}</div></div></section>

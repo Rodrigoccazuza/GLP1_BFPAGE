@@ -1,0 +1,10 @@
+---
+import Photo from './Photo.astro';
+import { program } from '../content';
+---
+<section class="testimonial section wrap" id="experience">
+  <p class="review-label">THE BODYFACTORY EXPERIENCE</p>
+  {program.testimonials.length ? program.testimonials.map(t=><figure><blockquote>“{t.quote}”</blockquote><figcaption>{t.attribution} · <a href={t.source}>Source</a></figcaption></figure>) : <figure><blockquote>“The staff is impeccable and the facility is very clean and modern.”</blockquote><figcaption>Lesley <span>BodyFactory skincare client</span></figcaption><p class="review-context">A general skincare review, not a GLP-1 treatment outcome. <a href="https://www.bodyfactoryskincare.com/#testimonials" target="_blank" rel="noopener noreferrer">Read on BodyFactory ↗</a></p></figure>}
+</section>
+<section class="why section wrap"><h2>WHY<br/><em>BodyFactory.</em></h2><div class="why-main"><p class="why-statement">A familiar name.<br/>A thoughtful approach.<br/><em>A very personal journey.</em></p><div class="why-bottom"><p>Bring your questions to a real conversation. Our approach puts your individual needs at the center, with medical decisions made by a licensed provider.</p><p>Rooted in New York. Grounded in personal care. Explore weight management with the brand you know for a considered skincare experience.</p></div></div></section>
+<section class="editorial"><Photo name="campaign" alt="BodyFactory campaign model relaxing in a sunlit studio"/><div class="editorial-copy"><h2>THE GOAL ISN’T<br/><em>just a number.</em></h2><p>It’s care that sees the whole you.</p></div><small>Campaign model. Not a patient testimonial.</small></section>

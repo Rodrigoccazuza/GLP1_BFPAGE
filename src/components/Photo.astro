@@ -1,0 +1,11 @@
+---
+const { name, alt = '', class: className = '', eager = false } = Astro.props;
+const images = {
+  hero: { src: '/assets/glp1/hero/poster', width:1672, height:941 },
+  product: { src: '/assets/glp1/program/vial', width:1200, height:1200 },
+  campaign: { src: '/assets/glp1/generated/campaign', width:1536, height:1024 },
+  studio: { src: '/assets/glp1/program/studio', width:1200, height:800 },
+};
+const img = images[name as keyof typeof images];
+---
+<img class={className} src={`${img.src}-1200.webp`} srcset={`${img.src}-640.webp 640w, ${img.src}-1200.webp 1200w`} sizes="(max-width: 767px) 100vw, 50vw" width={img.width} height={img.height} loading={eager ? 'eager' : 'lazy'} decoding="async" alt={alt} />

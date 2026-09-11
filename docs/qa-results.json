@@ -1,0 +1,83 @@
+{
+  "widths": [
+    {
+      "width": 320,
+      "scroll": 320,
+      "viewport": 320,
+      "overflow": []
+    },
+    {
+      "width": 375,
+      "scroll": 375,
+      "viewport": 375,
+      "overflow": []
+    },
+    {
+      "width": 390,
+      "scroll": 390,
+      "viewport": 390,
+      "overflow": []
+    },
+    {
+      "width": 430,
+      "scroll": 430,
+      "viewport": 430,
+      "overflow": []
+    },
+    {
+      "width": 768,
+      "scroll": 768,
+      "viewport": 768,
+      "overflow": []
+    },
+    {
+      "width": 1024,
+      "scroll": 1024,
+      "viewport": 1024,
+      "overflow": []
+    },
+    {
+      "width": 1280,
+      "scroll": 1280,
+      "viewport": 1280,
+      "overflow": []
+    },
+    {
+      "width": 1440,
+      "scroll": 1440,
+      "viewport": 1440,
+      "overflow": []
+    },
+    {
+      "width": 1728,
+      "scroll": 1728,
+      "viewport": 1728,
+      "overflow": []
+    }
+  ],
+  "errors": [],
+  "interactions": [
+    "Assessment rejects empty answer with accessible feedback",
+    "Assessment completes, preserves back-navigation choices, and shows provider-evaluation guidance",
+    "Booking handoff opens; Escape closes dialogs; answers clear on close",
+    "Native FAQ opens and closes",
+    "Mobile menu works and booking bar appears beyond hero",
+    "Mobile booking bar hides around final CTA",
+    "All four rail states activate during natural scrolling"
+  ],
+  "accessibility": [],
+  "reducedMotion": {
+    "videoPaused": true,
+    "videoSrc": null,
+    "sidebarPosition": "static"
+  },
+  "noJavaScript": {
+    "steps": 4,
+    "faq": 10,
+    "contact": "To inquire about a GLP-1 consultation, email BodyFactory or visit the general booking page. Confirm GLP-1 availability directly with the team.\n\nThe online assessment needs JavaScript. A provider can discuss your questions directly."
+  },
+  "video": {
+    "paused": false,
+    "readyState": 4
+  }
+}

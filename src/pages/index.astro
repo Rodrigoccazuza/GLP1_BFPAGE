@@ -1,0 +1,15 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Action from '../components/Action.astro';
+import Hero from '../components/Hero.astro';
+import Program from '../components/Program.astro';
+import Science from '../components/Science.astro';
+import Journey from '../components/Journey.astro';
+import Treatment from '../components/Treatment.astro';
+import Trust from '../components/Trust.astro';
+import Information from '../components/Information.astro';
+import Locations from '../components/Locations.astro';
+import Final from '../components/Final.astro';
+import Dialogs from '../components/Dialogs.astro';
+---
+<Layout><header class="header"><div class="header-inner wrap"><a class="brand" href="#top" aria-label="BodyFactory, home"><img src="/assets/logo.png" alt="BodyFactory Skin Care" width="180" height="62"/></a><nav class="desktop-nav" aria-label="Main"><a href="#program">The program</a><a href="#how-it-works">How it works</a><a href="#faq">FAQs</a><a href="#locations">NYC studios</a></nav><Action label="Book consultation"/><button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open navigation"><span></span><span></span></button></div><nav id="mobile-nav" aria-label="Mobile" hidden><a href="#program">The program</a><a href="#how-it-works">How it works</a><a href="#pricing">Program details</a><a href="#faq">FAQs</a><a href="#locations">NYC studios</a><Action/></nav></header><main id="main"><Hero/><Program/><Science/><Journey/><Treatment/><Trust/><Information/><Locations/><Final/></main><Dialogs/></Layout>

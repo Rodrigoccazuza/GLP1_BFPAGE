@@ -1,0 +1,19 @@
+---
+import Action from './Action.astro';
+import { medicalSource } from '../content';
+---
+<section id="science" class="science section">
+  <div class="wrap science-grid">
+    <div><h2>THE SCIENCE,<br/><em>simplified.</em></h2><p>Work with your biology.<br/>Understand your options.</p><a href={medicalSource} class="source-link" target="_blank" rel="noopener noreferrer">Explore the science at NIDDK ↗</a></div>
+    <div class="science-explainer">
+      <div class="signal-diagram" aria-hidden="true"><span class="signal-orbit orbit-one"></span><span class="signal-orbit orbit-two"></span><span class="signal-orbit orbit-three"></span><span class="signal-core">GLP-1</span><span class="signal-label label-top">APPETITE</span><span class="signal-label label-bottom">SATIETY</span></div>
+      <p>GLP-1 is a hormone involved in appetite and blood-sugar regulation. Certain medicines act on this pathway to help people feel less hungry or full sooner.</p>
+      <div class="science-notes"><span>Appetite signaling</span><span>Feeling fuller</span><span>A broader care plan</span></div>
+      <small>Medication is one part of care, alongside nutrition, movement, and medical follow-up. Effects vary by medication and person.</small>
+    </div>
+  </div>
+</section>
+<section class="candidate section wrap">
+  <div><h2>IS THIS<br/><em>right for me?</em></h2></div>
+  <div class="candidate-content"><p class="lead">You deserve an informed conversation about your health.</p><p>Medical weight management may be worth discussing if you’re looking for additional support with weight-related health concerns. A provider considers your overall health, history, current medications, and goals.</p><div class="candidate-rule"><span aria-hidden="true">↗</span><p>There is no automatic approval.<br/>Your provider determines what is appropriate for you.</p></div><Action kind="assessment" label="Start my assessment" variant="text"/></div>
+</section>

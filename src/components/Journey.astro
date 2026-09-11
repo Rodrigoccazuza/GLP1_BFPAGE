@@ -1,0 +1,14 @@
+---
+import { steps } from '../content';
+import Photo from './Photo.astro';
+import Action from './Action.astro';
+---
+<section id="how-it-works" class="journey section">
+  <div class="wrap journey-grid">
+    <div class="journey-sidebar"><h2>HOW IT<br/><em>works.</em></h2><p>One step at a time.<br/>With care at every one.</p>
+      <nav class="step-rail" aria-label="Your care journey"><div class="rail-track" aria-hidden="true"><span></span></div>{steps.map((step,i)=><a class:list={['rail-item',{'is-active':i===0}]} href={`#step-${i+1}`} data-step={i} aria-current={i===0 ? 'step' : undefined}><span class="rail-number">0{i+1}</span><span class="rail-name">{step.title}</span><span class="rail-status sr-only">{i===0?'Current step':'Upcoming step'}</span></a>)}</nav>
+      <p class="journey-count" aria-live="off">STEP <span id="current-step">01</span> OF 04</p>
+    </div>
+    <div class="journey-panels">{steps.map((step,i)=><article id={`step-${i+1}`} class="journey-panel" data-panel={i}><div class="step-heading"><span>0{i+1}</span><h3>{step.title}</h3></div><div class:list={['step-photo',`step-photo-${step.image}`]}><Photo name={step.image} alt={step.alt}/></div><h4>{step.line}</h4><p>{step.body}</p><span class="step-detail">{step.detail}</span></article>)}<Action/></div>
+  </div>
+</section>

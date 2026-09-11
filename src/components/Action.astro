@@ -1,0 +1,7 @@
+---
+const { kind = 'book', label, variant = 'primary', class: className = '' } = Astro.props;
+const text = label || (kind === 'book' ? 'Book a GLP-1 consultation' : 'See if I may qualify');
+---
+<a href={kind === 'book' ? '#contact' : '#assessment'} class:list={['action', variant, className]} data-action={kind}>
+  <span>{text}</span><span class="arrow" aria-hidden="true">↗</span>
+</a>

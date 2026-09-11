@@ -1,0 +1,16 @@
+---
+import Action from './Action.astro';
+import Photo from './Photo.astro';
+import { pillars } from '../content';
+---
+<section id="assessment" class="eligibility wrap">
+  <h2>Could GLP-1 treatment<br/><em>be right for you?</em></h2>
+  <div><p>You don’t need all the answers to take the first step.</p><Action kind="assessment" label="Start my assessment" variant="text"/><small>A conversation starter. Eligibility is determined by a licensed provider.</small></div>
+</section>
+<section id="program" class="program section wrap">
+  <div class="program-heading"><h2>MORE THAN<br/><em>medication.</em></h2><p>Medical care is personal.<br/>Your weight-management journey should be, too.</p></div>
+  <div class="program-grid">
+    <figure class="program-image"><Photo name="campaign" alt="Campaign model at ease in a sunlit studio, wearing an aqua top"/><figcaption>Care for the life you want to live.</figcaption></figure>
+    <div class="pillars">{pillars.map(([title, text],i) => <article><span class="pillar-number" aria-hidden="true">0{i+1}</span><div><h3>{title}</h3><p>{text}</p></div></article>)}</div>
+  </div>
+</section>

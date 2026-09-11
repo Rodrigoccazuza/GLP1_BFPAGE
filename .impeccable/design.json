@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-11T03:35:00Z",
+  "title": "Design System: BodyFactory GLP-1 Campaign",
+  "extensions": {
+    "colorMeta": {
+      "primary": {"role":"primary","displayName":"BodyFactory Aqua"},
+      "paper": {"role":"neutral","displayName":"Blush White"},
+      "dark": {"role":"neutral","displayName":"Dark Green-gray"}
+    },
+    "typographyMeta": {
+      "display": {"displayName":"Editorial Display","purpose":"Campaign and section statements."},
+      "body": {"displayName":"Reading Text","purpose":"Program explanations and interaction content."}
+    },
+    "motion": [
+      {"name":"ease-out","value":"cubic-bezier(.23,1,.32,1)","purpose":"Press feedback and rail state changes."},
+      {"name":"press","value":"150ms","purpose":"Immediate restrained action feedback."},
+      {"name":"rail","value":"240ms","purpose":"Communicate progression between journey steps."}
+    ],
+    "breakpoints": [
+      {"name":"narrow","value":"374px"},
+      {"name":"mobile","value":"767px"},
+      {"name":"navigation","value":"900px"},
+      {"name":"compact-desktop","value":"1100px"},
+      {"name":"wide","value":"1728px"}
+    ]
+  },
+  "components": [{
+    "name":"Primary Action","kind":"button","refersTo":"button-primary",
+    "description":"Aqua consultation action with strong ink contrast and visible focus.",
+    "html":"<button class=\"bf-action\">BOOK A GLP-1 CONSULTATION <span aria-hidden=\"true\">↗</span></button>",
+    "css":".bf-action{display:inline-flex;align-items:center;gap:25px;background:#3cbfb0;color:#141414;border:1px solid transparent;border-radius:2px;padding:17px 24px;font:500 11px/1.3 Montserrat,sans-serif;letter-spacing:.035em;min-height:52px;cursor:pointer}.bf-action:focus-visible{outline:2px solid #12675e;outline-offset:6px}.bf-action:active{transform:scale(.98)}"
+  }],
+  "narrative": {
+    "northStar":"Unmistakably BodyFactory",
+    "overview":"Editorial beauty with clear medical information and a personal consultation journey.",
+    "keyCharacteristics":["Exact brand artwork","Photographic scale","Natural-scroll journey","Factual restraint"],
+    "rules":[{"name":"Care before claims","body":"Display only verified commercial and clinical facts.","section":"components"}],
+    "dos":["Use local campaign assets","Preserve keyboard and reduced-motion behavior"],
+    "donts":["Invent patient outcomes","Turn all sections into identical cards"]
+  }
+}
