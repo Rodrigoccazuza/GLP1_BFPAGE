@@ -1,71 +1,169 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Dialogs from '../components/Dialogs.astro';
+import ArrowIcon from '../components/ArrowIcon.astro';
+
+const bodyFactoryHome = 'https://www.bodyfactoryskincare.com/';
+
 const steps = [
-  ['01','Consultation','We listen first. Your history, your goals, what has and hasn’t worked before.','bi-chat-heart'],
-  ['02','Medical review','A licensed clinician reviews your health and confirms whether a GLP-1 medication is appropriate.','bi-clipboard2-pulse'],
-  ['03','Your personal plan','Medication, dosing schedule and nutrition guidance, tailored to you and shared with clear pricing.','bi-calendar2-check'],
-  ['04','Ongoing support','Regular check-ins to track progress, adjust your dose and answer questions as they come up.','bi-heart-pulse']
+  ['01', 'Consultation', 'We listen first: your history, your goals, and what has or has not worked before.', 'bi-chat-heart'],
+  ['02', 'Medical review', 'A licensed clinician reviews your health and confirms whether GLP-1 treatment is appropriate.', 'bi-clipboard2-pulse'],
+  ['03', 'Your personal plan', 'Medication, dosing, and nutrition guidance are tailored to you and explained with clear pricing.', 'bi-calendar2-check'],
+  ['04', 'Ongoing support', 'Regular check-ins help track progress, adjust your plan, and answer questions as they come up.', 'bi-heart-pulse'],
 ];
+
 const benefits = [
- ['bi-heart-pulse','Better Metabolic Health','Weight reduction and certain GLP-1 treatments may help improve blood sugar, blood pressure and cholesterol levels.','assets/figma/movement.webp'],
- ['bi-stars','Greater Body Confidence','Work toward your individual goals and feel more comfortable in your clothing and daily activities.','assets/figma/confidence.webp'],
- ['bi-sun','Renew Your Self-Esteem','Celebrate meaningful progress and build a more positive relationship with your body.','assets/figma/routine.webp'],
- ['bi-activity','Improved Quality of Life','Meaningful progress may help you feel more comfortable and capable in daily life.','assets/figma/movement.webp'],
- ['bi-moon-stars','Better Sleep Health','Weight management may improve sleep apnea symptoms for some eligible patients.','assets/figma/rest.webp']
+  ['bi-lungs-fill', 'Better Metabolic Health', 'Weight reduction and certain GLP-1 treatments may help improve blood sugar, blood pressure, and cholesterol levels.', 'assets/figma/benefits/metabolic.webp'],
+  ['bi-stars', 'Greater Body Confidence', 'Work toward your individual goals and discover new possibilities for feeling comfortable in your clothing and daily activities.', 'assets/figma/benefits/confidence.webp'],
+  ['bi-feather', 'Renew Your Self-Esteem', 'Celebrate meaningful progress and build a more positive relationship with your body, one step at a time.', 'assets/figma/benefits/self-esteem.webp'],
+  ['bi-sun-fill', 'Improved Quality of Life', 'Meaningful progress may help you feel more comfortable and capable in your daily activities.', 'assets/figma/benefits/quality-of-life.webp'],
+  ['bi-moon-stars-fill', 'Better Sleep Health', 'Weight management may improve sleep apnea symptoms, with specific treatments offering proven benefits for eligible patients.', 'assets/figma/benefits/sleep.webp'],
 ];
+
 const care = [
- ['bi-capsule','Reduced appetite & cravings','Treatment can help regulate hunger signals, making it easier to follow a plan that works for you.'],
- ['bi-heart-pulse','Metabolic support','A plan focused on overall health, with guidance that goes beyond the number on the scale.'],
- ['bi-bag-heart','Personalized care','Your clinical team considers your history and goals before recommending a path forward.'],
- ['bi-calendar-check','Regular check-ins','Your team checks your progress and adjusts your plan when appropriate.'],
- ['bi-graph-up-arrow','Sustainable progress','Build habits you can carry forward with support at each step.'],
- ['bi-chat-dots','Answers along the way','Know what to expect, what to ask, and who to talk to when questions come up.']
+  ['bi-graph-up-arrow', 'Reduced appetite & cravings', 'Support hunger regulation with a plan designed around your needs.'],
+  ['bi-heart-pulse', 'Metabolic support', 'Focus on overall health, not only the number on the scale.'],
+  ['bi-person-heart', 'Personalized care', 'Your history and goals guide every clinical recommendation.'],
+  ['bi-calendar-check', 'Regular check-ins', 'Track progress and adjust your plan when clinically appropriate.'],
+  ['bi-arrow-repeat', 'Sustainable progress', 'Build practical habits you can carry forward over time.'],
+  ['bi-chat-dots', 'Answers along the way', 'Know what to expect and who to ask whenever questions come up.'],
 ];
+
 const faqs = [
- ['What is GLP-1 treatment?','GLP-1 medications mimic a hormone involved in appetite and blood sugar regulation. A licensed clinician determines whether treatment is appropriate for you.'],
- ['Am I eligible for a GLP-1 medication?','Eligibility depends on your health history, weight-related factors, and a clinical evaluation. We review your individual circumstances during a consultation.'],
- ['Is the medication administered in studio?','When prescribed, treatment is administered in studio by our nursing team. Your clinician will explain the plan and visit schedule.'],
- ['How long does the program take?','There is no one-size-fits-all timeline. Your clinician will discuss the expected course of care and reassess as you progress.'],
- ['What are the possible side effects?','Common side effects can include nausea and digestive symptoms. Your clinician will discuss risks, contraindications and what to watch for before treatment.'],
- ['How much does it cost?','Pricing depends on your individual plan. We explain costs during the consultation before you decide whether to proceed.'],
- ['Can I stop or change my treatment?','Your clinician can review your response and discuss adjustments or discontinuation with you.'],
- ['Where can I ask more questions?','Book a consultation to speak with the BodyFactory team about your goals, the process and available appointments.']
+  ['How do I know if I’m eligible?', 'Eligibility is confirmed during your clinical evaluation. Your provider considers your health history, weight-related factors, current medications, and any contraindications.'],
+  ['What does the first visit include?', 'Your first visit is a private conversation about your goals and medical history, followed by a clinical review and a clear explanation of possible next steps.'],
+  ['How is my medication administered?', 'When prescribed, treatment is administered in studio by the BodyFactory nursing team. Your clinician explains the dose and visit schedule.'],
+  ['What if I experience side effects?', 'Contact your clinical team. They can review your symptoms, provide guidance, and determine whether your plan should be adjusted.'],
+  ['Can my plan change over time?', 'Yes. Your clinician reviews progress and tolerability during regular check-ins and can make clinically appropriate adjustments.'],
+  ['Do you accept insurance?', 'Coverage varies. The BodyFactory team will explain known program costs, and you should confirm medication or laboratory benefits directly with your insurer.'],
+];
+
+const locations = [
+  { name: 'Hell’s Kitchen', address: '726 9th Ave · New York, NY 10019', image: 'assets/figma/locations/hells-kitchen.webp', url: 'https://www.bodyfactoryskincare.com/studios/hells-kitchen' },
+  { name: 'West Village', address: '472 6th Ave · New York, NY 10011', image: 'assets/figma/locations/west-village.webp', url: 'https://www.bodyfactoryskincare.com/studios/west-village' },
+  { name: 'Upper East Side', address: '1570 1st Ave · New York, NY 10028', image: 'assets/figma/locations/upper-east-side.webp', url: 'https://www.bodyfactoryskincare.com/studios/upper-east-side' },
 ];
 ---
+
 <Layout>
-  <header class="site-header" id="top"><div class="container nav-row">
-    <a class="brand" href="#top" aria-label="BodyFactory home"><img src="assets/figma/logo.png" alt="BodyFactory Skin Care" width="143" height="66" /></a>
-    <nav class="desktop-nav" aria-label="Main navigation"><a href="#approach">Approach</a><a href="#process">Process</a><a href="#program">Program</a><a href="#locations">Locations</a><a href="#faq">FAQ</a></nav>
-    <button class="pill primary nav-book" type="button" data-action="book">Book Now</button>
-    <button class="menu-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav"><span></span><span></span></button>
-  </div><nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation" hidden><a href="#approach">Approach</a><a href="#process">Process</a><a href="#program">Program</a><a href="#locations">Locations</a><a href="#faq">FAQ</a><button class="pill primary" type="button" data-action="book">Book Now</button></nav></header>
+  <header class="site-header" id="top">
+    <div class="container nav-row">
+      <a class="brand" href={bodyFactoryHome} aria-label="BodyFactory Skin Care home"><img src="assets/figma/logo.png" alt="BodyFactory Skin Care" width="143" height="66" /></a>
+      <nav class="desktop-nav" aria-label="Main navigation">
+        <a href={bodyFactoryHome}>Home</a><a href="#approach">Approach</a><a href="#process">Process</a><a href="#program">Program</a><a href="#locations">Locations</a><a href="#faq">FAQ</a>
+      </nav>
+      <button class="pill primary nav-book" type="button" data-action="book">Book Now <ArrowIcon/></button>
+      <button class="menu-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav"><span></span><span></span></button>
+    </div>
+    <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation" hidden>
+      <a href={bodyFactoryHome}>BodyFactory Home</a><a href="#approach">Approach</a><a href="#process">Process</a><a href="#program">Program</a><a href="#locations">Locations</a><a href="#faq">FAQ</a>
+      <button class="pill primary" type="button" data-action="book">Book Now <ArrowIcon/></button>
+    </nav>
+  </header>
+
   <main id="main">
-    <section class="hero container" aria-labelledby="hero-title"><div class="hero-copy" data-hero>
-      <p class="eyebrow">Personalized GLP-1 Care</p><h1 id="hero-title">Feel like your real<br/><em>self</em> again.</h1>
-      <p class="hero-sub">Prescription weight management, personalized to you and administered in studio by our nursing team.</p>
-      <div class="hero-actions"><button class="pill primary" type="button" data-action="book">Get Started</button><a href="#approach" class="pill outline">Explore More <span aria-hidden="true">↗</span></a></div>
-    </div><div class="hero-visual" data-reveal><img src="assets/figma/hero.png" alt="Two women in a bright studio, showing a personal wellness journey" fetchpriority="high" width="1121" height="804" /></div>
-    <div class="hero-foot" data-reveal><span><i class="bi bi-patch-check-fill"></i> Licensed clinicians</span><span><i class="bi bi-person-heart"></i> Personalized plans</span><span><i class="bi bi-calendar-check"></i> Regular check-ins</span></div>
+    <section class="hero container" aria-labelledby="hero-title">
+      <div class="hero-copy" data-hero>
+        <p class="eyebrow">Personalized GLP-1 Care</p>
+        <h1 id="hero-title" data-animate-words>Feel like your real<br/><em>self</em> again.</h1>
+        <p class="hero-sub">Prescription weight management, personalized to you and administered in studio by our nursing team.</p>
+        <div class="hero-actions">
+          <button class="pill primary hero-primary" type="button" data-action="book">Get Started <ArrowIcon/></button>
+          <a href="#approach" class="pill outline hero-secondary">Explore More <ArrowIcon/></a>
+          <a href={bodyFactoryHome} class="pill ghost hero-home">BodyFactory Home <ArrowIcon/></a>
+        </div>
+      </div>
+      <div class="hero-visual" data-reveal>
+        <img src="assets/figma/hero.png" alt="Two women in a bright studio, showing a personal wellness journey" fetchpriority="high" width="1121" height="804" />
+        <div class="hero-foot" aria-label="Program features">
+          <span><i class="bi bi-patch-check-fill"></i> Licensed clinicians</span>
+          <span><i class="bi bi-person-heart"></i> Personalized plans</span>
+          <span><i class="bi bi-calendar-check"></i> Regular check-ins</span>
+        </div>
+      </div>
     </section>
+
     <section class="stats container" aria-label="Research and experience" data-reveal>
-      <div><strong>14.9%</strong><b>Average Weight Loss</b><span>Mean body-weight reduction at 68 weeks.*</span></div>
-      <div><strong>86%</strong><b>Achieved 5%+ Weight Loss</b><span>In a 68-week clinical trial.*</span></div>
-      <div><strong>10+</strong><b>Years of expertise</b><span>Clinical experience in aesthetics and wellness.</span></div>
+      <div><strong data-counter data-value="14.9" data-suffix="%">0%</strong><b>Average Weight Loss</b><span>Mean body-weight reduction at 68 weeks.*</span></div>
+      <div><strong data-counter data-value="86" data-suffix="%">0%</strong><b>Achieved 5%+ Weight Loss</b><span>In a 68-week clinical trial.*</span></div>
+      <div><strong data-counter data-value="10" data-suffix="+">0+</strong><b>Years of expertise</b><span>Clinical experience in aesthetics and wellness.</span></div>
       <small>*Results from a clinical trial of semaglutide 2.4 mg with lifestyle intervention; individual results vary. <a href="https://www.nejm.org/doi/full/10.1056/NEJMoa2032183" target="_blank" rel="noopener noreferrer">Read the study</a>.</small>
     </section>
-    <section class="approach container section" id="approach"><p class="statement" data-reveal>GLP-1 medications work with your body’s own signals to help you feel fuller for longer. With clear guidance and steady support, healthy habits become easier to keep.</p><p class="statement-note" data-reveal>Prescribed only when a clinical evaluation shows it is right for you, and adjusted as you progress.</p>
+
+    <section class="approach container section" id="approach">
+      <p class="statement" data-animate-words>GLP-1 medications work with your body’s own signals to help you feel fuller for longer. With clear guidance and steady support, healthy habits become easier to keep.</p>
+      <p class="statement-note" data-reveal>Prescribed only when a clinical evaluation shows it is right for you, and adjusted as you progress.</p>
       <div class="honest" data-reveal><h2>Honest about<br/><strong>who it’s for.</strong></h2><p>GLP-1 medication isn’t right for everyone. Your clinician confirms eligibility after reviewing your full history.</p></div>
-      <div class="fit-grid"><article class="fit-card good" data-reveal><h3>May be a good fit</h3><ul><li>Adults with a BMI of 30 or higher, or 27 or higher with a weight-related condition</li><li>Those whose past efforts with diet and exercise haven’t lasted</li><li>Anyone ready to pair medication with steady lifestyle habits</li></ul></article><article class="fit-card caution" data-reveal><h3>When it may not be right</h3><ul><li>Pregnancy, breastfeeding or planning to conceive</li><li>Personal or family history of medullary thyroid cancer or MEN 2</li><li>A history of pancreatitis or other conditions, reviewed case by case</li></ul></article></div>
+      <div class="fit-grid">
+        <article class="fit-card good" data-fit-card><h3>May be a good fit</h3><ul><li>Adults with a BMI of 30 or higher, or 27 or higher with a weight-related condition</li><li>Those whose past efforts with diet and exercise haven’t lasted</li><li>Anyone ready to pair medication with steady lifestyle habits</li></ul></article>
+        <article class="fit-card caution" data-fit-card><h3>When it may not be right</h3><ul><li>Pregnancy, breastfeeding, or planning to conceive</li><li>Personal or family history of medullary thyroid cancer or MEN 2</li><li>A history of pancreatitis or other conditions, reviewed case by case</li></ul></article>
+      </div>
     </section>
-    <section class="process section" id="process"><div class="container process-grid"><div class="process-left"><img class="process-photo" src="assets/figma/consultation.png" alt="Clinician speaking with a patient during a consultation" loading="lazy" width="439" height="535" data-reveal/><div class="process-intro" data-reveal><h2>Four steps.<br/>One clear plan.</h2><p>From your first conversation to your ongoing check-ins, every step is explained before it happens.</p><button class="pill primary" type="button" data-action="book">Start with a consultation</button></div></div><div class="step-list">{steps.map(([number,title,description,icon]) => <article class="step-card" data-reveal><span class="step-icon"><i class:list={['bi',icon]} aria-hidden="true"></i></span><div><span class="step-number">Step {number.slice(1)}</span><h3>{title}</h3><p>{description}</p></div></article>)}</div></div></section>
-    <section class="program section container" id="program"><div class="center-heading" data-reveal><p class="eyebrow">Why us?</p><h2>Everything your program<br/>looks after.</h2><p>From your first visit to every follow-up, your care is built around you.</p></div><div class="benefit-orbit" data-reveal><div class="orbit-left">{care.slice(0,3).map(([icon,title,body]) => <article class="care-card"><i class:list={['bi',icon]} aria-hidden="true"></i><div><h3>{title}</h3><p>{body}</p></div></article>)}</div><img src="assets/figma/vial.png" alt="BodyFactory GLP-1 vial" loading="lazy" width="568" height="568"/><div class="orbit-right">{care.slice(3).map(([icon,title,body]) => <article class="care-card"><i class:list={['bi',icon]} aria-hidden="true"></i><div><h3>{title}</h3><p>{body}</p></div></article>)}</div></div></section>
-    <section class="lifestyle section"><div class="container"><p class="eyebrow" data-reveal>Beyond the scale</p><h2 data-reveal>A New Life Style.</h2><p class="lifestyle-lead" data-reveal>Treatment may support more than weight loss. See what progress could mean for the life you live every day.</p><div class="lifestyle-rail" aria-label="Potential wellness benefits">{benefits.map(([icon,title,body,image]) => <article class="life-card" data-reveal><img src={image} alt="" loading="lazy"/><div class="life-card-shade"></div><div class="life-card-content"><span class="life-icon"><i class:list={['bi',icon]} aria-hidden="true"></i></span><h3>{title}</h3><p>{body}</p></div></article>)}</div></div></section>
-    <section class="faq-section section container" id="faq"><div class="center-heading" data-reveal><h2>Frequently Asked Questions</h2></div><div class="faq-list" data-reveal>{faqs.map(([question,answer],index) => <details open={index===0}><summary>{question}<span class="faq-symbol" aria-hidden="true"></span></summary><p>{answer}</p></details>)}</div></section>
-    <section class="locations section container" id="locations"><div data-reveal><h2>Find us<br/>in the city.</h2><p>Three locations, one consistent standard of care.</p></div><div class="location-list" data-reveal><a href="https://www.bodyfactoryskincare.com/" target="_blank" rel="noopener noreferrer">Hell’s Kitchen <span>Explore studio ↗</span></a><a href="https://www.bodyfactoryskincare.com/" target="_blank" rel="noopener noreferrer">West Village <span>Explore studio ↗</span></a><a href="https://www.bodyfactoryskincare.com/" target="_blank" rel="noopener noreferrer">Upper East Side <span>Explore studio ↗</span></a></div></section>
-    <section class="quick-test section" id="quick-test"><div class="container"><div class="center-heading" data-reveal><h2>Let’s try a<br/>quick Test</h2><p>Three simple questions to help you start the conversation.</p></div><div class="test-panel" data-reveal><div class="test-copy"><span class="eyebrow">YOUR FIRST STEP</span><h3>It starts with you.</h3><p>Explore what matters most to you, then bring your questions to a consultation.</p><button class="pill primary" type="button" data-action="assessment">Take the quick test ↗</button></div><div class="test-preview"><span>YOUR PATH</span><div class="gauge"><i class="bi bi-speedometer2"></i></div><strong>A clearer next step.</strong><p>No diagnosis or medical screening. Just a starting point for your conversation.</p></div></div></div></section>
-    <section class="final-cta"><div class="container"><img src="assets/figma/vials.png" alt="Two BodyFactory GLP-1 vials" loading="lazy" width="704" height="547" data-reveal/><p class="eyebrow" data-reveal>Your next chapter starts here</p><h2 data-reveal>Your next <em>Self</em><br/>starts here.</h2><p data-reveal>Meet privately with our team to review your goals, determine eligibility, and understand exactly what comes next.</p><button class="pill primary" type="button" data-action="book">Book Your Consultation</button></div></section>
+
+    <section class="process section" id="process">
+      <div class="container process-grid">
+        <div class="process-left">
+          <img class="process-photo" src="assets/figma/consultation.png" alt="Clinician speaking with a patient during a consultation" loading="lazy" width="439" height="535" data-reveal/>
+          <div class="process-intro" data-reveal><h2>Four steps.<br/>One clear plan.</h2><p>From your first conversation to every check-in, each step is explained before it happens.</p></div>
+        </div>
+        <div class="process-flow">
+          <div class="step-list">{steps.map(([number, title, description, icon]) => <article class="step-card" data-reveal><span class="step-icon"><i class:list={['bi', icon]} aria-hidden="true"></i></span><div><span class="step-number">Step {number.slice(1)}</span><h3>{title}</h3><p>{description}</p></div></article>)}</div>
+          <button class="pill primary process-cta" type="button" data-action="book">Start with a consultation <ArrowIcon/></button>
+        </div>
+      </div>
+    </section>
+
+    <section class="program section container" id="program">
+      <div class="center-heading" data-reveal><p class="eyebrow">Why us?</p><h2>Everything your program<br/>looks after.</h2><p>From your first conversation to your ongoing check-ins, every step is explained before it happens.</p></div>
+      <div class="benefit-orbit">
+        <div class="orbit-left">{care.slice(0, 3).map(([icon, title, body]) => <article class="care-card"><i class:list={['bi', icon]} aria-hidden="true"></i><div><h3>{title}</h3><p>{body}</p></div></article>)}</div>
+        <div class="program-image-wrap" aria-hidden="true"><span class="program-glow"></span><img src="assets/figma/vial-gradient.webp" alt="" loading="lazy" width="917" height="897"/></div>
+        <div class="orbit-right">{care.slice(3).map(([icon, title, body]) => <article class="care-card"><i class:list={['bi', icon]} aria-hidden="true"></i><div><h3>{title}</h3><p>{body}</p></div></article>)}</div>
+      </div>
+    </section>
+
+    <section class="lifestyle section">
+      <div class="container">
+        <p class="eyebrow" data-reveal>Beyond the scale</p><h2 data-animate-words>A New Life Style.</h2><p class="lifestyle-lead" data-reveal>Treatment may support more than weight loss. See what progress could mean for the life you live every day.</p>
+        <div class="lifestyle-rail" aria-label="Potential wellness benefits">{benefits.map(([icon, title, body, image]) => <article class="life-card" data-reveal><img src={image} alt="" loading="lazy"/><div class="life-card-shade"></div><span class="life-icon"><i class:list={['bi', icon]} aria-hidden="true"></i></span><div class="life-card-content"><h3>{title}</h3><p>{body}</p></div></article>)}</div>
+      </div>
+    </section>
+
+    <section class="faq-section section container" id="faq">
+      <div class="center-heading" data-reveal><h2>Frequently Asked Questions</h2></div>
+      <div class="faq-list" data-faq>{faqs.map(([question, answer], index) => <details open={index === 0}><summary>{question}<span class="faq-symbol" aria-hidden="true"></span></summary><div class="faq-answer"><p>{answer}</p></div></details>)}</div>
+    </section>
+
+    <section class="locations section container" id="locations">
+      <div class="locations-heading" data-reveal><p class="eyebrow">Find us</p><h2>Three studios.<br/>One New York.</h2><p>Visit the BodyFactory studio that fits your city rhythm.</p></div>
+      <div class="location-grid">{locations.map((location, index) => <a class="location-card" href={location.url} target="_blank" rel="noopener noreferrer"><img src={location.image} alt={`${location.name} BodyFactory studio`} loading="lazy"/><span class="location-shade"></span><span class="location-copy"><small>NYC / 0{index + 1}</small><strong>{location.name}</strong><span>{location.address}</span></span><ArrowIcon class="location-arrow"/><span class="sr-only">View studio details, opens a new tab</span></a>)}</div>
+    </section>
+
+    <section class="quick-test section" id="quick-test">
+      <div class="container">
+        <div class="center-heading" data-reveal><p class="eyebrow">Your first step</p><h2>Let’s try a<br/>quick test.</h2><p>Three simple questions to help you start the conversation.</p></div>
+        <div class="test-panel" data-reveal>
+          <div class="test-copy"><span class="eyebrow">YOUR PATH</span><h3>It starts with you.</h3><p>Explore what matters most, then bring your questions to a consultation.</p><button class="pill primary" type="button" data-action="assessment">Take the quick test <ArrowIcon/></button></div>
+          <div class="test-preview"><span>PRIVATE & SIMPLE</span><div class="gauge"><i class="bi bi-envelope-heart"></i></div><strong>Receive your result by email.</strong><p>The final screen includes an email field and consent choice. Delivery will be activated when the secure form service is connected.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="final-cta">
+      <div class="container"><img src="assets/figma/vials.png" alt="Two BodyFactory GLP-1 vials" loading="lazy" width="704" height="547" data-reveal/><p class="eyebrow" data-reveal>Your next chapter starts here</p><h2 data-animate-words>Your next <em>Self</em><br/>starts here.</h2><p data-reveal>Meet privately with our team to review your goals, determine eligibility, and understand what comes next.</p><button class="pill primary" type="button" data-action="book">Book Your Consultation <ArrowIcon/></button></div>
+    </section>
   </main>
-  <footer class="footer"><div class="container"><div class="footer-top"><p>Personalized aesthetics and wellness care across New York City.</p><div><b>Studios</b><a href="#locations">West Village</a><a href="#locations">Hell’s Kitchen</a><a href="#locations">Upper East Side</a></div><div><b>Explore</b><a href="#program">Program</a><a href="#approach">Approach</a><a href="#faq">FAQ</a></div></div><img src="assets/logo-white.png" alt="BodyFactory Skin Care" width="1200" height="400"/><div class="footer-bottom"><span>© {new Date().getFullYear()} BodyFactory Skin Care</span><a href="https://www.bodyfactoryskincare.com/" target="_blank" rel="noopener noreferrer">Visit BodyFactory ↗</a></div></div></footer>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-about"><img src="assets/logo-white.png" alt="BodyFactory Skin Care" width="540" height="165"/><p>Personalized aesthetics and wellness care across New York City.</p></div>
+        <nav aria-label="Footer navigation"><b>Explore</b><a href={bodyFactoryHome}>Home</a><a href="#approach">Approach</a><a href="#process">How it works</a><a href="#program">Program</a><a href="#locations">Locations</a><a href="#faq">FAQ</a></nav>
+        <div class="footer-contact"><b>Connect</b><a href="mailto:hello@bodyfactoryskincare.com">hello@bodyfactoryskincare.com</a><div class="social-links"><a href="https://www.instagram.com/bodyfactoryskincare/" aria-label="BodyFactory on Instagram" target="_blank" rel="noopener noreferrer"><i class="bi bi-instagram"></i></a><a href="https://www.tiktok.com/@bodyfactoryskincare" aria-label="BodyFactory on TikTok" target="_blank" rel="noopener noreferrer"><i class="bi bi-tiktok"></i></a></div><a class="pill footer-home" href={bodyFactoryHome}>Visit BodyFactory <ArrowIcon/></a></div>
+      </div>
+      <div class="footer-bottom"><span>© {new Date().getFullYear()} BodyFactory Skin Care. All rights reserved.</span><div><a href="https://www.bodyfactoryskincare.com/privacy-policy">Privacy</a><a href="https://www.bodyfactoryskincare.com/terms-and-conditions">Terms</a><a href="#top">Back to top</a></div></div>
+    </div>
+  </footer>
+
   <Dialogs/>
 </Layout>
