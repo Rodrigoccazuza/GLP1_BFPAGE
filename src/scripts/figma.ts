@@ -207,22 +207,43 @@ function splitWords(element: HTMLElement) {
 
 function setupFaq() {
   const details = Array.from(document.querySelectorAll<HTMLDetailsElement>('[data-faq] details'));
+
+  const closeDetail = (detail: HTMLDetailsElement) => {
+    const answer = detail.querySelector<HTMLElement>('.faq-answer');
+    if (!answer || !detail.open) return;
+    gsap.killTweensOf(answer);
+    gsap.fromTo(answer,
+      { height: answer.offsetHeight, opacity: 1 },
+      {
+        height: 0,
+        opacity: 0,
+        duration: .25,
+        ease: 'power2.inOut',
+        onComplete: () => {
+          detail.open = false;
+          gsap.set(answer, { clearProps: 'height,opacity' });
+        },
+      },
+    );
+  };
+
   details.forEach(detail => {
     const summary = detail.querySelector<HTMLElement>('summary')!;
+    const answer = detail.querySelector<HTMLElement>('.faq-answer')!;
     summary.addEventListener('click', event => {
       if (reduced.matches) return;
       event.preventDefault();
       if (detail.open) {
-        gsap.to(detail, { height: summary.offsetHeight, duration: .38, ease: 'power2.inOut', onComplete: () => { detail.open = false; detail.style.height = ''; } });
+        closeDetail(detail);
         return;
       }
-      details.filter(item => item !== detail && item.open).forEach(item => {
-        item.open = false;
-        item.style.height = '';
-      });
+      details.filter(item => item !== detail && item.open).forEach(closeDetail);
       detail.open = true;
-      const targetHeight = detail.scrollHeight;
-      gsap.fromTo(detail, { height: summary.offsetHeight }, { height: targetHeight, duration: .48, ease: 'power3.inOut', onComplete: () => { detail.style.height = 'auto'; } });
+      gsap.killTweensOf(answer);
+      gsap.fromTo(answer,
+        { height: 0, opacity: 0 },
+        { height: answer.scrollHeight, opacity: 1, duration: .32, ease: 'power2.out', onComplete: () => gsap.set(answer, { clearProps: 'height,opacity' }) },
+      );
     });
   });
 }
@@ -232,7 +253,7 @@ setupFaq();
 if (!reduced.matches) {
   gsap.registerPlugin(ScrollTrigger);
 
-  document.querySelectorAll<HTMLElement>('[data-animate-words]').forEach(splitWords);
+  document.querySelectorAll<HTMLElement>('[data-animate-words], [data-highlight-words]').forEach(splitWords);
 
   const heroTimeline = gsap.timeline({ defaults: { duration: .85, ease: 'power3.out' } });
   heroTimeline
@@ -251,6 +272,15 @@ if (!reduced.matches) {
   document.querySelectorAll<HTMLElement>('[data-animate-words]').forEach(element => {
     if (element.closest('[data-hero]')) return;
     gsap.from(element.querySelectorAll('.word'), { yPercent: 85, opacity: 0, stagger: .025, duration: .65, ease: 'power3.out', scrollTrigger: { trigger: element, start: 'top 86%', once: true } });
+  });
+
+  document.querySelectorAll<HTMLElement>('[data-highlight-words]').forEach(element => {
+    gsap.to(element.querySelectorAll('.word'), {
+      color: '#111716',
+      stagger: .085,
+      ease: 'none',
+      scrollTrigger: { trigger: element, start: 'top 78%', end: 'bottom 42%', scrub: .45 },
+    });
   });
 
   document.querySelectorAll<HTMLElement>('[data-counter]').forEach(counter => {

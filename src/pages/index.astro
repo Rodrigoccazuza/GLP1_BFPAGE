@@ -68,9 +68,8 @@ const locations = [
         <h1 id="hero-title" data-animate-words>Feel like your real<br/><em>self</em> again.</h1>
         <p class="hero-sub">Prescription weight management, personalized to you and administered in studio by our nursing team.</p>
         <div class="hero-actions">
-          <button class="pill primary hero-primary" type="button" data-action="book">Get Started <ArrowIcon/></button>
+          <button class="pill primary hero-primary" type="button" data-action="book">Get Started</button>
           <a href="#approach" class="pill outline hero-secondary">Explore More <ArrowIcon/></a>
-          <a href={bodyFactoryHome} class="pill ghost hero-home">BodyFactory Home <ArrowIcon/></a>
         </div>
       </div>
       <div class="hero-visual" data-reveal>
@@ -91,9 +90,9 @@ const locations = [
     </section>
 
     <section class="approach container section" id="approach">
-      <p class="statement" data-animate-words>GLP-1 medications work with your body’s own signals to help you feel fuller for longer. With clear guidance and steady support, healthy habits become easier to keep.</p>
+      <p class="statement" data-highlight-words>GLP-1 medications work with your body’s own signals to help you feel fuller for longer. With clear guidance and steady support, healthy habits become easier to keep.</p>
       <p class="statement-note" data-reveal>Prescribed only when a clinical evaluation shows it is right for you, and adjusted as you progress.</p>
-      <div class="honest" data-reveal><h2>Honest about<br/><strong>who it’s for.</strong></h2><p>GLP-1 medication isn’t right for everyone. Your clinician confirms eligibility after reviewing your full history.</p></div>
+      <div class="honest" data-reveal><h2>Honest about<br/>who it’s for.</h2><p>GLP-1 medication isn’t right for everyone. Your clinician confirms eligibility after reviewing your full history.</p></div>
       <div class="fit-grid">
         <article class="fit-card good" data-fit-card><h3>May be a good fit</h3><ul><li>Adults with a BMI of 30 or higher, or 27 or higher with a weight-related condition</li><li>Those whose past efforts with diet and exercise haven’t lasted</li><li>Anyone ready to pair medication with steady lifestyle habits</li></ul></article>
         <article class="fit-card caution" data-fit-card><h3>When it may not be right</h3><ul><li>Pregnancy, breastfeeding, or planning to conceive</li><li>Personal or family history of medullary thyroid cancer or MEN 2</li><li>A history of pancreatitis or other conditions, reviewed case by case</li></ul></article>
@@ -104,11 +103,10 @@ const locations = [
       <div class="container process-grid">
         <div class="process-left">
           <img class="process-photo" src="assets/figma/consultation.png" alt="Clinician speaking with a patient during a consultation" loading="lazy" width="439" height="535" data-reveal/>
-          <div class="process-intro" data-reveal><h2>Four steps.<br/>One clear plan.</h2><p>From your first conversation to every check-in, each step is explained before it happens.</p></div>
+          <div class="process-intro" data-reveal><h2>Four steps.<br/>One clear plan.</h2><p>From your first conversation to every check-in, each step is explained before it happens.</p><button class="pill primary process-cta" type="button" data-action="book">Start with a consultation</button></div>
         </div>
         <div class="process-flow">
           <div class="step-list">{steps.map(([number, title, description, icon]) => <article class="step-card" data-reveal><span class="step-icon"><i class:list={['bi', icon]} aria-hidden="true"></i></span><div><span class="step-number">Step {number.slice(1)}</span><h3>{title}</h3><p>{description}</p></div></article>)}</div>
-          <button class="pill primary process-cta" type="button" data-action="book">Start with a consultation <ArrowIcon/></button>
         </div>
       </div>
     </section>
@@ -150,17 +148,18 @@ const locations = [
     </section>
 
     <section class="final-cta">
-      <div class="container"><img src="assets/figma/vials.png" alt="Two BodyFactory GLP-1 vials" loading="lazy" width="704" height="547" data-reveal/><p class="eyebrow" data-reveal>Your next chapter starts here</p><h2 data-animate-words>Your next <em>Self</em><br/>starts here.</h2><p data-reveal>Meet privately with our team to review your goals, determine eligibility, and understand what comes next.</p><button class="pill primary" type="button" data-action="book">Book Your Consultation <ArrowIcon/></button></div>
+      <div class="container"><img src="assets/figma/vials.png" alt="Two BodyFactory GLP-1 vials" loading="lazy" width="704" height="547" data-reveal/><p class="eyebrow" data-reveal>Your next chapter starts here</p><h2 data-animate-words>Your next <em>Self</em><br/>starts here.</h2><p data-reveal>Meet privately with our team to review your goals, determine eligibility, and understand what comes next.</p><button class="pill primary" type="button" data-action="book">Book Your Consultation</button></div>
     </section>
   </main>
 
   <footer class="footer">
     <div class="container">
       <div class="footer-top">
-        <div class="footer-about"><img src="assets/logo-white.png" alt="BodyFactory Skin Care" width="540" height="165"/><p>Personalized aesthetics and wellness care across New York City.</p></div>
+        <div class="footer-about"><p>Personalized aesthetics and wellness care across New York City.</p></div>
         <nav aria-label="Footer navigation"><b>Explore</b><a href={bodyFactoryHome}>Home</a><a href="#approach">Approach</a><a href="#process">How it works</a><a href="#program">Program</a><a href="#locations">Locations</a><a href="#faq">FAQ</a></nav>
-        <div class="footer-contact"><b>Connect</b><a href="mailto:hello@bodyfactoryskincare.com">hello@bodyfactoryskincare.com</a><div class="social-links"><a href="https://www.instagram.com/bodyfactoryskincare/" aria-label="BodyFactory on Instagram" target="_blank" rel="noopener noreferrer"><i class="bi bi-instagram"></i></a><a href="https://www.tiktok.com/@bodyfactoryskincare" aria-label="BodyFactory on TikTok" target="_blank" rel="noopener noreferrer"><i class="bi bi-tiktok"></i></a></div><a class="pill footer-home" href={bodyFactoryHome}>Visit BodyFactory <ArrowIcon/></a></div>
+        <div class="footer-contact"><b>Connect</b><a href="mailto:hello@bodyfactoryskincare.com">hello@bodyfactoryskincare.com</a><div class="social-links"><a href="https://www.instagram.com/bodyfactoryskincare/" aria-label="BodyFactory on Instagram" target="_blank" rel="noopener noreferrer"><i class="bi bi-instagram"></i></a><a href="https://www.tiktok.com/@bodyfactoryskincare" aria-label="BodyFactory on TikTok" target="_blank" rel="noopener noreferrer"><i class="bi bi-tiktok"></i></a></div><a class="pill footer-home" href={bodyFactoryHome}>Visit BodyFactory</a></div>
       </div>
+      <a class="footer-brandmark" href={bodyFactoryHome} aria-label="Visit the BodyFactory Skin Care home page"><img src="assets/figma/footer-logo-huge.png" alt="BodyFactory Skin Care" width="1160" height="372" loading="lazy"/></a>
       <div class="footer-bottom"><span>© {new Date().getFullYear()} BodyFactory Skin Care. All rights reserved.</span><div><a href="https://www.bodyfactoryskincare.com/privacy-policy">Privacy</a><a href="https://www.bodyfactoryskincare.com/terms-and-conditions">Terms</a><a href="#top">Back to top</a></div></div>
     </div>
   </footer>
