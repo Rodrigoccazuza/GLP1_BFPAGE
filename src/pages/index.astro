@@ -52,12 +52,12 @@ const locations = [
       <nav class="desktop-nav" aria-label="Main navigation">
         <a href={bodyFactoryHome}>Home</a><a href="#approach">Approach</a><a href="#process">Process</a><a href="#program">Program</a><a href="#locations">Locations</a><a href="#faq">FAQ</a>
       </nav>
-      <button class="pill primary nav-book" type="button" data-action="book">Book Now <ArrowIcon/></button>
+      <button class="pill primary nav-book" type="button" data-action="book">Book Now</button>
       <button class="menu-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav"><span></span><span></span></button>
     </div>
     <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation" hidden>
       <a href={bodyFactoryHome}>BodyFactory Home</a><a href="#approach">Approach</a><a href="#process">Process</a><a href="#program">Program</a><a href="#locations">Locations</a><a href="#faq">FAQ</a>
-      <button class="pill primary" type="button" data-action="book">Book Now <ArrowIcon/></button>
+      <button class="pill primary" type="button" data-action="book">Book Now</button>
     </nav>
   </header>
 
@@ -83,7 +83,7 @@ const locations = [
     </section>
 
     <section class="stats container" aria-label="Research and experience" data-reveal>
-      <div><strong data-counter data-value="14.9" data-suffix="%">0%</strong><b>Average Weight Loss</b><span>Mean body-weight reduction at 68 weeks.*</span></div>
+      <div class="stat-weight-loss"><strong data-counter data-value="14.9" data-suffix="%">0%</strong><b>Average Weight Loss</b><span>Mean body-weight reduction at 68 weeks.*</span></div>
       <div><strong data-counter data-value="86" data-suffix="%">0%</strong><b>Achieved 5%+ Weight Loss</b><span>In a 68-week clinical trial.*</span></div>
       <div><strong data-counter data-value="10" data-suffix="+">0+</strong><b>Years of expertise</b><span>Clinical experience in aesthetics and wellness.</span></div>
       <small>*Results from a clinical trial of semaglutide 2.4 mg with lifestyle intervention; individual results vary. <a href="https://www.nejm.org/doi/full/10.1056/NEJMoa2032183" target="_blank" rel="noopener noreferrer">Read the study</a>.</small>
@@ -102,8 +102,9 @@ const locations = [
     <section class="process section" id="process">
       <div class="container process-grid">
         <div class="process-left">
+          <h2 class="process-title" data-reveal>Four steps.<br/>One clear plan.</h2>
           <img class="process-photo" src="assets/figma/consultation.png" alt="Clinician speaking with a patient during a consultation" loading="lazy" width="439" height="535" data-reveal/>
-          <div class="process-intro" data-reveal><h2>Four steps.<br/>One clear plan.</h2><p>From your first conversation to every check-in, each step is explained before it happens.</p><button class="pill primary process-cta" type="button" data-action="book">Start with a consultation</button></div>
+          <div class="process-intro" data-reveal><p>From your first conversation to every check-in, each step is explained before it happens.</p><button class="pill primary process-cta" type="button" data-action="book">Start with a consultation</button></div>
         </div>
         <div class="process-flow">
           <div class="step-list">{steps.map(([number, title, description, icon]) => <article class="step-card" data-reveal><span class="step-icon"><i class:list={['bi', icon]} aria-hidden="true"></i></span><div><span class="step-number">Step {number.slice(1)}</span><h3>{title}</h3><p>{description}</p></div></article>)}</div>

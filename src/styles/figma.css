@@ -61,10 +61,11 @@ a:hover .arrow-icon, button:hover .arrow-icon { transform: translate(2px, -2px);
 .desktop-nav a { position: relative; font-family: var(--label); font-size: .67rem; letter-spacing: .055em; text-decoration: none; }
 .desktop-nav a::after { content: ''; position: absolute; left: 0; right: 100%; bottom: -6px; height: 1px; background: var(--teal-dark); transition: right .3s var(--ease); }
 .desktop-nav a:hover::after { right: 0; }
-.nav-book { min-width: 132px; }
+.nav-book { min-width: 132px; color: #fff; font-weight: 700; }
 .menu-toggle { display: none; width: 44px; height: 44px; border: 0; background: none; cursor: pointer; }
 .menu-toggle span { display: block; width: 22px; height: 1px; margin: 6px auto; background: currentColor; }
 .mobile-nav { border-bottom: 1px solid var(--line); background: var(--paper); }
+.mobile-nav .primary { color: #fff; font-weight: 700; }
 
 .hero { padding-top: clamp(72px, 8vw, 112px); text-align: center; }
 .hero-copy { position: relative; z-index: 2; }
@@ -72,7 +73,7 @@ a:hover .arrow-icon, button:hover .arrow-icon { transform: translate(2px, -2px);
 .hero-copy h1 em { color: var(--teal); font-style: normal; font-weight: 500; }
 .hero-sub { max-width: 660px; margin: 28px auto 0; color: #555e5b; }
 .hero-actions { display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 32px; flex-wrap: wrap; }
-.hero-primary { min-width: 230px; color: #fff; font-size: .864rem; }
+.hero-primary { min-width: 230px; color: #fff; font-size: .864rem; font-weight: 700; }
 .hero-secondary { min-width: 150px; }
 .hero-visual { position: relative; width: min(1120px, 100%); margin: 66px auto 0; overflow: hidden; border-radius: clamp(28px, 4vw, 58px); background: #eef2f0; box-shadow: 0 18px 60px rgba(18, 30, 27, .09); }
 .hero-visual > img { width: 100%; height: auto; }
@@ -85,6 +86,8 @@ a:hover .arrow-icon, button:hover .arrow-icon { transform: translate(2px, -2px);
 .stats strong { color: var(--teal-dark); font-size: clamp(2.9rem, 5vw, 4.7rem); font-weight: 600; line-height: 1; letter-spacing: -.06em; font-variant-numeric: tabular-nums; }
 .stats b { margin-top: 14px; font-family: var(--label); font-size: .72rem; }
 .stats span { max-width: 230px; margin-top: 6px; color: var(--muted); font-size: .73rem; }
+.stat-weight-loss strong { font-weight: 700; }
+.stat-weight-loss b, .stat-weight-loss span { width: 168px; max-width: 168px; text-align: center; }
 .stats small { grid-column: 1 / -1; margin-top: 16px; color: #737a77; font-size: .64rem; }
 
 .approach { padding-top: clamp(104px, 12vw, 176px); }
@@ -106,11 +109,11 @@ a:hover .arrow-icon, button:hover .arrow-icon { transform: translate(2px, -2px);
 
 .process { background: var(--soft); }
 .process-grid { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: clamp(50px, 8vw, 112px); align-items: start; }
+.process-title { margin-bottom: 34px; font-weight: 700; }
 .process-photo { width: min(100%, 470px); aspect-ratio: 439 / 535; object-fit: cover; border-radius: 42px; }
-.process-intro { margin-top: 48px; }
-.process-intro h2 { font-weight: 550; }
-.process-intro p { max-width: 470px; margin-top: 22px; color: var(--muted); }
-.process-intro .process-cta { width: auto; min-height: 48px; margin-top: 26px; padding: 11px 21px; color: #fff; font-size: .68rem; }
+.process-intro { margin-top: 30px; }
+.process-intro p { max-width: 470px; color: var(--muted); }
+.process-intro .process-cta { width: auto; min-height: 48px; margin-top: 26px; padding: 11px 21px; color: #fff; font-size: .68rem; font-weight: 700; }
 .process-flow { display: grid; gap: 30px; }
 .step-list { display: grid; gap: 18px; }
 .step-card { display: flex; gap: 24px; min-height: 160px; padding: 32px; border: 1px solid rgba(22, 34, 31, .05); border-radius: 22px; background: #fff; box-shadow: 0 10px 35px rgba(21, 32, 29, .04); }
@@ -127,9 +130,15 @@ a:hover .arrow-icon, button:hover .arrow-icon { transform: translate(2px, -2px);
 .program-image-wrap { position: absolute; z-index: -1; inset: 0; display: grid; place-items: center; pointer-events: none; }
 .program-image-wrap img { position: relative; z-index: 2; width: min(48%, 520px); height: auto; object-fit: contain; filter: drop-shadow(0 34px 28px rgba(60,191,176,.2)); }
 .program-glow { position: absolute; inset: 17%; border-radius: 50%; background: rgba(60,191,176,.6); filter: blur(44px); }
-.orbit-left, .orbit-right { position: relative; z-index: 2; display: grid; gap: 24px; }
-.care-card { display: flex; align-items: flex-start; gap: 14px; min-height: 118px; padding: 22px; border-radius: 15px; background: #090d0c; box-shadow: 0 16px 32px rgba(4, 8, 7, .12); color: #fff; }
-.care-card > i { display: grid; place-items: center; flex: none; width: 35px; height: 35px; border-radius: 50%; background: var(--teal); color: #071412; }
+.orbit-left, .orbit-right { position: relative; z-index: 2; display: grid; gap: 30px; }
+.orbit-left .care-card { justify-self: end; }
+.orbit-right .care-card { justify-self: start; }
+.orbit-left .care-card:nth-child(1), .orbit-left .care-card:nth-child(3) { --card-shift: 48px; }
+.orbit-right .care-card:nth-child(1), .orbit-right .care-card:nth-child(3) { --card-shift: -48px; }
+.care-card { display: flex; align-items: flex-start; gap: 14px; width: 100%; max-width: 360px; min-height: 118px; padding: 22px; border: 1px solid transparent; border-radius: 15px; background: #090d0c; box-shadow: 0 16px 32px rgba(4, 8, 7, .12); color: #fff; transform: translateX(var(--card-shift, 0)); transition: transform .45s var(--ease), box-shadow .45s var(--ease), border-color .35s ease; }
+.care-card > i { display: grid; place-items: center; flex: none; width: 35px; height: 35px; border-radius: 50%; background: var(--teal); color: #071412; transition: transform .45s var(--ease), background-color .35s ease; }
+.care-card:hover { border-color: rgba(60,191,176,.72); box-shadow: 0 25px 55px rgba(4,8,7,.23), 0 0 0 1px rgba(60,191,176,.12); transform: translateX(var(--card-shift, 0)) translateY(-8px) scale(1.018); }
+.care-card:hover > i { background: #65d5c8; transform: rotate(-8deg) scale(1.08); }
 .care-card h3 { font-size: .86rem; letter-spacing: -.02em; }
 .care-card p { margin-top: 7px; color: #c6cecb; font-size: .69rem; line-height: 1.45; }
 
@@ -195,7 +204,7 @@ a:hover .arrow-icon, button:hover .arrow-icon { transform: translate(2px, -2px);
 .final-cta h2 { margin: 14px 0 22px; font-weight: 800; }
 .final-cta h2 em { color: var(--teal); font-style: normal; font-weight: 500; }
 .final-cta > .container > p:not(.eyebrow) { max-width: 600px; margin: 0 auto 30px; color: #c6cecb; }
-.final-cta .primary { color: #fff; }
+.final-cta .primary { color: #071412; font-weight: 700; }
 
 .footer { padding: 70px 0 32px; background: #050807; color: #fff; border-top: 1px solid rgba(255,255,255,.1); }
 .footer-top { display: grid; grid-template-columns: 1.35fr .7fr 1fr; gap: clamp(38px, 7vw, 100px); }
@@ -261,6 +270,8 @@ a:hover .arrow-icon, button:hover .arrow-icon { transform: translate(2px, -2px);
   .desktop-nav { gap: 15px; }
   .nav-book { min-width: 112px; }
   .benefit-orbit { column-gap: 220px; }
+  .orbit-left .care-card:nth-child(1), .orbit-left .care-card:nth-child(3) { --card-shift: 24px; }
+  .orbit-right .care-card:nth-child(1), .orbit-right .care-card:nth-child(3) { --card-shift: -24px; }
   .care-card { padding: 17px; }
   .location-card { min-height: 440px; }
 }
@@ -294,7 +305,8 @@ a:hover .arrow-icon, button:hover .arrow-icon { transform: translate(2px, -2px);
 
   .process-grid { grid-template-columns: 1fr; gap: 52px; }
   .process-photo { width: 100%; max-height: 520px; }
-  .process-intro { margin-top: 34px; }
+  .process-title { margin-bottom: 28px; }
+  .process-intro { margin-top: 28px; }
   .step-card { padding: 24px; min-height: 0; }
   .process-intro .process-cta { min-height: 48px; }
 
@@ -308,7 +320,8 @@ a:hover .arrow-icon, button:hover .arrow-icon { transform: translate(2px, -2px);
   .orbit-left, .orbit-right { z-index: 3; gap: 14px; padding-inline: 20px; }
   .orbit-left { margin-top: -150px; }
   .orbit-right { margin-top: 14px; }
-  .care-card { width: 100%; min-height: 132px; padding: 24px; border-radius: 17px; }
+  .orbit-left .care-card, .orbit-right .care-card { --card-shift: 0; justify-self: stretch; }
+  .care-card { width: 100%; max-width: none; min-height: 132px; padding: 24px; border-radius: 17px; }
   .care-card h3 { font-size: 1rem; }
   .care-card p { font-size: .76rem; }
 

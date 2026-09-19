@@ -296,7 +296,7 @@ if (!reduced.matches) {
   });
 
   gsap.utils.toArray<HTMLElement>('.care-card').forEach((card, index) => {
-    gsap.from(card, { x: index < 3 ? -38 : 38, y: 12, opacity: 0, duration: .7, ease: 'power3.out', scrollTrigger: { trigger: card, start: 'top 88%', once: true } });
+    gsap.from(card, { x: index < 3 ? -38 : 38, y: 12, opacity: 0, duration: .7, ease: 'power3.out', clearProps: 'transform,opacity', scrollTrigger: { trigger: card, start: 'top 88%', once: true } });
   });
 
   gsap.from('.program-image-wrap img', { scale: .86, opacity: 0, duration: 1.1, ease: 'power3.out', scrollTrigger: { trigger: '.benefit-orbit', start: 'top 76%', once: true } });
