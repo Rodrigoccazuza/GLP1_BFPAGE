@@ -22,10 +22,11 @@ Build output: `dist/`. No server runtime or external font requests needed by the
 
 ## Edit
 
-- `src/content.ts`: FAQs, journey, program settings, locations, future approved treatments/testimonials.
+- `src/content.ts`: all campaign copy (plans, prices, inclusions, journey, NP care model, FAQ, disclosure, gated testimonial).
 - `src/components/`: modular sections and reusable buttons/media.
-- `src/styles/global.css`: responsive brand system and interaction states.
-- `src/scripts/interactions.ts`: dialog, nonclinical assessment, video, rail and sticky CTA.
+- `src/styles/site.css`: design tokens (type scale, 12/8/4 grid, spacing, motion) and all component styles.
+- `src/scripts/site.ts`: menu, dialogs, assessment, FAQ, care tabs, sticky mobile CTA, motion.
+- `docs/redesign-report.md`: audit, systems and QA results. `docs/image-briefs.md`: prompts for new imagery.
 - `public/assets/glp1/`: optimized local imagery and film. Originals remain in the supplied folders.
 - `docs/`: research, asset provenance, review and launch-confirmation notes.
 
@@ -33,7 +34,7 @@ The assessment asks only about visitor intent. It does not diagnose, score eligi
 
 ## Browser QA
 
-Start the local preview, then `npm test`. The test uses installed Google Chrome on macOS; set the executable path in `tests/qa.mjs` for another machine. Screenshots land in `.impeccable/review/`; machine-readable results land in `docs/qa-results.json`. Tests cover nine requested widths, axe WCAG A/AA checks, assessment validation/back/reset, dialog close, mobile navigation/CTA, all rail states, reduced motion, video and no-JavaScript content.
+Start the local preview, then `npm test`. The test uses installed Google Chrome on macOS; set the executable path in `tests/qa.mjs` for another machine. Screenshots land in `.impeccable/review/`; machine-readable results land in `docs/qa-results.json`. Tests cover widths 320-1440 (overflow, text under 12px, small targets), axe WCAG 2.2 AA, required campaign copy, care tabs (mouse and keyboard), FAQ, dialogs, assessment, mobile menu, sticky CTA and no-JavaScript content. Override the URL with `QA_URL`.
 
 ## Launch
 

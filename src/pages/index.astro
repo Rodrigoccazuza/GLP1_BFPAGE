@@ -2,154 +2,179 @@
 import Layout from '../layouts/Layout.astro';
 import Dialogs from '../components/Dialogs.astro';
 import ArrowIcon from '../components/ArrowIcon.astro';
+import { program, facts, why, plans, inclusions, journey, care, benefits, faqs, locations, disclosure, unsplash, unsplashCredit } from '../content';
 
-const bodyFactoryHome = 'https://www.bodyfactoryskincare.com/';
-
-const steps = [
-  ['01', 'Consultation', 'We listen first: your history, your goals, and what has or has not worked before.', 'bi-chat-heart'],
-  ['02', 'Medical review', 'A licensed clinician reviews your health and confirms whether GLP-1 treatment is appropriate.', 'bi-clipboard2-pulse'],
-  ['03', 'Your personal plan', 'Medication, dosing, and nutrition guidance are tailored to you and explained with clear pricing.', 'bi-calendar2-check'],
-  ['04', 'Ongoing support', 'Regular check-ins help track progress, adjust your plan, and answer questions as they come up.', 'bi-heart-pulse'],
-];
-
-const benefits = [
-  ['bi-lungs-fill', 'Better Metabolic Health', 'Weight reduction and certain GLP-1 treatments may help improve blood sugar, blood pressure, and cholesterol levels.', 'assets/figma/benefits/metabolic.webp'],
-  ['bi-stars', 'Greater Body Confidence', 'Work toward your individual goals and discover new possibilities for feeling comfortable in your clothing and daily activities.', 'assets/figma/benefits/confidence.webp'],
-  ['bi-feather', 'Renew Your Self-Esteem', 'Celebrate meaningful progress and build a more positive relationship with your body, one step at a time.', 'assets/figma/benefits/self-esteem.webp'],
-  ['bi-sun-fill', 'Improved Quality of Life', 'Meaningful progress may help you feel more comfortable and capable in your daily activities.', 'assets/figma/benefits/quality-of-life.webp'],
-  ['bi-moon-stars-fill', 'Better Sleep Health', 'Weight management may improve sleep apnea symptoms, with specific treatments offering proven benefits for eligible patients.', 'assets/figma/benefits/sleep.webp'],
-];
-
-const care = [
-  ['bi-graph-up-arrow', 'Reduced appetite & cravings', 'Support hunger regulation with a plan designed around your needs.'],
-  ['bi-heart-pulse', 'Metabolic support', 'Focus on overall health, not only the number on the scale.'],
-  ['bi-person-heart', 'Personalized care', 'Your history and goals guide every clinical recommendation.'],
-  ['bi-calendar-check', 'Regular check-ins', 'Track progress and adjust your plan when clinically appropriate.'],
-  ['bi-arrow-repeat', 'Sustainable progress', 'Build practical habits you can carry forward over time.'],
-  ['bi-chat-dots', 'Answers along the way', 'Know what to expect and who to ask whenever questions come up.'],
-];
-
-const faqs = [
-  ['How do I know if I’m eligible?', 'Eligibility is confirmed during your clinical evaluation. Your provider considers your health history, weight-related factors, current medications, and any contraindications.'],
-  ['What does the first visit include?', 'Your first visit is a private conversation about your goals and medical history, followed by a clinical review and a clear explanation of possible next steps.'],
-  ['How is my medication administered?', 'When prescribed, treatment is administered in studio by the BodyFactory nursing team. Your clinician explains the dose and visit schedule.'],
-  ['What if I experience side effects?', 'Contact your clinical team. They can review your symptoms, provide guidance, and determine whether your plan should be adjusted.'],
-  ['Can my plan change over time?', 'Yes. Your clinician reviews progress and tolerability during regular check-ins and can make clinically appropriate adjustments.'],
-  ['Do you accept insurance?', 'Coverage varies. The BodyFactory team will explain known program costs, and you should confirm medication or laboratory benefits directly with your insurer.'],
-];
-
-const locations = [
-  { name: 'Hell’s Kitchen', address: '726 9th Ave · New York, NY 10019', image: 'assets/figma/locations/hells-kitchen.webp', url: 'https://www.bodyfactoryskincare.com/studios/hells-kitchen' },
-  { name: 'West Village', address: '472 6th Ave · New York, NY 10011', image: 'assets/figma/locations/west-village.webp', url: 'https://www.bodyfactoryskincare.com/studios/west-village' },
-  { name: 'Upper East Side', address: '1570 1st Ave · New York, NY 10028', image: 'assets/figma/locations/upper-east-side.webp', url: 'https://www.bodyfactoryskincare.com/studios/upper-east-side' },
-];
+const nav = [['#how', 'How it works'], ['#plans', 'Plans'], ['#care', 'Your care'], ['#faq', 'FAQ'], ['#locations', 'Locations']];
 ---
 
 <Layout>
   <header class="site-header" id="top">
     <div class="container nav-row">
-      <a class="brand" href={bodyFactoryHome} aria-label="BodyFactory Skin Care home"><img src="assets/figma/logo.png" alt="BodyFactory Skin Care" width="143" height="66" /></a>
-      <nav class="desktop-nav" aria-label="Main navigation">
-        <a href={bodyFactoryHome}>Home</a><a href="#approach">Approach</a><a href="#process">Process</a><a href="#program">Program</a><a href="#locations">Locations</a><a href="#faq">FAQ</a>
-      </nav>
-      <button class="pill primary nav-book" type="button" data-action="book">Book Now</button>
-      <button class="menu-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav"><span></span><span></span></button>
+      <a class="brand" href={program.home} aria-label="BodyFactory Skin Care home"><img src="assets/figma/logo.png" alt="BodyFactory Skin Care" width="143" height="66" /></a>
+      <nav class="desktop-nav" aria-label="Main navigation">{nav.map(([href, label]) => <a href={href}>{label}</a>)}</nav>
+      <button class="pill primary nav-book" type="button" data-action="book">Book consultation</button>
+      <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav"><span></span><span></span></button>
     </div>
     <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation" hidden>
-      <a href={bodyFactoryHome}>BodyFactory Home</a><a href="#approach">Approach</a><a href="#process">Process</a><a href="#program">Program</a><a href="#locations">Locations</a><a href="#faq">FAQ</a>
-      <button class="pill primary" type="button" data-action="book">Book Now</button>
+      {nav.map(([href, label]) => <a href={href}>{label}</a>)}
+      <a href={program.home}>BodyFactory home</a>
+      <button class="pill primary" type="button" data-action="book">Book consultation</button>
     </nav>
   </header>
 
   <main id="main">
-    <section class="hero container" aria-labelledby="hero-title">
+    <section class="hero container" aria-labelledby="hero-title" data-hero-section>
       <div class="hero-copy" data-hero>
-        <p class="eyebrow">Personalized GLP-1 Care</p>
-        <h1 id="hero-title" data-animate-words>Feel like your real<br/><em>self</em> again.</h1>
-        <p class="hero-sub">Prescription weight management, personalized to you and administered in studio by our nursing team.</p>
+        <p class="eyebrow">Compounded GLP-1 &amp; GIP in New York</p>
+        <h1 id="hero-title" class="t-display" data-animate-words>Weight loss, <em>personalized.</em></h1>
+        <p class="hero-sub t-lead">A medically supervised program designed to help you eat less, feel fuller, and work toward sustainable, long-term results.</p>
         <div class="hero-actions">
-          <button class="pill primary hero-primary" type="button" data-action="book">Get Started</button>
-          <a href="#approach" class="pill outline hero-secondary">Explore More <ArrowIcon/></a>
+          <button class="pill primary hero-primary" type="button" data-action="book">Schedule your consultation <ArrowIcon/></button>
+          <a href="#plans" class="pill outline">Compare plans</a>
         </div>
       </div>
-      <div class="hero-visual" data-reveal>
-        <img src="assets/figma/hero.png" alt="Two women in a bright studio, showing a personal wellness journey" fetchpriority="high" width="1121" height="804" />
-        <div class="hero-foot" aria-label="Program features">
-          <span><i class="bi bi-patch-check-fill"></i> Licensed clinicians</span>
-          <span><i class="bi bi-person-heart"></i> Personalized plans</span>
-          <span><i class="bi bi-calendar-check"></i> Regular check-ins</span>
+      <div class="hero-visual">
+        <picture>
+          <source media="(max-width: 700px)" srcset="assets/figma/hero-640.webp" />
+          <img src="assets/figma/hero.webp" alt="A woman looking into a mirror that reflects her at a different body size, representing a personal weight loss journey" fetchpriority="high" width="1121" height="804" />
+        </picture>
+      </div>
+    </section>
+
+    <section class="facts container" aria-label="Program at a glance">
+      <dl class="facts-list">{facts.map(fact => <div><dt>{fact.label}</dt><dd>{fact.value}</dd></div>)}</dl>
+    </section>
+
+    <section class="approach container section" id="how" aria-labelledby="how-title">
+      <h2 id="how-title" class="sr-only">How it works</h2>
+      <p class="statement" data-highlight-words>GLP-1 and GIP therapies work with your body’s natural hormones to help control hunger, support your metabolism, and make lasting habits easier to keep.</p>
+      <p class="statement-note">Prescribed only when your nurse practitioner confirms it is appropriate, and reviewed with you every month.</p>
+    </section>
+
+    <section class="why section container" aria-labelledby="why-title">
+      <div class="section-head center" data-reveal><h2 id="why-title" class="t-h2">Why GLP-1 &amp; GIP?</h2><p class="t-lead">Two of the most advanced weight loss therapies available today, paired with close medical supervision.</p></div>
+      <div class="benefit-orbit">
+        <div class="orbit-left">{why.slice(0, 3).map(([icon, title, body]) => <article class="care-card"><i class:list={['bi', icon]} aria-hidden="true"></i><div><h3 class="t-h5">{title}</h3><p>{body}</p></div></article>)}</div>
+        <div class="program-image-wrap" aria-hidden="true"><img src="assets/figma/vial.webp" alt="" loading="lazy" width="568" height="568"/></div>
+        <div class="orbit-right">{why.slice(3).map(([icon, title, body]) => <article class="care-card"><i class:list={['bi', icon]} aria-hidden="true"></i><div><h3 class="t-h5">{title}</h3><p>{body}</p></div></article>)}</div>
+      </div>
+    </section>
+
+    <section class="plans section" id="plans" aria-labelledby="plans-title">
+      <div class="container">
+        <div class="section-head" data-reveal><h2 id="plans-title" class="t-h2">Choose your membership.</h2><p class="t-lead">Two therapies, one standard of care. Your nurse practitioner confirms which, if either, is right for you.</p></div>
+        <div class="plan-grid">
+          {plans.map((plan, index) => (
+            <article class:list={['plan', index === 1 && 'plan-dark']} id={plan.id} aria-labelledby={`${plan.id}-name`}>
+              <header class="plan-head">
+                <h3 id={`${plan.id}-name`} class="t-h3">{plan.name}</h3>
+                <p class="plan-tier">{plan.tier}</p>
+              </header>
+              <p class="plan-price"><span class="plan-amount">${plan.price}</span><span>/month</span></p>
+              <p class="plan-therapy"><strong>{plan.therapy}</strong> ({plan.ingredient})</p>
+              <p class="plan-summary">{plan.summary}</p>
+              <p class="plan-intro">{plan.intro}</p>
+              <ul class="check-list">{plan.benefits.map(item => <li>{item}</li>)}</ul>
+              <p class="plan-fit">{plan.fit}</p>
+              <button class:list={['pill', index === 1 ? 'primary' : 'dark']} type="button" data-action="book">Start with {plan.name} <ArrowIcon/></button>
+            </article>
+          ))}
+        </div>
+
+        <div class="compare">
+          <table>
+            <caption class="t-h4">What each membership includes</caption>
+            <thead><tr><th scope="col"><span class="sr-only">Included service</span></th><th scope="col">SlimFit™<span>$299/mo</span></th><th scope="col">SlimFit Plus™<span>$399/mo</span></th></tr></thead>
+            <tbody>
+              {inclusions.map(([label, a, b]) => (
+                <tr data-row><th scope="row">{label}</th>{[a, b].map(on => <td>{on ? <><i class="bi bi-check-lg" aria-hidden="true"></i><span class="sr-only">Included</span></> : <><span class="dash" aria-hidden="true"></span><span class="sr-only">Not included</span></>}</td>)}</tr>
+              ))}
+            </tbody>
+          </table>
+          <p class="fine-print">{disclosure}</p>
         </div>
       </div>
     </section>
 
-    <section class="stats container" aria-label="Research and experience" data-reveal>
-      <div class="stat-weight-loss"><strong data-counter data-value="14.9" data-suffix="%">0%</strong><b>Average Weight Loss</b><span>Mean body-weight reduction at 68 weeks.*</span></div>
-      <div><strong data-counter data-value="86" data-suffix="%">0%</strong><b>Achieved 5%+ Weight Loss</b><span>In a 68-week clinical trial.*</span></div>
-      <div><strong data-counter data-value="10" data-suffix="+">0+</strong><b>Years of expertise</b><span>Clinical experience in aesthetics and wellness.</span></div>
-      <small>*Results from a clinical trial of semaglutide 2.4 mg with lifestyle intervention; individual results vary. <a href="https://www.nejm.org/doi/full/10.1056/NEJMoa2032183" target="_blank" rel="noopener noreferrer">Read the study</a>.</small>
-    </section>
-
-    <section class="approach container section" id="approach">
-      <p class="statement" data-highlight-words>GLP-1 medications work with your body’s own signals to help you feel fuller for longer. With clear guidance and steady support, healthy habits become easier to keep.</p>
-      <p class="statement-note" data-reveal>Prescribed only when a clinical evaluation shows it is right for you, and adjusted as you progress.</p>
-      <div class="honest" data-reveal><h2>Honest about<br/>who it’s for.</h2><p>GLP-1 medication isn’t right for everyone. Your clinician confirms eligibility after reviewing your full history.</p></div>
-      <div class="fit-grid">
-        <article class="fit-card good" data-fit-card><h3>May be a good fit</h3><ul><li>Adults with a BMI of 30 or higher, or 27 or higher with a weight-related condition</li><li>Those whose past efforts with diet and exercise haven’t lasted</li><li>Anyone ready to pair medication with steady lifestyle habits</li></ul></article>
-        <article class="fit-card caution" data-fit-card><h3>When it may not be right</h3><ul><li>Pregnancy, breastfeeding, or planning to conceive</li><li>Personal or family history of medullary thyroid cancer or MEN 2</li><li>A history of pancreatitis or other conditions, reviewed case by case</li></ul></article>
-      </div>
-    </section>
-
-    <section class="process section" id="process">
+    <section class="process section" id="journey" aria-labelledby="journey-title">
       <div class="container process-grid">
         <div class="process-left">
-          <h2 class="process-title" data-reveal>Four steps.<br/>One clear plan.</h2>
-          <img class="process-photo" src="assets/figma/consultation.png" alt="Clinician speaking with a patient during a consultation" loading="lazy" width="439" height="535" data-reveal/>
-          <div class="process-intro" data-reveal><p>From your first conversation to every check-in, each step is explained before it happens.</p><button class="pill primary process-cta" type="button" data-action="book">Start with a consultation</button></div>
+          <h2 id="journey-title" class="t-h2" data-reveal>Your journey with BodyFactory.</h2>
+          <img class="process-photo" src="assets/figma/consultation.webp" alt="A nurse practitioner speaking with a patient during a consultation" loading="lazy" width="439" height="535"/>
+          <div class="process-intro"><p>Every step is explained before it happens, and your nurse practitioner stays with you from the first visit onward.</p><button class="pill primary" type="button" data-action="book">Schedule your consultation <ArrowIcon/></button></div>
         </div>
-        <div class="process-flow">
-          <div class="step-list">{steps.map(([number, title, description, icon]) => <article class="step-card" data-reveal><span class="step-icon"><i class:list={['bi', icon]} aria-hidden="true"></i></span><div><span class="step-number">Step {number.slice(1)}</span><h3>{title}</h3><p>{description}</p></div></article>)}</div>
-        </div>
+        <ol class="step-list" data-steps>
+          {journey.map((step, index) => <li class="step-card"><span class="step-icon"><i class:list={['bi', step.icon]} aria-hidden="true"></i></span><div><span class="step-number" aria-hidden="true">{index + 1}</span><h3 class="t-h4">{step.title}</h3><p>{step.body}</p></div></li>)}
+        </ol>
       </div>
     </section>
 
-    <section class="program section container" id="program">
-      <div class="center-heading" data-reveal><p class="eyebrow">Why us?</p><h2>Everything your program<br/>looks after.</h2><p>From your first conversation to your ongoing check-ins, every step is explained before it happens.</p></div>
-      <div class="benefit-orbit">
-        <div class="orbit-left">{care.slice(0, 3).map(([icon, title, body]) => <article class="care-card"><i class:list={['bi', icon]} aria-hidden="true"></i><div><h3>{title}</h3><p>{body}</p></div></article>)}</div>
-        <div class="program-image-wrap" aria-hidden="true"><span class="program-glow"></span><img src="assets/figma/vial-gradient.webp" alt="" loading="lazy" width="917" height="897"/></div>
-        <div class="orbit-right">{care.slice(3).map(([icon, title, body]) => <article class="care-card"><i class:list={['bi', icon]} aria-hidden="true"></i><div><h3>{title}</h3><p>{body}</p></div></article>)}</div>
+    <section class="care section" id="care" aria-labelledby="care-title" data-care>
+      <div class="care-stage">
+        <div class="container care-grid">
+          <div class="care-intro">
+            <h2 id="care-title" class="t-h2">Your care, month by month.</h2>
+            <p class="t-lead">How your nurse practitioner evaluates, doses, and monitors your treatment.</p>
+            <nav class="care-guide" aria-label="Care stages">
+              <ol>
+                {care.map((panel, index) => <li><a href={`#panel-${panel.id}`} data-care-step={index}><span class="care-guide-num">{String(index + 1).padStart(2, '0')}</span><span class="care-guide-label">{panel.tab}</span><span class="care-guide-bar" aria-hidden="true"><span></span></span></a></li>)}
+              </ol>
+              <p class="care-guide-current" data-care-current>{care[0].tab}</p>
+            </nav>
+          </div>
+          <div class="care-panels">
+            {care.map((panel, index) => (
+              <article class="care-panel" id={`panel-${panel.id}`} aria-labelledby={`panel-${panel.id}-title`} data-care-panel={index}>
+                <figure class="care-media">
+                  <picture>
+                    <source media="(min-width: 1024px)" srcset={`${unsplash(panel.image.src, 560, 900)} 1x, ${unsplash(panel.image.src, 1120, 1800)} 2x`} />
+                    <img src={unsplash(panel.image.src, 1200, 675)} srcset={`${unsplash(panel.image.src, 640, 360)} 640w, ${unsplash(panel.image.src, 1200, 675)} 1200w`} sizes="100vw" alt={panel.image.alt} loading="lazy" width="1200" height="675" style={`object-position:${panel.image.position}`} />
+                  </picture>
+                  <figcaption>Photo: <a href={unsplashCredit(panel.image.user)} target="_blank" rel="noopener noreferrer">{panel.image.credit}</a> on <a href="https://unsplash.com/?utm_source=bodyfactory_glp1&utm_medium=referral" target="_blank" rel="noopener noreferrer">Unsplash</a></figcaption>
+                </figure>
+                <div class="care-body">
+                  <p class="care-label"><span>{String(index + 1).padStart(2, '0')} / 04</span>{panel.tab}</p>
+                  <h3 id={`panel-${panel.id}-title`} class="t-h3">{panel.title}</h3>
+                  <p class="care-lead">{panel.intro}</p>
+                  <ul class="check-list two-col">{panel.items.map(item => <li>{item}</li>)}</ul>
+                  {panel.record && <div class="care-record"><h4 class="t-h6">Recorded at every monthly visit</h4><ul>{panel.record.map(item => <li>{item}</li>)}</ul></div>}
+                  {panel.notes && <div class="care-notes">{panel.notes.map(([title, body]) => <p><strong>{title}</strong> {body}</p>)}</div>}
+                  {panel.urgent && <p class="care-urgent" role="note"><i class="bi bi-exclamation-circle" aria-hidden="true"></i><span>{panel.urgent}</span></p>}
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
       </div>
+      <p class="container fine-print care-fine">Your NP makes the final decision on medication selection, dosing, dose changes, and whether treatment continues. Compounded medications are prescribed and administered according to the specific formulation supplied by the compounding pharmacy.</p>
     </section>
 
-    <section class="lifestyle section">
+    <section class="lifestyle section" aria-labelledby="lifestyle-title">
       <div class="container">
-        <p class="eyebrow" data-reveal>Beyond the scale</p><h2 data-animate-words>A New Life Style.</h2><p class="lifestyle-lead" data-reveal>Treatment may support more than weight loss. See what progress could mean for the life you live every day.</p>
-        <div class="lifestyle-rail" aria-label="Potential wellness benefits">{benefits.map(([icon, title, body, image]) => <article class="life-card" data-reveal><img src={image} alt="" loading="lazy"/><div class="life-card-shade"></div><span class="life-icon"><i class:list={['bi', icon]} aria-hidden="true"></i></span><div class="life-card-content"><h3>{title}</h3><p>{body}</p></div></article>)}</div>
+        <p class="eyebrow">Beyond the scale</p><h2 id="lifestyle-title" class="t-h2">A new lifestyle.</h2><p class="lifestyle-lead t-lead">Treatment may support more than weight loss. See what progress could mean for the life you live every day.</p>
+        <div class="lifestyle-rail" role="region" aria-label="Potential wellness benefits, scrollable" tabindex="0">{benefits.map(([icon, title, body, image]) => <article class="life-card"><img src={image} alt="" loading="lazy" width="385" height="515"/><div class="life-card-shade"></div><span class="life-icon"><i class:list={['bi', icon]} aria-hidden="true"></i></span><div class="life-card-content"><h3 class="t-h4">{title}</h3><p>{body}</p></div></article>)}</div>
       </div>
     </section>
 
-    <section class="faq-section section container" id="faq">
-      <div class="center-heading" data-reveal><h2>Frequently Asked Questions</h2></div>
-      <div class="faq-list" data-faq>{faqs.map(([question, answer], index) => <details open={index === 0}><summary>{question}<span class="faq-symbol" aria-hidden="true"></span></summary><div class="faq-answer"><p>{answer}</p></div></details>)}</div>
+    <section class="faq section container" id="faq" aria-labelledby="faq-title">
+      <div class="faq-head"><h2 id="faq-title" class="t-h2" data-reveal>Frequently asked questions</h2><p>Still deciding? Bring any question to your consultation.</p><button class="pill outline" type="button" data-action="book">Ask the team</button></div>
+      <div class="faq-list" data-faq>{faqs.map(([question, answer], index) => <details open={index === 0}><summary><span>{question}</span><span class="faq-symbol" aria-hidden="true"></span></summary><div class="faq-answer"><p>{answer}</p></div></details>)}</div>
     </section>
 
-    <section class="locations section container" id="locations">
-      <div class="locations-heading" data-reveal><p class="eyebrow">Find us</p><h2>Three studios.<br/>One New York.</h2><p>Visit the BodyFactory studio that fits your city rhythm.</p></div>
-      <div class="location-grid">{locations.map((location, index) => <a class="location-card" href={location.url} target="_blank" rel="noopener noreferrer"><img src={location.image} alt={`${location.name} BodyFactory studio`} loading="lazy"/><span class="location-shade"></span><span class="location-copy"><small>NYC / 0{index + 1}</small><strong>{location.name}</strong><span>{location.address}</span></span><ArrowIcon class="location-arrow"/><span class="sr-only">View studio details, opens a new tab</span></a>)}</div>
+    <section class="locations section container" id="locations" aria-labelledby="locations-title">
+      <div class="section-head" data-reveal><p class="eyebrow">Find us</p><h2 id="locations-title" class="t-h2">Three studios. One New York.</h2><p class="t-lead">Visit the BodyFactory studio that fits your city rhythm.</p></div>
+      <div class="location-grid">{locations.map(location => <a class="location-card" href={location.url} target="_blank" rel="noopener noreferrer"><img src={location.image} alt="" loading="lazy"/><span class="location-shade"></span><span class="location-copy"><strong>{location.name}</strong><span>{location.address}</span></span><ArrowIcon class="location-arrow"/><span class="sr-only">, studio details, opens in a new tab</span></a>)}</div>
     </section>
 
-    <section class="quick-test section" id="quick-test">
-      <div class="container">
-        <div class="center-heading" data-reveal><p class="eyebrow">Your first step</p><h2>Let’s try a<br/>quick test.</h2><p>Three simple questions to help you start the conversation.</p></div>
-        <div class="test-panel" data-reveal>
-          <div class="test-copy"><span class="eyebrow">YOUR PATH</span><h3>It starts with you.</h3><p>Explore what matters most, then bring your questions to a consultation.</p><button class="pill primary" type="button" data-action="assessment">Take the quick test <ArrowIcon/></button></div>
-          <div class="test-preview"><span>PRIVATE & SIMPLE</span><div class="gauge"><i class="bi bi-envelope-heart"></i></div><strong>Receive your result by email.</strong><p>The final screen includes an email field and consent choice. Delivery will be activated when the secure form service is connected.</p></div>
-        </div>
+    <section class="quick-test section" id="quick-test" aria-labelledby="test-title">
+      <div class="container test-panel">
+        <div class="test-copy"><h2 id="test-title" class="t-h3">Not sure where to start?</h2><p>Three simple questions to help you prepare for your consultation. This is not a medical screening, and your answers stay on your device.</p><button class="pill primary" type="button" data-action="assessment">Take the quick test <ArrowIcon/></button></div>
+        <div class="test-preview"><i class="bi bi-envelope-heart" aria-hidden="true"></i><strong>Receive your result by email.</strong><p>The final screen includes an optional email field with a clear consent choice.</p></div>
       </div>
     </section>
 
-    <section class="final-cta">
-      <div class="container"><img src="assets/figma/vials.png" alt="Two BodyFactory GLP-1 vials" loading="lazy" width="704" height="547" data-reveal/><p class="eyebrow" data-reveal>Your next chapter starts here</p><h2 data-animate-words>Your next <em>Self</em><br/>starts here.</h2><p data-reveal>Meet privately with our team to review your goals, determine eligibility, and understand what comes next.</p><button class="pill primary" type="button" data-action="book">Book Your Consultation</button></div>
+    <section class="final-cta" aria-labelledby="final-title" data-final-cta>
+      <div class="container"><img src="assets/figma/vials.webp" alt="" loading="lazy" width="704" height="547"/><p class="eyebrow">Stronger. Healthier. Better you.</p><h2 id="final-title" class="t-display"><span>Start your</span> <span><em>transformation</em></span> <span>today.</span></h2><p class="t-lead">Medically guided. Science backed. Results driven.</p><button class="pill primary" type="button" data-action="book">Schedule your consultation <ArrowIcon/></button></div>
     </section>
   </main>
 
@@ -157,13 +182,19 @@ const locations = [
     <div class="container">
       <div class="footer-top">
         <div class="footer-about"><p>Personalized aesthetics and wellness care across New York City.</p></div>
-        <nav aria-label="Footer navigation"><b>Explore</b><a href={bodyFactoryHome}>Home</a><a href="#approach">Approach</a><a href="#process">How it works</a><a href="#program">Program</a><a href="#locations">Locations</a><a href="#faq">FAQ</a></nav>
-        <div class="footer-contact"><b>Connect</b><a href="mailto:hello@bodyfactoryskincare.com">hello@bodyfactoryskincare.com</a><div class="social-links"><a href="https://www.instagram.com/bodyfactoryskincare/" aria-label="BodyFactory on Instagram" target="_blank" rel="noopener noreferrer"><i class="bi bi-instagram"></i></a><a href="https://www.tiktok.com/@bodyfactoryskincare" aria-label="BodyFactory on TikTok" target="_blank" rel="noopener noreferrer"><i class="bi bi-tiktok"></i></a></div><a class="pill footer-home" href={bodyFactoryHome}>Visit BodyFactory</a></div>
+        <nav aria-label="Footer navigation"><b>Explore</b>{nav.map(([href, label]) => <a href={href}>{label}</a>)}</nav>
+        <div class="footer-contact"><b>Connect</b><a href={`mailto:${program.email}`}>{program.email}</a><div class="social-links"><a href="https://www.instagram.com/bodyfactoryskincare/" aria-label="BodyFactory on Instagram" target="_blank" rel="noopener noreferrer"><i class="bi bi-instagram" aria-hidden="true"></i></a><a href="https://www.tiktok.com/@bodyfactoryskincare" aria-label="BodyFactory on TikTok" target="_blank" rel="noopener noreferrer"><i class="bi bi-tiktok" aria-hidden="true"></i></a></div><a class="pill footer-home" href={program.home}>Visit BodyFactory</a></div>
       </div>
-      <a class="footer-brandmark" href={bodyFactoryHome} aria-label="Visit the BodyFactory Skin Care home page"><img src="assets/figma/footer-logo-huge.png" alt="BodyFactory Skin Care" width="1160" height="372" loading="lazy"/></a>
+      <p class="footer-disclosure">{disclosure} This page is for general information and does not replace medical advice.</p>
+      <a class="footer-brandmark" href={program.home} aria-label="Visit the BodyFactory Skin Care home page"><img src="assets/figma/footer-logo-huge.png" alt="" width="1160" height="372" loading="lazy"/></a>
       <div class="footer-bottom"><span>© {new Date().getFullYear()} BodyFactory Skin Care. All rights reserved.</span><div><a href="https://www.bodyfactoryskincare.com/privacy-policy">Privacy</a><a href="https://www.bodyfactoryskincare.com/terms-and-conditions">Terms</a><a href="#top">Back to top</a></div></div>
     </div>
   </footer>
+
+  <div class="sticky-cta" data-sticky-cta aria-hidden="true" inert>
+    <p><strong>From $299</strong><span>/month</span></p>
+    <button class="pill primary" type="button" data-action="book">Book consultation <ArrowIcon/></button>
+  </div>
 
   <Dialogs/>
 </Layout>
