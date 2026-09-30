@@ -12,3 +12,10 @@ The local page is a review build, with noindex enabled by default. Nothing was d
 - Production intake integration, privacy review and secure health-data handling if expanding the nonclinical, memory-only assessment into an actual medical intake. No tracking scripts or third-party form collectors are present in this build.
 
 Central editable data: src/content.ts. All unconfirmed fields are null/empty. These are never rendered as invented prices, availability, or credentials.
+
+## Added with the 2026 campaign update
+- **Regulatory review of claims.** The banner's "FDA-approved" language was not used because the NP guidelines describe compounded semaglutide/tirzepatide, which are not FDA-approved. Legal/clinical sign-off on the disclosure in `src/content.ts → disclosure`, the benefit lists ("may help"), and the ingredient names on plan cards.
+- Confirm SlimFit™ / SlimFit Plus™ pricing ($299 / $399 per month) and what the price covers (medication, labs, visits), plus cancellation terms.
+- Confirm where injections happen (in studio vs. at home). The page now says only "once-weekly injection" and "injection instructions".
+- Testimonial and before/after results (`results.approved`) stay hidden until a real patient, written consent, unedited photos and a typical-results disclosure are supplied.
+- Replace image placeholder IMG-01 and, ideally, re-export the hero without its baked-in text (see `docs/image-briefs.md`).

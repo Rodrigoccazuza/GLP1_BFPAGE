@@ -5,13 +5,13 @@ import '@fontsource/montserrat/latin-600.css';
 import '@fontsource/montserrat/latin-700.css';
 import '@fontsource/montserrat/latin-800.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
-import '../styles/figma.css';
+import '../styles/site.css';
 const site = import.meta.env.PUBLIC_SITE_URL;
 const canonical = site ? new URL('/', site).href : undefined;
 const {
-  title = 'GLP-1 Medical Weight Management | BodyFactory NYC',
-  description = 'Personalized GLP-1 weight management, prescribed when appropriate and administered in studio by our nursing team in New York City.',
+  title = 'GLP-1 & GIP Medical Weight Loss | BodyFactory NYC',
+  description = 'Nurse practitioner-led compounded GLP-1 & GIP weight loss memberships in New York City. SlimFit™ from $299/month, with monthly medical visits.',
   robots = import.meta.env.PUBLIC_LAUNCH_APPROVED === 'true' ? 'index,follow' : 'noindex,nofollow',
 } = Astro.props;
 ---
-<!doctype html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>{title}</title><meta name="description" content={description}/><meta name="theme-color" content="#3CBFB0"/>{canonical && <link rel="canonical" href={canonical}/>}<meta name="robots" content={robots}/><meta property="og:type" content="website"/><meta property="og:title" content={title}/><meta property="og:description" content={description}/>{canonical && <><meta property="og:url" content={canonical}/><meta property="og:image" content={new URL('assets/figma/hero.png', site).href}/></>}<meta name="twitter:card" content="summary_large_image"/><link rel="icon" href="favicon.png"/></head><body><a class="skip-link" href="#main">Skip to content</a><slot/><script src="../scripts/figma.ts"></script></body></html>
+<!doctype html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>{title}</title><meta name="description" content={description}/><meta name="theme-color" content="#3CBFB0"/>{canonical && <link rel="canonical" href={canonical}/>}<meta name="robots" content={robots}/><meta property="og:type" content="website"/><meta property="og:title" content={title}/><meta property="og:description" content={description}/>{canonical && <><meta property="og:url" content={canonical}/><meta property="og:image" content={new URL('assets/figma/hero.png', site).href}/></>}<meta name="twitter:card" content="summary_large_image"/><link rel="icon" href="favicon.png"/></head><body><a class="skip-link" href="#main">Skip to content</a><slot/><script src="../scripts/site.ts"></script></body></html>

@@ -1,89 +1,52 @@
 ---
-name: BodyFactory GLP-1 Campaign
-description: Editorial wellness with a personal medical-care journey.
+name: BodyFactory GLP-1 & GIP Campaign
+description: Editorial wellness with nurse practitioner-led medical care.
 colors:
-  primary: "#3CBFB0"
-  ink: "#141414"
-  paper: "#FFFAF9"
-  sand: "#EEE8E6"
-  dark: "#192C2A"
-  muted: "#5B625F"
-  line: "#D4D6D0"
+  primary: "#3CBFB0"      # buttons, accents on dark
+  teal-ink: "#14685F"     # aqua text on light (7:1)
+  teal-display: "#1F9A8C" # aqua display type on light (3.4:1, large only)
+  ink: "#111716"
+  muted: "#545C5A"
+  paper: "#FFFDFC"
+  soft: "#F5F1EF"
+  line: "#DCDEDB"
+  dark: "#10211F"
+  black: "#070B0A"
 typography:
-  display:
-    fontFamily: "Bodoni Moda, Georgia, serif"
-    fontSize: "clamp(42px, 4.8vw, 76px)"
-    fontWeight: 400
-    lineHeight: 1.04
-    letterSpacing: "-0.035em"
-  body:
-    fontFamily: "Work Sans, sans-serif"
-    fontSize: "16px"
-    fontWeight: 400
-    lineHeight: 1.65
-  action:
-    fontFamily: "Montserrat, sans-serif"
-    fontSize: "11px"
-    fontWeight: 500
-    lineHeight: 1.3
-    letterSpacing: "0.035em"
-rounded:
-  action: "2px"
-  dialog: "3px"
-spacing:
-  gutter: "clamp(24px, 5.3vw, 96px)"
-  section: "clamp(72px, 8vw, 132px)"
-components:
-  button-primary:
-    backgroundColor: "{colors.primary}"
-    textColor: "{colors.ink}"
-    rounded: "{rounded.action}"
-    padding: "17px 24px"
-  button-dark:
-    backgroundColor: "{colors.ink}"
-    textColor: "{colors.paper}"
-    rounded: "{rounded.action}"
-    padding: "17px 24px"
+  family: "Montserrat (400/500/600/700/800, local)"
+  display: "clamp(40px → 76px) / 800 / 1.0 / -0.055em"
+  h2: "clamp(32px → 56px) / 600 / 1.05 / -0.045em"
+  h3: "clamp(24px → 32px) / 600 / 1.15 / -0.03em"
+  h4: "clamp(19px → 22px) / 600 / 1.25 / -0.02em"
+  h5: "17px / 600 / 1.35"
+  h6-label: "12px / 600 / uppercase / +0.12em"
+  lead: "clamp(17px → 20px) / 400 / 1.55"
+  body: "16px / 400 / 1.6"
+  small: "14px"
+  caption: "13px (floor for any visible text)"
+  button: "14px / 600"
+grid:
+  desktop: "12 cols ≥1024px"
+  tablet: "8 cols 768-1023px"
+  mobile: "4 cols <768px"
+  container: "1240px"
+  margin: "clamp(20px, 5vw, 80px)"
+  gap: "clamp(16px, 2.2vw, 32px)"
+spacing: "4 / 8 / 12 / 16 / 24 / 32 / 48 / 64 / 96; section clamp(72px → 136px)"
+rounded: { sm: 12px, md: 20px, lg: 32px, pill: 999px }
+motion:
+  ease-out: "cubic-bezier(.23, 1, .32, 1)"
+  press: 120ms
+  fast: 180ms
+  base: 240ms
 ---
 
-## Overview
+## Rules
 
-BodyFactory’s recognizable aqua and exact master logo anchor a campaign of large editorial statements, authentic skin texture, and clear care information. Photographic scale carries the expression; interactive controls remain restrained. This campaign extends the supplied brandbook with the master prompt’s Bodoni display direction and minimal button geometry.
-
-## Colors
-
-Brand aqua leads the hero and primary actions. Warm paper is the reading surface; sand marks the journey. Dark green-gray creates contrast for science and the final invitation. Ink stays readable on aqua. Muted text is reserved for light surfaces; dark sections use lighter green-tinted supporting text.
-
-## Typography
-
-Bodoni Moda provides high-contrast headlines and italic emphasis within the same family. Work Sans carries explanations and controls; Montserrat provides precise action labels. Display scales by viewport, and small screens have explicit headline breaks. Body measures remain under 65 characters where practical. Fonts are local Latin WOFF2 files.
-
-## Layout
-
-The outer container caps at 1632px, including responsive gutters. Wide screens use asymmetric editorial columns, separated by substantial space rather than cards. Sections range from 72px to 132px of vertical padding. Below 768px, content becomes sequential and the hero uses a distinct portrait crop above a solid aqua text surface. At 320px, gutters reduce to 20px.
-
-## Elevation & Depth
-
-Photography, surface changes, and thin dividers create depth. The only overlay is a focused native dialog with a dark translucent backdrop. Mobile navigation receives a subtle offset shadow. General content has no decorative shadows.
-
-## Shapes
-
-Images and information panels have straight edges. Actions have minimally softened corners; dialogs use a matching small radius. Circular nodes belong to the numbered journey, where their shape communicates state.
-
-## Components
-
-Primary actions pair an uppercase label with a directional arrow. Dark actions appear on the aqua hero and light navigation; aqua actions appear on reading and dark surfaces. All have visible focus and brief press feedback.
-
-The journey has a sticky desktop rail with active, completed, and upcoming states. Mobile panels share an in-flow vertical connector and stateful nodes. No scrolling is hijacked. Reduced motion makes the sidebar static and removes transformations.
-
-FAQ items use native details/summary. Dialogs retain Escape dismissal, visible close controls, keyboard wrapping, and focus return. Assessment options use native radio inputs and inline validation; the final state guides visitors toward provider evaluation.
-
-## Do's and Don'ts
-
-- Preserve the supplied logo artwork and aspect ratio.
-- Keep campaign model imagery distinct from patient evidence.
-- Use real content and confirmed data; unconfirmed commercial details remain inquiry-based.
-- Keep essential text readable without animation or JavaScript.
-- Preserve natural scrolling and reduced-motion fallbacks.
-- Do not introduce invented outcomes, medication labels, clinical credentials, or testimonials.
-- Do not turn every section into matching cards or add unnecessary motion.
+- Tokens live at the top of `src/styles/site.css`. Use `.t-display`, `.t-h2`…`.t-h6`, `.t-lead` to set visual level independently of the semantic heading level.
+- One family (Montserrat). Hierarchy comes from size, weight and tracking; aqua `<em>` inside display headlines is the brand signature.
+- Buttons are pills: `.primary` (aqua, white label and icon, per brand direction 2026-09-29), `.dark`, `.outline`. Note: white on #3CBFB0 is 2.2:1 and fails WCAG AA; `--teal-press` (#33AB9E) is the hover.
+- Eyebrows: at most one per three sections (currently hero, lifestyle, locations, final CTA).
+- No em-dashes in visible copy. No glows, no pills overlaid on photos.
+- Hover effects only under `(hover: hover)`. Every animation has a reduced-motion path; content never depends on JavaScript.
+- Compounded-medication disclosure must accompany pricing and appear in the footer. Never describe the medications as FDA-approved.
