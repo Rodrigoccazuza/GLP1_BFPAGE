@@ -428,6 +428,17 @@ if (!reduced.matches) {
     .from('[data-hero] .hero-actions > *', { y: 12, opacity: 0, stagger: .06 }, '-=.45');
   gsap.from('.hero-visual img', { opacity: 0, scale: 1.03, duration: 1.1, ease: 'power3.out', delay: .15 });
 
+  // M1b · Hero notifications pop in one by one as the photo scrolls into view, like incoming messages.
+  //       Each enters with a small overshoot from below; scrolling back up tucks them away again.
+  gsap.utils.toArray<HTMLElement>('.hero-note').forEach((note, index) => {
+    if (!note.offsetParent) return; // hidden on mobile (first-visit card)
+    gsap.set(note, { opacity: 0, y: 18, scale: .86 });
+    gsap.to(note, {
+      opacity: 1, y: 0, scale: 1, duration: .55, delay: index * .15, ease: 'back.out(1.8)',
+      scrollTrigger: { trigger: '[data-hero-visual]', start: `top ${82 - index * 9}%`, toggleActions: 'play none none reverse' },
+    });
+  });
+
   // M2 · Section heading reveal: short rise, headings only.
   gsap.utils.toArray<HTMLElement>('[data-reveal]').forEach(element => {
     gsap.from(element, { y: 16, opacity: 0, duration: .6, ease: 'power2.out', scrollTrigger: { trigger: element, start: 'top 88%', once: true } });

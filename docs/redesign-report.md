@@ -76,3 +76,10 @@ Verified by `tests/qa.mjs` (`content.missing` is empty). Banner: headline, progr
 - **Care, month by month:** on desktop (≥1024px wide, ≥700px tall, motion allowed, content fits) the section pins and scrolling moves through the 4 stages, in both directions. A progress guide (numbered steps, per-stage fill bars) shows where you are, and clicking a step jumps to it. On smaller screens, with reduced motion, or without JS, the stages stack and a sticky progress strip tracks the one in view. Each stage has a photo.
 - **New motion:** M5 journey line draws down and steps light up as they're reached (scrubbed). M6 membership table rows rise in, and their checks pop in sequence. M7 plan cards and facts reveal once. M9 slight hero parallax and the final vials settle as you scroll. M10 lifestyle cards slide along the rail and FAQ rows reveal in sequence. Care-stage crossfade: 360ms opacity, 480ms translate, direction-aware.
 - **Images (Unsplash, hotlinked with attribution in each caption):** private collection unsplash.com/collections/KyBf8i8rXJI. First visit: CDC (Y2lUjUiay-o). Every month: National Cancer Institute (nR2C9AVzfHY). Your dose: National Cancer Institute (NNpo-liY5aU). Safety: engin akyurt (PcU17evKnew). tl447mekwuQ and LbUOh89q4Es were also collected but not used (one shows an oncology badge).
+
+## Update 3 (2026-10-01, Figma refinements)
+
+- Brand photography replaces Unsplash: hero (clean export, `Assets/hero/hero-clean.png`), journey (`Assets/journey-nurse-consulting.png`), 4 care stages, 5 lifestyle cards. All in `public/assets/brand/` as WebP.
+- Hero overlays are live HTML (Your first visit card + 3 chips matching the supplied SVG chips) and pop in one by one on scroll (back.out ease, 150ms stagger; reverse on scroll up; static with reduced motion). The first-visit card is hidden on mobile.
+- Final CTA copy: "Your next *Self* starts here." (Montserrat 600 italic for "Self").
+- Buttons: 700 weight.

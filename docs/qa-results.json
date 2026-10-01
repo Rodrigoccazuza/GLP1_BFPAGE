@@ -5,13 +5,7 @@
       "scrollWidth": 320,
       "overflow": [],
       "smallText": [],
-      "smallTargets": [
-        "CDC",
-        "Unsplash",
-        "National Cancer Institute",
-        "Unsplash",
-        "National Cancer Institute"
-      ],
+      "smallTargets": [],
       "pass": true
     },
     {
@@ -19,13 +13,7 @@
       "scrollWidth": 390,
       "overflow": [],
       "smallText": [],
-      "smallTargets": [
-        "CDC",
-        "Unsplash",
-        "National Cancer Institute",
-        "Unsplash",
-        "National Cancer Institute"
-      ],
+      "smallTargets": [],
       "pass": true
     },
     {
@@ -33,13 +21,7 @@
       "scrollWidth": 768,
       "overflow": [],
       "smallText": [],
-      "smallTargets": [
-        "CDC",
-        "Unsplash",
-        "National Cancer Institute",
-        "Unsplash",
-        "National Cancer Institute"
-      ],
+      "smallTargets": [],
       "pass": true
     },
     {
@@ -47,13 +29,7 @@
       "scrollWidth": 1024,
       "overflow": [],
       "smallText": [],
-      "smallTargets": [
-        "CDC",
-        "Unsplash",
-        "National Cancer Institute",
-        "Unsplash",
-        "National Cancer Institute"
-      ],
+      "smallTargets": [],
       "pass": true
     },
     {
@@ -61,13 +37,7 @@
       "scrollWidth": 1280,
       "overflow": [],
       "smallText": [],
-      "smallTargets": [
-        "CDC",
-        "Unsplash",
-        "National Cancer Institute",
-        "Unsplash",
-        "National Cancer Institute"
-      ],
+      "smallTargets": [],
       "pass": true
     },
     {
@@ -75,13 +45,7 @@
       "scrollWidth": 1440,
       "overflow": [],
       "smallText": [],
-      "smallTargets": [
-        "CDC",
-        "Unsplash",
-        "National Cancer Institute",
-        "Unsplash",
-        "National Cancer Institute"
-      ],
+      "smallTargets": [],
       "pass": true
     }
   ],

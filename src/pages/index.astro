@@ -2,7 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import Dialogs from '../components/Dialogs.astro';
 import ArrowIcon from '../components/ArrowIcon.astro';
-import { program, facts, why, plans, inclusions, journey, care, benefits, faqs, locations, disclosure, unsplash, unsplashCredit } from '../content';
+import { program, facts, why, plans, inclusions, journey, care, benefits, faqs, locations, disclosure } from '../content';
 
 const nav = [['#how', 'How it works'], ['#plans', 'Plans'], ['#care', 'Your care'], ['#faq', 'FAQ'], ['#locations', 'Locations']];
 ---
@@ -33,11 +33,17 @@ const nav = [['#how', 'How it works'], ['#plans', 'Plans'], ['#care', 'Your care
           <a href="#plans" class="pill outline">Compare plans</a>
         </div>
       </div>
-      <div class="hero-visual">
+      <div class="hero-visual" data-hero-visual>
         <picture>
-          <source media="(max-width: 700px)" srcset="assets/figma/hero-640.webp" />
-          <img src="assets/figma/hero.webp" alt="A woman looking into a mirror that reflects her at a different body size, representing a personal weight loss journey" fetchpriority="high" width="1121" height="804" />
+          <source media="(max-width: 700px)" srcset="assets/brand/hero-700.webp" />
+          <img src="assets/brand/hero.webp" alt="A woman in teal activewear looks at her reflection in a standing mirror" fetchpriority="high" width="1145" height="872" />
         </picture>
+        <ul class="hero-notes" aria-label="What your care includes">
+          <li class="hero-note hero-card" style="--x:5%; --y:37%"><span class="hero-card-tag">Your first visit</span><ul><li>Health history and goals review</li><li>Clinical evaluation for eligibility</li><li>Clear pricing, shared upfront</li></ul></li>
+          <li class="hero-note hero-chip" style="--x:68%; --y:22%"><i class="bi bi-calendar2-check" aria-hidden="true"></i>Regular check-ins</li>
+          <li class="hero-note hero-chip" style="--x:57%; --y:40%"><i class="bi bi-person-heart" aria-hidden="true"></i>Personalized plans</li>
+          <li class="hero-note hero-chip" style="--x:63%; --y:66%"><i class="bi bi-patch-check-fill" aria-hidden="true"></i>Licensed clinicians</li>
+        </ul>
       </div>
     </section>
 
@@ -100,7 +106,7 @@ const nav = [['#how', 'How it works'], ['#plans', 'Plans'], ['#care', 'Your care
       <div class="container process-grid">
         <div class="process-left">
           <h2 id="journey-title" class="t-h2" data-reveal>Your journey with BodyFactory.</h2>
-          <img class="process-photo" src="assets/figma/consultation.webp" alt="A nurse practitioner speaking with a patient during a consultation" loading="lazy" width="439" height="535"/>
+          <img class="process-photo" src="assets/brand/journey.webp" alt="A BodyFactory nurse practitioner with a tablet talks with a patient by a window" loading="lazy" width="498" height="607"/>
           <div class="process-intro"><p>Every step is explained before it happens, and your nurse practitioner stays with you from the first visit onward.</p><button class="pill primary" type="button" data-action="book">Schedule your consultation <ArrowIcon/></button></div>
         </div>
         <ol class="step-list" data-steps>
@@ -126,11 +132,7 @@ const nav = [['#how', 'How it works'], ['#plans', 'Plans'], ['#care', 'Your care
             {care.map((panel, index) => (
               <article class="care-panel" id={`panel-${panel.id}`} aria-labelledby={`panel-${panel.id}-title`} data-care-panel={index}>
                 <figure class="care-media">
-                  <picture>
-                    <source media="(min-width: 1024px)" srcset={`${unsplash(panel.image.src, 560, 900)} 1x, ${unsplash(panel.image.src, 1120, 1800)} 2x`} />
-                    <img src={unsplash(panel.image.src, 1200, 675)} srcset={`${unsplash(panel.image.src, 640, 360)} 640w, ${unsplash(panel.image.src, 1200, 675)} 1200w`} sizes="100vw" alt={panel.image.alt} loading="lazy" width="1200" height="675" style={`object-position:${panel.image.position}`} />
-                  </picture>
-                  <figcaption>Photo: <a href={unsplashCredit(panel.image.user)} target="_blank" rel="noopener noreferrer">{panel.image.credit}</a> on <a href="https://unsplash.com/?utm_source=bodyfactory_glp1&utm_medium=referral" target="_blank" rel="noopener noreferrer">Unsplash</a></figcaption>
+                  <img src={panel.image.src} alt={panel.image.alt} loading="lazy" width="1200" height="800" style={`object-position:${panel.image.position}`} />
                 </figure>
                 <div class="care-body">
                   <p class="care-label"><span>{String(index + 1).padStart(2, '0')} / 04</span>{panel.tab}</p>
@@ -174,7 +176,7 @@ const nav = [['#how', 'How it works'], ['#plans', 'Plans'], ['#care', 'Your care
     </section>
 
     <section class="final-cta" aria-labelledby="final-title" data-final-cta>
-      <div class="container"><img src="assets/figma/vials.webp" alt="" loading="lazy" width="704" height="547"/><p class="eyebrow">Stronger. Healthier. Better you.</p><h2 id="final-title" class="t-display"><span>Start your</span> <span><em>transformation</em></span> <span>today.</span></h2><p class="t-lead">Medically guided. Science backed. Results driven.</p><button class="pill primary" type="button" data-action="book">Schedule your consultation <ArrowIcon/></button></div>
+      <div class="container"><img src="assets/figma/vials.webp" alt="" loading="lazy" width="704" height="547"/><p class="eyebrow">Stronger. Healthier. Better you.</p><h2 id="final-title" class="t-display"><span>Your next <em>Self</em></span> <span>starts here.</span></h2><p class="t-lead">Medically guided. Science backed. Results driven.</p><button class="pill primary" type="button" data-action="book">Schedule your consultation <ArrowIcon/></button></div>
     </section>
   </main>
 

@@ -78,7 +78,7 @@ h1, h2, h3, h4, h5, h6, p, figure, dl, dd { margin: 0; }
 h1, h2, h3, h4, h5, h6 { font-weight: 600; text-wrap: balance; }
 .t-display { font-size: var(--fs-display); font-weight: 800; line-height: 1; letter-spacing: -.055em; }
 .t-display em { font-style: normal; font-weight: 500; color: var(--teal-display); }
-.final-cta .t-display em { color: var(--teal); }
+.final-cta .t-display em { color: var(--teal); font-style: italic; font-weight: 600; letter-spacing: -.01em; padding-right: .06em; }
 .t-h2 { font-size: var(--fs-h2); line-height: 1.05; letter-spacing: -.045em; }
 .t-h3 { font-size: var(--fs-h3); line-height: 1.15; letter-spacing: -.03em; }
 .t-h4 { font-size: var(--fs-h4); line-height: 1.25; letter-spacing: -.02em; }
@@ -101,7 +101,7 @@ p { max-width: 65ch; text-wrap: pretty; }
 
 /* ---------- Buttons ---------- */
 .arrow-icon { width: 1.15em; height: 1.15em; flex: none; transition: transform var(--d-fast) var(--ease-out); }
-.pill, .action { display: inline-flex; align-items: center; justify-content: center; gap: var(--s-3); min-height: 48px; padding: 12px 24px; border: 1px solid transparent; border-radius: var(--r-pill); font-size: var(--fs-button); font-weight: 600; letter-spacing: .01em; line-height: 1.2; text-decoration: none; cursor: pointer; transition: background-color var(--d-fast) ease, color var(--d-fast) ease, border-color var(--d-fast) ease, transform var(--d-press) var(--ease-out); }
+.pill, .action { display: inline-flex; align-items: center; justify-content: center; gap: var(--s-3); min-height: 48px; padding: 12px 24px; border: 1px solid transparent; border-radius: var(--r-pill); font-size: var(--fs-button); font-weight: 700; letter-spacing: .01em; line-height: 1.2; text-decoration: none; cursor: pointer; transition: background-color var(--d-fast) ease, color var(--d-fast) ease, border-color var(--d-fast) ease, transform var(--d-press) var(--ease-out); }
 .pill:active, .action:active { transform: scale(.97); }
 .primary { background: var(--teal); color: #fff; }
 .dark { background: var(--ink); color: #fff; }
@@ -134,7 +134,19 @@ p { max-width: 65ch; text-wrap: pretty; }
 .hero-sub { max-width: 36rem; }
 .hero-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--s-3); margin-top: var(--s-2); }
 .hero-visual { width: min(1120px, 100%); margin: clamp(40px, 5vw, 64px) auto 0; }
+.hero-visual { position: relative; container-type: inline-size; }
 .hero-visual img { width: 100%; }
+
+/* Hero notifications: live-text cards over the photo, popped in on scroll */
+.hero-notes { position: absolute; inset: 0; margin: 0; padding: 0; list-style: none; pointer-events: none; }
+.hero-note { position: absolute; left: var(--x); top: var(--y); transform-origin: left center; }
+.hero-chip { display: inline-flex; align-items: center; gap: .7em; padding: .78em 1.4em .78em 1.15em; border-radius: var(--r-pill); background: #fff; box-shadow: 0 10px 30px -12px rgb(17 23 22 / .28); color: #1c2321; font-size: max(12px, 1.3cqi); font-weight: 500; line-height: 1; white-space: nowrap; }
+.hero-chip .bi { font-size: 1.35em; color: var(--teal-ink); }
+.hero-card { width: max(150px, 27%); padding: 1.3cqi 1.5cqi; border-radius: 1.6cqi; background: #fff; box-shadow: 0 14px 40px -14px rgb(17 23 22 / .3); font-size: max(11px, 1.1cqi); color: #3b4442; text-align: left; }
+.hero-card-tag { display: inline-block; padding: .35em .9em; border-radius: var(--r-pill); background: #e3f5f2; color: var(--teal-ink); font-weight: 600; }
+.hero-card ul { display: grid; gap: .55em; margin: .9em 0 0; padding: 0; list-style: none; }
+.hero-card li { position: relative; padding-left: 1.5em; }
+.hero-card li::before { content: '\F26E'; position: absolute; left: 0; font-family: 'bootstrap-icons'; color: var(--teal); }
 
 /* ---------- Facts ---------- */
 .facts { padding-block: var(--s-7) 0; }
@@ -499,6 +511,9 @@ p { max-width: 65ch; text-wrap: pretty; }
   .hero-sub { order: 4; margin-top: var(--s-5); font-size: 15px; line-height: 1.55; max-width: 32ch; }
   .hero-actions { order: 5; display: grid; grid-template-columns: 1fr; width: 100%; margin-top: var(--s-5); }
   .hero-actions .pill { width: 100%; }
+  .hero-card { display: none; }
+  .hero-chip { font-size: 12px; padding: 8px 12px 8px 10px; gap: 6px; }
+  .hero-note.hero-chip { left: 3%; }
 
   .facts-list { gap: var(--s-5) var(--s-4); }
   .statement { max-width: none; }

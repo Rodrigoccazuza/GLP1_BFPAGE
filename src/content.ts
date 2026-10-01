@@ -79,7 +79,7 @@ export const journey = [
 export const care = [
   {
     id: 'first-visit',
-    image: { src: 'photo-1631815590058-860e4f83c1e8', alt: 'A healthcare worker checks a woman’s blood pressure during a clinic visit', credit: 'CDC', user: 'cdc', position: 'center 30%' },
+    image: { src: 'assets/brand/care-first-visit.webp', alt: 'A BodyFactory nurse practitioner reviews a tablet with a patient during her first visit', position: '45% center' },
     tab: 'First visit',
     title: 'A complete picture before anything is prescribed.',
     intro: 'At your initial visit, your nurse practitioner will:',
@@ -96,7 +96,7 @@ export const care = [
   },
   {
     id: 'monthly',
-    image: { src: 'photo-1631217871099-88310a909a32', alt: 'A smiling clinician talks with a patient during a follow-up visit', credit: 'National Cancer Institute', user: 'nci', position: 'center 30%' },
+    image: { src: 'assets/brand/care-monthly.webp', alt: 'A BodyFactory clinician smiles during a monthly check-in at the studio', position: '62% center' },
     tab: 'Every month',
     title: 'Each month of treatment starts with a visit.',
     intro: 'Your NP evaluates you monthly before your next month of treatment is authorized. At each visit, your NP will:',
@@ -114,7 +114,7 @@ export const care = [
   },
   {
     id: 'dosing',
-    image: { src: 'photo-1576091358783-a212ec293ff3', alt: 'A pharmacist explains a prescription to a patient', credit: 'National Cancer Institute', user: 'nci', position: 'center 30%' },
+    image: { src: 'assets/brand/care-dosing.webp', alt: 'A BodyFactory clinician walks a patient through her plan on a tablet', position: '55% center' },
     tab: 'Your dose',
     title: 'Compounded dosing, set by your NP.',
     intro: 'Before prescribing or changing your dose, your NP verifies:',
@@ -133,7 +133,7 @@ export const care = [
   },
   {
     id: 'safety',
-    image: { src: 'photo-1624948465121-96e87ae34a87', alt: 'A woman drinking a glass of water', credit: 'engin akyurt', user: 'enginakyurt', position: 'center 40%' },
+    image: { src: 'assets/brand/care-safety.webp', alt: 'A BodyFactory team member talks with a client in the studio', position: '68% center' },
     tab: 'Safety pauses',
     title: 'We pause first, then evaluate.',
     intro: 'Your NP will hold your medication and evaluate you if you experience:',
@@ -151,16 +151,12 @@ export const care = [
   },
 ];
 
-/** Unsplash images are hotlinked per the Unsplash API guidelines; collection: unsplash.com/collections/KyBf8i8rXJI */
-export const unsplash = (id: string, w: number, h: number) => `https://images.unsplash.com/${id}?auto=format&fit=crop&crop=faces,center&w=${w}&h=${h}&q=72`;
-export const unsplashCredit = (user: string) => `https://unsplash.com/@${user}?utm_source=bodyfactory_glp1&utm_medium=referral`;
-
 export const benefits = [
-  ['bi-lungs-fill', 'Better metabolic health', 'Weight reduction and certain GLP-1 treatments may help improve blood sugar, blood pressure, and cholesterol levels.', 'assets/figma/benefits/metabolic.webp'],
-  ['bi-stars', 'Greater body confidence', 'Work toward your individual goals and feel more comfortable in your clothing and daily activities.', 'assets/figma/benefits/confidence.webp'],
-  ['bi-feather', 'Renewed self-esteem', 'Celebrate meaningful progress and build a more positive relationship with your body, one step at a time.', 'assets/figma/benefits/self-esteem.webp'],
-  ['bi-sun-fill', 'Improved quality of life', 'Meaningful progress may help you feel more comfortable and capable in your daily activities.', 'assets/figma/benefits/quality-of-life.webp'],
-  ['bi-moon-stars-fill', 'Better sleep health', 'Weight management may improve sleep apnea symptoms for some patients. Ask your NP what applies to you.', 'assets/figma/benefits/sleep.webp'],
+  ['bi-lungs-fill', 'Better metabolic health', 'Weight reduction and certain GLP-1 treatments may help improve blood sugar, blood pressure, and cholesterol levels.', 'assets/brand/benefit-metabolic.webp'],
+  ['bi-stars', 'Greater body confidence', 'Work toward your individual goals and feel more comfortable in your clothing and daily activities.', 'assets/brand/benefit-confidence.webp'],
+  ['bi-feather', 'Renewed self-esteem', 'Celebrate meaningful progress and build a more positive relationship with your body, one step at a time.', 'assets/brand/benefit-self-esteem.webp'],
+  ['bi-sun-fill', 'Improved quality of life', 'Meaningful progress may help you feel more comfortable and capable in your daily activities.', 'assets/brand/benefit-quality.webp'],
+  ['bi-moon-stars-fill', 'Better sleep health', 'Weight management may improve sleep apnea symptoms for some patients. Ask your NP what applies to you.', 'assets/brand/benefit-sleep.webp'],
 ];
 
 export const faqs = [
