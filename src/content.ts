@@ -79,7 +79,7 @@ export const journey = [
 export const care = [
   {
     id: 'first-visit',
-    image: { src: 'assets/brand/care-first-visit.webp', alt: 'A BodyFactory nurse practitioner reviews a tablet with a patient during her first visit', position: '45% center' },
+    image: { src: 'assets/brand/care-first-visit.webp', alt: 'A BodyFactory nurse practitioner reviews a tablet with a patient during her first visit', position: '46% 32%' },
     tab: 'First visit',
     title: 'A complete picture before anything is prescribed.',
     intro: 'At your initial visit, your nurse practitioner will:',
@@ -96,7 +96,7 @@ export const care = [
   },
   {
     id: 'monthly',
-    image: { src: 'assets/brand/care-monthly.webp', alt: 'A BodyFactory clinician smiles during a monthly check-in at the studio', position: '62% center' },
+    image: { src: 'assets/brand/care-monthly.webp', alt: 'A BodyFactory clinician smiles during a monthly check-in at the studio', position: '62% 30%' },
     tab: 'Every month',
     title: 'Each month of treatment starts with a visit.',
     intro: 'Your NP evaluates you monthly before your next month of treatment is authorized. At each visit, your NP will:',
@@ -114,7 +114,7 @@ export const care = [
   },
   {
     id: 'dosing',
-    image: { src: 'assets/brand/care-dosing.webp', alt: 'A BodyFactory clinician walks a patient through her plan on a tablet', position: '55% center' },
+    image: { src: 'assets/brand/care-dosing.webp', alt: 'A BodyFactory clinician walks a patient through her plan on a tablet', position: '54% 32%' },
     tab: 'Your dose',
     title: 'Compounded dosing, set by your NP.',
     intro: 'Before prescribing or changing your dose, your NP verifies:',
@@ -133,7 +133,7 @@ export const care = [
   },
   {
     id: 'safety',
-    image: { src: 'assets/brand/care-safety.webp', alt: 'A BodyFactory team member talks with a client in the studio', position: '68% center' },
+    image: { src: 'assets/brand/care-safety.webp', alt: 'A BodyFactory team member talks with a client in the studio', position: '70% 35%' },
     tab: 'Safety pauses',
     title: 'We pause first, then evaluate.',
     intro: 'Your NP will hold your medication and evaluate you if you experience:',

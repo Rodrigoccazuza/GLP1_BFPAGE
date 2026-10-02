@@ -498,7 +498,7 @@ if (!reduced.matches) {
     if (!note.offsetParent) return; // hidden on mobile (first-visit card)
     gsap.set(note, { opacity: 0, y: 18, scale: .86 });
     gsap.to(note, {
-      opacity: 1, y: 0, scale: 1, duration: .55, delay: index * .15, ease: 'back.out(1.8)',
+      opacity: 1, y: 0, scale: 1, duration: .55, delay: index * .15, ease: 'back.out(1.8)', clearProps: 'transform',
       scrollTrigger: { trigger: '[data-hero-visual]', start: `top ${82 - index * 9}%`, toggleActions: 'play none none reverse' },
     });
   });
