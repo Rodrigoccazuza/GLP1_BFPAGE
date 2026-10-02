@@ -142,7 +142,7 @@ p { max-width: 65ch; text-wrap: pretty; }
 .hero-note { position: absolute; left: var(--x); top: var(--y); transform-origin: left center; }
 .hero-chip { display: inline-flex; align-items: center; gap: .7em; padding: .78em 1.4em .78em 1.15em; border-radius: var(--r-pill); background: #fff; box-shadow: 0 10px 30px -12px rgb(17 23 22 / .28); color: #1c2321; font-size: max(12px, 1.3cqi); font-weight: 500; line-height: 1; white-space: nowrap; }
 .hero-chip .bi { font-size: 1.35em; color: var(--teal-ink); }
-.hero-card { width: max(130px, 21%); padding: 1cqi 1.2cqi; border-radius: 1.3cqi; background: #fff; box-shadow: 0 14px 40px -14px rgb(17 23 22 / .3); font-size: max(10px, 1cqi); color: #3b4442; text-align: left; }
+.hero-card { width: max(110px, 16%); padding: .8cqi 1cqi; border-radius: 1.1cqi; background: #fff; box-shadow: 0 14px 40px -14px rgb(17 23 22 / .3); font-size: max(9px, .85cqi); color: #3b4442; text-align: left; }
 .hero-card-tag { display: inline-block; padding: .35em .9em; border-radius: var(--r-pill); background: #e3f5f2; color: var(--teal-ink); font-weight: 600; }
 .hero-card ul { display: grid; gap: .55em; margin: .9em 0 0; padding: 0; list-style: none; }
 .hero-card li { position: relative; padding-left: 1.5em; }
@@ -428,7 +428,8 @@ p { max-width: 65ch; text-wrap: pretty; }
 .dialog::backdrop { background: rgb(3 16 14 / .72); animation: backdrop-in var(--d-fast) ease; }
 @keyframes dialog-in { from { opacity: 0; transform: translateY(12px) scale(.98); } }
 @keyframes backdrop-in { from { opacity: 0; } }
-.dialog-close { position: absolute; top: 14px; right: 14px; display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid var(--line); border-radius: 50%; background: #fff; }
+.dialog-close { position: absolute; top: 10px; right: 10px; display: grid; place-items: center; width: 44px; height: 44px; border: 0; border-radius: 0; background: transparent; color: var(--ink); font-size: 22px; cursor: pointer; }
+.dialog-close:hover { color: var(--teal-ink); }
 .dialog h2 { margin: var(--s-4) 0 var(--s-5); font-size: clamp(2rem, 1.5rem + 2vw, 2.75rem); line-height: 1.05; letter-spacing: -.045em; }
 .dialog h2 em { color: var(--teal-ink); font-style: normal; font-weight: 500; }
 .dialog > p:not(.eyebrow) { color: var(--muted); }
@@ -437,7 +438,7 @@ p { max-width: 65ch; text-wrap: pretty; }
 .dialog .action { width: 100%; justify-content: space-between; }
 .dialog .text-link { display: inline-flex; align-items: center; gap: var(--s-2); min-height: 44px; margin: var(--s-3) 0; padding: 0; border: 0; background: none; font-size: var(--fs-small); text-decoration: underline; }
 .dialog small { display: block; color: var(--muted); font-size: var(--fs-caption); }
-.assessment-top { display: flex; justify-content: space-between; font-size: var(--fs-h6); font-weight: 600; letter-spacing: .12em; }
+.assessment-top { display: flex; justify-content: space-between; gap: var(--s-3); padding-right: 40px; font-size: var(--fs-h6); font-weight: 600; letter-spacing: .12em; }
 .assessment-dialog progress { width: 100%; height: 6px; margin-top: var(--s-4); accent-color: var(--teal-ink); }
 .assessment-intro { margin-bottom: var(--s-5); font-size: var(--fs-small); }
 .assessment-dialog fieldset { margin: 0; padding: 0; border: 0; }
@@ -593,8 +594,8 @@ p { max-width: 65ch; text-wrap: pretty; }
   .hero-actions { order: 5; display: grid; grid-template-columns: 1fr; width: 100%; margin-top: var(--s-5); }
   .hero-actions .pill { width: 100%; }
   .hero-card { display: none; }
-  .hero-chip { font-size: 13px; font-weight: 600; padding: 10px 16px 10px 10px; gap: 10px; }
-  .hero-chip .bi { display: inline-grid; place-items: center; width: 24px; height: 24px; flex: none; border-radius: 50%; background: var(--teal); color: #fff; font-size: 13px; }
+  .hero-chip { font-size: 11px; font-weight: 600; padding: 6px 12px 6px 6px; gap: 7px; }
+  .hero-chip .bi { display: inline-grid; place-items: center; width: 18px; height: 18px; flex: none; border-radius: 50%; background: var(--teal); color: #fff; font-size: 10px; }
   .hero-chip .bi::before { content: '\F26E'; }
   /* Reference layout: alternating sides over the photo */
   .hero-note.hero-chip:nth-of-type(2) { left: auto; right: 5%; top: 68%; }
