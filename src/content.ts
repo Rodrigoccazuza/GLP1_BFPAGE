@@ -159,6 +159,45 @@ export const benefits = [
   ['bi-moon-stars-fill', 'Better sleep health', 'Weight management may improve sleep apnea symptoms for some patients. Ask your NP what applies to you.', 'assets/brand/benefit-sleep.webp'],
 ];
 
+export const reviews = [
+  {
+    quote: 'Zhanna is the best! I’ve seen her multiple times now for facials and every session has been fantastic. She’s so knowledgeable and takes the time to fully assess my specific skin needs and give recommendations.',
+    name: 'Google review',
+    meta: 'Posted August 2026',
+    initials: null,
+  },
+  {
+    quote: 'Nina is truly a master at her craft. I loved my sessions with her, I can’t recommend enough. Her attention to detail is unparalleled and I cannot be any happier with my results.',
+    name: 'Google review',
+    meta: 'Posted August 2026',
+    initials: null,
+  },
+  {
+    quote: 'I absolutely love Body Factory Skin Care! From the moment you walk in, you’re welcomed by a warm, relaxing atmosphere and a friendly, professional team that makes you feel comfortable right away. The results exceeded my expectations, and the attention to detail is incredible.',
+    name: 'Google review',
+    meta: 'Posted July 2026',
+    initials: null,
+  },
+  {
+    quote: 'Been going to Kandis for over 4 years now for Botox. Every single time she crushes it. Cannot recommend her enough.',
+    name: 'Colby H.',
+    meta: 'Yelp review',
+    initials: 'CH',
+  },
+  {
+    quote: 'Very accommodating. The tech provided suggestions with clear explanations, but never pushy. Very clean and friendly environment. Would recommend.',
+    name: 'M R.',
+    meta: 'Yelp review',
+    initials: 'MR',
+  },
+  {
+    quote: 'My facial with Mila was amazing and tailored to my needs.',
+    name: 'Google review',
+    meta: 'Verified client',
+    initials: null,
+  },
+];
+
 export const faqs = [
   ['How do I get started?', 'Schedule your consultation with BodyFactory. Our medical team will guide you through every step of the process, starting with a visit with a nurse practitioner.'],
   ['Who is a candidate?', 'Adults who are struggling with weight loss, appetite control, or metabolic health may qualify. A consultation with one of our nurse practitioners will determine whether treatment is appropriate for you.'],

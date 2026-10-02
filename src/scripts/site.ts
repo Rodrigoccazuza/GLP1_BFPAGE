@@ -415,6 +415,70 @@ function setupStepLine() {
 
 setupStepLine();
 
+/* ---------- Lifestyle: vertical page scroll drives the cards horizontally ----------
+   The section pins while the rail translates; scrub keeps the motion glued to the
+   reader's scroll. With reduced motion the rail stays a native horizontal
+   scroller (see the reduced-motion CSS). */
+function setupLifestyle() {
+  const section = document.querySelector<HTMLElement>('[data-lifestyle]');
+  const rail = section?.querySelector<HTMLElement>('[data-lifestyle-rail]');
+  if (!section || !rail || reduced.matches) return;
+
+  const distance = () => {
+    const start = rail.getBoundingClientRect().left - section.getBoundingClientRect().left;
+    return Math.max(0, start + rail.scrollWidth - section.clientWidth);
+  };
+
+  gsap.to(rail, {
+    x: () => -distance(),
+    ease: 'none',
+    scrollTrigger: {
+      trigger: section,
+      start: 'top top',
+      end: () => `+=${Math.max(1, distance())}`,
+      pin: true,
+      scrub: 1,
+      anticipatePin: 1,
+      invalidateOnRefresh: true,
+    },
+  });
+
+  // Entrance: cards drift in once as the section arrives, then the scrub takes over.
+  gsap.from('.life-card', {
+    x: 60, opacity: 0, stagger: .08, duration: .6, ease: 'power3.out', clearProps: 'transform,opacity',
+    scrollTrigger: { trigger: section, start: 'top 85%', once: true },
+  });
+
+  ScrollTrigger.refresh();
+}
+
+setupLifestyle();
+
+/* ---------- Reviews: arrow-driven snap carousel ---------- */
+function setupReviews() {
+  const rail = document.querySelector<HTMLElement>('[data-reviews-rail]');
+  const prev = document.querySelector<HTMLButtonElement>('[data-reviews-prev]');
+  const next = document.querySelector<HTMLButtonElement>('[data-reviews-next]');
+  if (!rail || !prev || !next) return;
+  const step = () => {
+    const card = rail.querySelector<HTMLElement>('.review-card');
+    const gap = parseFloat(getComputedStyle(rail).columnGap || '24');
+    return (card?.offsetWidth || 320) + gap;
+  };
+  const update = () => {
+    prev.disabled = rail.scrollLeft <= 2;
+    next.disabled = rail.scrollLeft >= rail.scrollWidth - rail.clientWidth - 2;
+  };
+  const behavior = reduced.matches ? 'auto' : 'smooth';
+  prev.addEventListener('click', () => rail.scrollBy({ left: -step(), behavior }));
+  next.addEventListener('click', () => rail.scrollBy({ left: step(), behavior }));
+  rail.addEventListener('scroll', update, { passive: true });
+  addEventListener('resize', update);
+  update();
+}
+
+setupReviews();
+
 /* ---------- Motion vocabulary (skipped entirely with reduced motion) ---------- */
 if (!reduced.matches) {
 
@@ -489,17 +553,18 @@ if (!reduced.matches) {
     },
   });
 
-  // M7 · Plan cards and facts arrive once, then stay still so prices read clearly.
+  // M7 · Plan cards arrive once, then stay still so prices read clearly.
   gsap.from('.plan', { y: 32, opacity: 0, stagger: .12, duration: .7, ease: 'power3.out', scrollTrigger: { trigger: '.plan-grid', start: 'top 82%', once: true } });
-  gsap.from('.facts-list > div', { y: 16, opacity: 0, stagger: .08, duration: .5, ease: 'power2.out', scrollTrigger: { trigger: '.facts-list', start: 'top 90%', once: true } });
 
   // M9 · Hero image drifts slightly slower than the page for depth; final vials settle into place.
   gsap.to('.hero-visual img', { yPercent: -5, ease: 'none', scrollTrigger: { trigger: '.hero-visual', start: 'top 60%', end: 'bottom top', scrub: true } });
   gsap.fromTo('.final-cta img', { y: 60, rotate: -6 }, { y: 0, rotate: 0, ease: 'none', scrollTrigger: { trigger: '.final-cta', start: 'top bottom', end: 'top 30%', scrub: true } });
 
-  // M10 · Lifestyle cards slide in along the rail's own axis; FAQ rows settle in sequence.
-  gsap.from('.life-card', { x: 60, opacity: 0, stagger: .1, duration: .7, ease: 'power3.out', scrollTrigger: { trigger: '.lifestyle-rail', start: 'top 85%', once: true } });
+  // M10 · FAQ rows settle in sequence.
   gsap.from('.faq-list details', { y: 12, opacity: 0, stagger: .05, duration: .45, ease: 'power2.out', scrollTrigger: { trigger: '.faq-list', start: 'top 85%', once: true } });
+
+  // M11 · Review cards rise in as the rail arrives.
+  gsap.from('.review-card', { y: 24, opacity: 0, stagger: .08, duration: .6, ease: 'power3.out', clearProps: 'transform,opacity', scrollTrigger: { trigger: '[data-reviews-rail]', start: 'top 88%', once: true } });
 
   // M8 · Location cards unmask upward, one gesture for the group.
   gsap.from('.location-card', { clipPath: 'inset(12% 0 0 0 round 32px)', opacity: 0, stagger: .1, duration: .8, ease: 'power3.out', clearProps: 'clipPath', scrollTrigger: { trigger: '.location-grid', start: 'top 85%', once: true } });

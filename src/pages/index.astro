@@ -2,7 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import Dialogs from '../components/Dialogs.astro';
 import ArrowIcon from '../components/ArrowIcon.astro';
-import { program, facts, why, plans, inclusions, journey, care, benefits, faqs, locations, disclosure } from '../content';
+import { program, why, plans, inclusions, journey, care, benefits, reviews, faqs, locations, disclosure } from '../content';
 
 const nav = [['#how', 'How it works'], ['#plans', 'Plans'], ['#care', 'Your care'], ['#faq', 'FAQ'], ['#locations', 'Locations']];
 ---
@@ -45,10 +45,6 @@ const nav = [['#how', 'How it works'], ['#plans', 'Plans'], ['#care', 'Your care
           <li class="hero-note hero-chip" style="--x:63%; --y:66%"><i class="bi bi-patch-check-fill" aria-hidden="true"></i>Licensed clinicians</li>
         </ul>
       </div>
-    </section>
-
-    <section class="facts container" aria-label="Program at a glance">
-      <dl class="facts-list">{facts.map(fact => <div><dt>{fact.label}</dt><dd>{fact.value}</dd></div>)}</dl>
     </section>
 
     <section class="approach container section" id="how" aria-labelledby="how-title">
@@ -151,16 +147,42 @@ const nav = [['#how', 'How it works'], ['#plans', 'Plans'], ['#care', 'Your care
       <p class="container fine-print care-fine">Your NP makes the final decision on medication selection, dosing, dose changes, and whether treatment continues. Compounded medications are prescribed and administered according to the specific formulation supplied by the compounding pharmacy.</p>
     </section>
 
-    <section class="lifestyle section" aria-labelledby="lifestyle-title">
+    <section class="lifestyle section" aria-labelledby="lifestyle-title" data-lifestyle>
       <div class="container">
         <p class="eyebrow">Beyond the scale</p><h2 id="lifestyle-title" class="t-h2">A new lifestyle.</h2><p class="lifestyle-lead t-lead">Treatment may support more than weight loss. See what progress could mean for the life you live every day.</p>
-        <div class="lifestyle-rail" role="region" aria-label="Potential wellness benefits, scrollable" tabindex="0">{benefits.map(([icon, title, body, image]) => <article class="life-card"><img src={image} alt="" loading="lazy" width="385" height="515"/><div class="life-card-shade"></div><span class="life-icon"><i class:list={['bi', icon]} aria-hidden="true"></i></span><div class="life-card-content"><h3 class="t-h4">{title}</h3><p>{body}</p></div></article>)}</div>
+        <div class="lifestyle-viewport" data-lifestyle-viewport>
+          <div class="lifestyle-rail" data-lifestyle-rail role="region" aria-label="Potential wellness benefits">{benefits.map(([icon, title, body, image]) => <article class="life-card"><img src={image} alt="" loading="lazy" width="385" height="515"/><div class="life-card-shade"></div><span class="life-icon"><i class:list={['bi', icon]} aria-hidden="true"></i></span><div class="life-card-content"><h3 class="t-h4">{title}</h3><p>{body}</p></div></article>)}</div>
+        </div>
       </div>
     </section>
 
     <section class="faq section container" id="faq" aria-labelledby="faq-title">
       <div class="faq-head"><h2 id="faq-title" class="t-h2" data-reveal>Frequently asked questions</h2><p>Still deciding? Bring any question to your consultation.</p><button class="pill outline" type="button" data-action="book">Ask the team</button></div>
       <div class="faq-list" data-faq>{faqs.map(([question, answer], index) => <details open={index === 0}><summary><span>{question}</span><span class="faq-symbol" aria-hidden="true"></span></summary><div class="faq-answer"><p>{answer}</p></div></details>)}</div>
+    </section>
+
+    <section class="reviews section" aria-labelledby="reviews-title" data-reviews>
+      <div class="container">
+        <div class="section-head center" data-reveal><h2 id="reviews-title" class="t-h2">Inspiring Client Experiences</h2><p class="t-lead">Join us and become our next success story</p></div>
+        <div class="reviews-rail" data-reviews-rail>
+          <article class="review-card review-rating">
+            <div class="review-stars" role="img" aria-label="Rated 4.5 out of 5 stars"><i class="bi bi-star-fill" aria-hidden="true"></i><i class="bi bi-star-fill" aria-hidden="true"></i><i class="bi bi-star-fill" aria-hidden="true"></i><i class="bi bi-star-fill" aria-hidden="true"></i><i class="bi bi-star-half" aria-hidden="true"></i></div>
+            <p class="review-score">4.5 Rating</p>
+            <div class="review-trust"><span class="review-avatars" aria-hidden="true"><span>Z</span><span>N</span><span>M</span></span><p><strong>80+</strong>Google reviews</p></div>
+          </article>
+          {reviews.map(review => (
+            <article class="review-card">
+              <span class="review-quote" aria-hidden="true">&ldquo;</span>
+              <blockquote><p>{review.quote}</p></blockquote>
+              <footer><span class="review-avatar" aria-hidden="true">{review.initials ? review.initials : <i class="bi bi-person-fill"></i>}</span><div><strong>{review.name}</strong><span class="review-meta">{review.meta}</span></div></footer>
+            </article>
+          ))}
+        </div>
+        <div class="reviews-nav">
+          <button class="review-arrow" type="button" data-reviews-prev aria-label="Show previous reviews"><i class="bi bi-chevron-left" aria-hidden="true"></i></button>
+          <button class="review-arrow" type="button" data-reviews-next aria-label="Show next reviews"><i class="bi bi-chevron-right" aria-hidden="true"></i></button>
+        </div>
+      </div>
     </section>
 
     <section class="locations section container" id="locations" aria-labelledby="locations-title">
