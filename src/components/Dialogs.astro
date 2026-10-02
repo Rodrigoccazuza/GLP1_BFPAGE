@@ -15,16 +15,151 @@ import ArrowIcon from './ArrowIcon.astro';
 </dialog>
 
 <dialog id="assessment-dialog" class="dialog assessment-dialog" aria-labelledby="assessment-title">
-  <button class="dialog-close" data-close type="button" aria-label="Close assessment"><i class="bi bi-x-lg" aria-hidden="true"></i></button>
-  <div class="assessment-top"><span>YOUR FIRST STEP</span><span id="assessment-count">01 / 03</span></div>
-  <progress id="assessment-progress" max="3" value="1" aria-label="Assessment progress"></progress>
-  <h2 id="assessment-title" tabindex="-1">Let’s start<br/><em>with you.</em></h2>
-  <p class="assessment-intro">Three questions to prepare for a consultation. This is not a medical screening. Your answers stay in this window and are cleared when you close it.</p>
+  <button class="dialog-close" data-close type="button" aria-label="Close eligibility questionnaire"><i class="bi bi-x-lg" aria-hidden="true"></i></button>
+  <div class="assessment-top"><span>PRE-CONSULTATION SCREENING</span><span id="assessment-count">STEP 1 OF 4</span></div>
+  <ol class="assessment-steps" id="assessment-steps" aria-label="Questionnaire progress">
+    <li class="is-current" aria-current="step"><span class="a-step-n" aria-hidden="true">1</span><span class="a-step-t">Measurements</span></li>
+    <li><span class="a-step-n" aria-hidden="true">2</span><span class="a-step-t">Health</span></li>
+    <li><span class="a-step-n" aria-hidden="true">3</span><span class="a-step-t">Safety</span></li>
+    <li><span class="a-step-n" aria-hidden="true">4</span><span class="a-step-t">Results</span></li>
+  </ol>
+  <h2 id="assessment-title" tabindex="-1">Find out if GLP-1 treatment <em>may be right for you.</em></h2>
+  <p class="assessment-intro">Answer a few quick questions to receive a preliminary eligibility result. This takes about 1–2 minutes.</p>
+  <p class="assessment-disclaimer">Your answers are used for pre-screening purposes only. Final treatment eligibility must be determined by a licensed medical provider. Your answers stay in this window and are cleared when you close it.</p>
   <form id="assessment-form" novalidate>
-    <div id="assessment-question"></div>
-    <p id="assessment-error" class="form-error" role="alert" hidden>Please choose an answer to continue.</p>
+    <section class="a-panel" data-apanel="0" aria-label="Step 1 of 4: Your body measurements">
+      <h3 class="a-step-title">Your body measurements</h3>
+      <div class="a-field-row">
+        <div class="a-field">
+          <span class="a-label" id="a-height-label">Height</span>
+          <div class="a-height" role="group" aria-labelledby="a-height-label">
+            <select id="a-feet" aria-label="Height, feet">
+              <option value="" selected>ft</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+            </select>
+            <select id="a-inches" aria-label="Height, inches">
+              <option value="" selected>in</option>
+              <option value="0">0</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
+              <option value="11">11</option>
+            </select>
+          </div>
+        </div>
+        <div class="a-field">
+          <label class="a-label" for="a-weight">Current weight</label>
+          <div class="a-weight-wrap"><input id="a-weight" type="number" inputmode="decimal" min="50" max="900" step="1" placeholder="e.g. 195" /><span aria-hidden="true">lbs</span></div>
+        </div>
+      </div>
+      <div class="a-bmi" aria-live="polite">
+        <span class="a-bmi-label">Your estimated BMI</span>
+        <strong class="a-bmi-value" id="a-bmi-value">–</strong>
+        <p>BMI is calculated automatically using your height and weight. Your BMI will be considered together with your health history when evaluating treatment options.</p>
+      </div>
+      <fieldset class="a-choices">
+        <legend>Which best describes your goal? <span class="a-opt">Optional</span></legend>
+        <label class="a-check"><input type="checkbox" name="goal" value="Lose weight" /><span>Lose weight</span></label>
+        <label class="a-check"><input type="checkbox" name="goal" value="Improve metabolic health" /><span>Improve metabolic health</span></label>
+        <label class="a-check"><input type="checkbox" name="goal" value="Manage a weight-related health condition" /><span>Manage a weight-related health condition</span></label>
+        <label class="a-check"><input type="checkbox" name="goal" value="Learn whether GLP-1 treatment is appropriate for me" /><span>Learn whether GLP-1 treatment is appropriate for me</span></label>
+      </fieldset>
+    </section>
+
+    <section class="a-panel" data-apanel="1" aria-label="Step 2 of 4: Health and eligibility" hidden>
+      <h3 class="a-step-title">Health &amp; eligibility</h3>
+      <fieldset class="a-choices">
+        <legend>Do any of the following apply to you? <span class="a-opt">Select all that apply</span></legend>
+        <label class="a-check"><input type="checkbox" name="condition" value="hbp" /><span>High blood pressure</span></label>
+        <label class="a-check"><input type="checkbox" name="condition" value="chol" /><span>High cholesterol</span></label>
+        <label class="a-check"><input type="checkbox" name="condition" value="diabetes" /><span>Type 2 diabetes</span></label>
+        <label class="a-check"><input type="checkbox" name="condition" value="apnea" /><span>Sleep apnea</span></label>
+        <label class="a-check"><input type="checkbox" name="condition" value="heart" /><span>Cardiovascular or heart disease</span></label>
+        <label class="a-check"><input type="checkbox" name="condition" value="none" /><span>None of the above</span></label>
+        <label class="a-check"><input type="checkbox" name="condition" value="notsure" /><span>I'm not sure</span></label>
+      </fieldset>
+      <fieldset class="a-choices">
+        <legend>Have you previously tried to lose weight through diet, exercise, or another weight-management program?</legend>
+        <div class="a-radio-row">
+          <label class="a-radio"><input type="radio" name="tried" value="yes" /><span>Yes</span></label>
+          <label class="a-radio"><input type="radio" name="tried" value="no" /><span>No</span></label>
+        </div>
+      </fieldset>
+      <fieldset class="a-choices">
+        <legend>Are you currently taking a GLP-1 medication?</legend>
+        <p class="a-hint">Examples may include Wegovy, Ozempic, Zepbound, Mounjaro, Saxenda, or similar medications.</p>
+        <div class="a-radio-row">
+          <label class="a-radio"><input type="radio" name="glp1" value="yes" /><span>Yes</span></label>
+          <label class="a-radio"><input type="radio" name="glp1" value="no" /><span>No</span></label>
+          <label class="a-radio"><input type="radio" name="glp1" value="notsure" /><span>Not sure</span></label>
+        </div>
+      </fieldset>
+    </section>
+
+    <section class="a-panel" data-apanel="2" aria-label="Step 3 of 4: Safety screening" hidden>
+      <h3 class="a-step-title">Safety screening</h3>
+      <p class="a-hint">Please answer the following safety questions.</p>
+      <fieldset class="a-choices">
+        <legend>Do you or an immediate family member have a history of medullary thyroid cancer or Multiple Endocrine Neoplasia Type 2 (MEN 2)?</legend>
+        <div class="a-radio-row">
+          <label class="a-radio"><input type="radio" name="thyroid" value="yes" /><span>Yes</span></label>
+          <label class="a-radio"><input type="radio" name="thyroid" value="no" /><span>No</span></label>
+          <label class="a-radio"><input type="radio" name="thyroid" value="notsure" /><span>Not sure</span></label>
+        </div>
+      </fieldset>
+      <fieldset class="a-choices">
+        <legend>Have you ever had a severe allergic reaction to a GLP-1 medication such as semaglutide or tirzepatide?</legend>
+        <div class="a-radio-row">
+          <label class="a-radio"><input type="radio" name="allergic" value="yes" /><span>Yes</span></label>
+          <label class="a-radio"><input type="radio" name="allergic" value="no" /><span>No</span></label>
+          <label class="a-radio"><input type="radio" name="allergic" value="never" /><span>I've never taken one</span></label>
+        </div>
+      </fieldset>
+      <fieldset class="a-choices">
+        <legend>Have you ever been diagnosed with pancreatitis or severe stomach-emptying problems such as gastroparesis?</legend>
+        <div class="a-radio-row">
+          <label class="a-radio"><input type="radio" name="pancreatitis" value="yes" /><span>Yes</span></label>
+          <label class="a-radio"><input type="radio" name="pancreatitis" value="no" /><span>No</span></label>
+          <label class="a-radio"><input type="radio" name="pancreatitis" value="notsure" /><span>Not sure</span></label>
+        </div>
+      </fieldset>
+      <fieldset class="a-choices">
+        <legend>Are you currently pregnant, breastfeeding, or planning to become pregnant?</legend>
+        <div class="a-radio-row">
+          <label class="a-radio"><input type="radio" name="pregnant" value="yes" /><span>Yes</span></label>
+          <label class="a-radio"><input type="radio" name="pregnant" value="no" /><span>No</span></label>
+          <label class="a-radio"><input type="radio" name="pregnant" value="na" /><span>Not applicable</span></label>
+        </div>
+      </fieldset>
+    </section>
+
+    <section class="a-panel" data-apanel="3" aria-label="Step 4 of 4: Get your results" hidden>
+      <h3 class="a-step-title">Get your results</h3>
+      <p class="a-hint">Your preliminary screening is ready. Enter your information below and we'll send your results directly to your email.</p>
+      <div class="a-field">
+        <label class="a-label" for="a-name">Full name</label>
+        <input id="a-name" type="text" autocomplete="name" placeholder="First and last name" />
+      </div>
+      <div class="a-field">
+        <label class="a-label" for="a-email">Email address</label>
+        <input id="a-email" type="email" autocomplete="email" placeholder="you@example.com" />
+      </div>
+      <label class="a-check a-consent"><input type="checkbox" id="a-consent" /><span>I agree to receive my preliminary screening results and information about scheduling a consultation.</span></label>
+    </section>
+
+    <p id="assessment-error" class="form-error" role="alert" hidden></p>
     <div class="assessment-controls">
-      <button type="button" id="assessment-back" class="text-link" hidden>Back</button>
+      <button type="button" id="assessment-back" class="text-link" hidden>← Back</button>
       <button type="submit" class="action primary" id="assessment-next">Continue <ArrowIcon/></button>
     </div>
   </form>
