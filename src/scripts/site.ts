@@ -85,103 +85,233 @@ if (booking && assessment) {
   }
 }
 
-const questions = [
-  { title: 'What brings you here?', options: ['I’m exploring medical weight management', 'I want to understand GLP-1 treatment', 'I’m ready to speak with a provider'] },
-  { title: 'What would you like to discuss first?', options: ['Treatment options and suitability', 'The care experience and follow-ups', 'Program costs and what’s included'] },
-  { title: 'What would feel like a helpful next step?', options: ['A conversation with the BodyFactory team', 'More information before I book', 'A provider evaluation'] },
-];
+/* ---------- Eligibility questionnaire: 4-step pre-consultation screening ----------
+   Answers live only in memory and are cleared when the dialog closes.
+   Email delivery is not connected, so results are shown on screen. */
+const eligForm = document.querySelector<HTMLFormElement>('#assessment-form');
+const eligResult = document.querySelector<HTMLElement>('#assessment-result');
+const eligPanels = Array.from(document.querySelectorAll<HTMLElement>('[data-apanel]'));
+const eligStepItems = Array.from(document.querySelectorAll<HTMLElement>('#assessment-steps li'));
+const eligCount = document.querySelector<HTMLElement>('#assessment-count');
+const eligError = document.querySelector<HTMLElement>('#assessment-error');
+const eligBack = document.querySelector<HTMLButtonElement>('#assessment-back');
+const eligNext = document.querySelector<HTMLButtonElement>('#assessment-next');
+const eligIntro = document.querySelector<HTMLElement>('.assessment-intro');
+const eligDisclaimer = document.querySelector<HTMLElement>('.assessment-disclaimer');
+const eligStepsList = document.querySelector<HTMLElement>('#assessment-steps');
+const feetEl = document.querySelector<HTMLSelectElement>('#a-feet');
+const inchesEl = document.querySelector<HTMLSelectElement>('#a-inches');
+const weightEl = document.querySelector<HTMLInputElement>('#a-weight');
+const bmiValueEl = document.querySelector<HTMLElement>('#a-bmi-value');
+const nameEl = document.querySelector<HTMLInputElement>('#a-name');
+const emailEl = document.querySelector<HTMLInputElement>('#a-email');
+const consentEl = document.querySelector<HTMLInputElement>('#a-consent');
 
-let step = 0;
-const answers: string[] = [];
-const assessmentForm = document.querySelector<HTMLFormElement>('#assessment-form');
-const question = document.querySelector<HTMLElement>('#assessment-question');
-const result = document.querySelector<HTMLElement>('#assessment-result');
+let eligStep = 0;
+const WEIGHT_RELATED = ['hbp', 'chol', 'diabetes', 'apnea', 'heart'];
 
-function renderQuestion(focus = false) {
-  if (!assessmentForm || !question) return;
-  const current = questions[step];
-  question.innerHTML = `<fieldset><legend tabindex="-1">${current.title}</legend>${current.options.map(option => `<label class="assessment-option"><input type="radio" name="intent" value="${option}" ${answers[step] === option ? 'checked' : ''}><span>${option}</span></label>`).join('')}</fieldset>`;
-  document.querySelector('#assessment-count')!.textContent = `0${step + 1} / 03`;
-  document.querySelector<HTMLProgressElement>('#assessment-progress')!.value = step + 1;
-  document.querySelector<HTMLElement>('#assessment-back')!.hidden = step === 0;
-  document.querySelector('#assessment-next')!.innerHTML = `${step === 2 ? 'See my result' : 'Continue'} ${arrowSvg}`;
-  document.querySelector<HTMLElement>('#assessment-error')!.hidden = true;
-  if (focus) question.querySelector<HTMLElement>('legend')?.focus();
+function eligBmi(): number | null {
+  if (!feetEl || !inchesEl || !weightEl) return null;
+  const feet = parseInt(feetEl.value, 10);
+  const inches = parseInt(inchesEl.value, 10);
+  const weight = parseFloat(weightEl.value);
+  if (!feet || Number.isNaN(inches) || !(weight > 0)) return null;
+  const totalInches = feet * 12 + inches;
+  if (totalInches <= 0) return null;
+  return (weight / (totalInches * totalInches)) * 703;
 }
 
-function resetAssessment() {
-  if (!assessmentForm || !result) return;
-  step = 0;
-  answers.length = 0;
-  assessmentForm.hidden = false;
-  result.hidden = true;
-  result.replaceChildren();
-  document.querySelector<HTMLElement>('.assessment-intro')!.hidden = false;
-  renderQuestion();
+function renderBmi() {
+  if (!bmiValueEl) return;
+  const bmi = eligBmi();
+  bmiValueEl.textContent = bmi === null ? '–' : bmi.toFixed(1);
 }
 
-function showAssessmentResult() {
-  if (!assessmentForm || !result || !assessment || !booking) return;
-  assessmentForm.hidden = true;
-  document.querySelector<HTMLElement>('.assessment-intro')!.hidden = true;
-  document.querySelector('#assessment-count')!.textContent = 'YOUR RESULT';
-  result.hidden = false;
-  result.innerHTML = `
-    <h3 tabindex="-1">Your next step is a conversation.</h3>
-    <p>Only a licensed clinician can determine whether GLP-1 treatment is appropriate. Your answers do not assess medical eligibility.</p>
-    <div class="assessment-summary"><strong>Your conversation starter</strong><p></p></div>
-    <form class="result-email" id="result-email-form">
-      <label>Email address<input type="email" name="email" autocomplete="email" placeholder="you@example.com" required></label>
-      <label class="consent-row"><input type="checkbox" name="consent" required><span>I consent to BodyFactory using my email to deliver this result and to the essential cookies required for secure form submission. I understand delivery is not active in this preview.</span></label>
-      <button class="action primary" type="submit">Receive your result by email ${arrowSvg}</button>
-      <p class="delivery-status" role="status" hidden></p>
-    </form>
-    <button class="text-link" type="button" id="result-book">Book a consultation ${arrowSvg}</button>
-    <button class="text-link" type="button" id="restart-assessment">Start again</button>`;
-  result.querySelector<HTMLElement>('.assessment-summary p')!.textContent = answers[1];
-  result.querySelector<HTMLElement>('h3')!.focus();
-  result.querySelector<HTMLFormElement>('#result-email-form')!.addEventListener('submit', event => {
-    event.preventDefault();
-    const form = event.currentTarget as HTMLFormElement;
-    if (!form.reportValidity()) return;
-    const status = form.querySelector<HTMLElement>('.delivery-status')!;
-    status.hidden = false;
-    status.textContent = 'The email form is ready. Connect the secure delivery service to activate sending.';
+function eligChecked(name: string): string[] {
+  return Array.from(document.querySelectorAll<HTMLInputElement>(`input[name="${name}"]:checked`)).map(input => input.value);
+}
+
+function showEligError(message: string) {
+  if (!eligError) return;
+  eligError.textContent = message;
+  eligError.hidden = false;
+  eligPanels[eligStep]?.querySelector<HTMLElement>('select, input')?.focus({ preventScroll: false });
+}
+
+function hideEligError() {
+  if (eligError) eligError.hidden = true;
+}
+
+function setEligStep(next: number, focus = false) {
+  eligStep = next;
+  eligPanels.forEach((panel, i) => { panel.hidden = i !== next; });
+  eligStepItems.forEach((item, i) => {
+    item.classList.toggle('is-current', i === next);
+    item.classList.toggle('is-done', i < next);
+    if (i === next) item.setAttribute('aria-current', 'step');
+    else item.removeAttribute('aria-current');
   });
-  result.querySelector('#result-book')!.addEventListener('click', () => {
+  if (eligCount) eligCount.textContent = `STEP ${next + 1} OF 4`;
+  if (eligBack) eligBack.hidden = next === 0;
+  if (eligNext) eligNext.innerHTML = `${next === 3 ? 'Send my results' : 'Continue'} ${arrowSvg}`;
+  hideEligError();
+  if (assessment) assessment.scrollTop = 0;
+  if (focus) {
+    const title = eligPanels[next]?.querySelector<HTMLElement>('.a-step-title');
+    title?.setAttribute('tabindex', '-1');
+    title?.focus({ preventScroll: true });
+  }
+}
+
+function validateEligStep(n: number): string | null {
+  if (n === 0) {
+    if (eligBmi() === null) return 'Please enter your height and weight to continue.';
+    return null;
+  }
+  if (n === 1) {
+    if (!eligChecked('condition').length) return 'Please select at least one option.';
+    if (!eligChecked('tried').length) return 'Please answer whether you have tried to lose weight before.';
+    if (!eligChecked('glp1').length) return 'Please answer whether you are currently taking a GLP-1 medication.';
+    return null;
+  }
+  if (n === 2) {
+    for (const name of ['thyroid', 'allergic', 'pancreatitis', 'pregnant']) {
+      if (!eligChecked(name).length) return 'Please answer all four safety questions to continue.';
+    }
+    return null;
+  }
+  const name = nameEl?.value.trim() || '';
+  if (name.length < 2) return 'Please enter your full name.';
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailEl?.value.trim() || '')) return 'Please enter a valid email address.';
+  if (!consentEl?.checked) return 'Please agree to receive your results to continue.';
+  return null;
+}
+
+type EligOutcome = 'A' | 'B' | 'C';
+
+function evaluateEligibility(): EligOutcome {
+  const bmi = eligBmi() ?? 0;
+  const conditions = eligChecked('condition');
+  const hasWeightRelated = conditions.some(c => WEIGHT_RELATED.includes(c));
+  const one = (name: string) => eligChecked(name)[0];
+  // C: safety considerations a clinician must review first
+  if (one('thyroid') === 'yes' || one('allergic') === 'yes' || one('pregnant') === 'yes') return 'C';
+  // B: answers that call for medical review
+  if (one('thyroid') === 'notsure' || one('pancreatitis') !== 'no' || one('glp1') !== 'no' || conditions.includes('notsure')) return 'B';
+  // A: meets commonly used criteria
+  if (bmi >= 30 || (bmi >= 27 && hasWeightRelated)) return 'A';
+  return 'B';
+}
+
+const ELIG_COPY: Record<EligOutcome, { badge: string; title: string; body: string[] }> = {
+  A: {
+    badge: 'PRELIMINARY RESULT',
+    title: 'You may be a candidate.',
+    body: [
+      'Based on your answers, GLP-1 treatment may be worth discussing with a medical provider.',
+      'Your BMI and health information indicate that you may meet common criteria used when evaluating patients for GLP-1 weight-management treatment.',
+      'A medical provider will review your complete health history before determining whether treatment is appropriate.',
+    ],
+  },
+  B: {
+    badge: 'PRELIMINARY RESULT',
+    title: 'A medical review is recommended.',
+    body: [
+      'Some of your answers require additional review.',
+      'This does not necessarily mean that GLP-1 treatment is unavailable to you. A licensed medical provider should review your medical history and discuss the safest options with you.',
+    ],
+  },
+  C: {
+    badge: 'PRELIMINARY RESULT',
+    title: 'GLP-1 treatment may not be appropriate based on your answers.',
+    body: [
+      'One or more of your answers may represent an important safety consideration.',
+      'A medical provider should review your individual health history before you begin any GLP-1 medication.',
+      'You may still schedule a consultation to discuss your options and possible alternatives.',
+    ],
+  },
+};
+
+function showEligResult() {
+  if (!eligForm || !eligResult || !assessment || !booking) return;
+  const outcome = evaluateEligibility();
+  const copy = ELIG_COPY[outcome];
+  const bmi = eligBmi();
+  eligForm.hidden = true;
+  if (eligIntro) eligIntro.hidden = true;
+  if (eligDisclaimer) eligDisclaimer.hidden = true;
+  if (eligStepsList) eligStepsList.hidden = true;
+  if (eligCount) eligCount.textContent = 'YOUR RESULT';
+  eligResult.hidden = false;
+  eligResult.innerHTML = `
+    <p class="a-result-badge">${copy.badge}</p>
+    <h3 tabindex="-1">${copy.title}</h3>
+    ${copy.body.map(p => `<p>${p}</p>`).join('')}
+    <div class="assessment-summary"><strong>Your screening snapshot</strong><p>Estimated BMI ${bmi === null ? '–' : bmi.toFixed(1)} · Answers recorded ${new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</p></div>
+    <p class="a-email-note" role="status">Email delivery isn't connected yet, so your preliminary result is shown here instead of in your inbox. Your name and email were not sent anywhere.</p>
+    <button class="action primary" type="button" id="elig-book">Book a consultation ${arrowSvg}</button>
+    <a class="action outline" href="tel:+12122555655">Call us ${arrowSvg}</a>
+    <button type="button" class="text-link" id="elig-restart">Start again</button>
+    <p class="a-fineprint">This is a preliminary screening only, not a medical diagnosis. Only a licensed medical provider can determine whether GLP-1 treatment is appropriate for you.</p>`;
+  eligResult.querySelector<HTMLElement>('h3')!.focus();
+  eligResult.querySelector('#elig-book')!.addEventListener('click', () => {
     assessment.close();
     openDialog(booking, returnFocus || undefined);
   });
-  result.querySelector('#restart-assessment')!.addEventListener('click', () => {
+  eligResult.querySelector('#elig-restart')!.addEventListener('click', () => {
     resetAssessment();
-    question?.querySelector<HTMLElement>('legend')?.focus();
+    eligTitleFocus();
   });
 }
 
-if (assessmentForm && question && result) {
-  assessmentForm.addEventListener('submit', event => {
+function eligTitleFocus() {
+  const title = document.querySelector<HTMLElement>('#assessment-title');
+  title?.focus({ preventScroll: true });
+}
+
+function resetAssessment() {
+  if (!eligForm || !eligResult) return;
+  eligForm.reset();
+  renderBmi();
+  eligForm.hidden = false;
+  eligResult.hidden = true;
+  eligResult.replaceChildren();
+  if (eligIntro) eligIntro.hidden = false;
+  if (eligDisclaimer) eligDisclaimer.hidden = false;
+  if (eligStepsList) eligStepsList.hidden = false;
+  setEligStep(0);
+}
+
+if (eligForm) {
+  eligForm.addEventListener('submit', event => {
     event.preventDefault();
-    const selected = new FormData(assessmentForm).get('intent') as string | null;
-    if (!selected) {
-      document.querySelector<HTMLElement>('#assessment-error')!.hidden = false;
-      question.querySelector<HTMLInputElement>('input')?.focus();
+    const problem = validateEligStep(eligStep);
+    if (problem) {
+      showEligError(problem);
       return;
     }
-    answers[step] = selected;
-    if (step < 2) {
-      step += 1;
-      renderQuestion(true);
+    if (eligStep < 3) {
+      setEligStep(eligStep + 1, true);
       return;
     }
-    showAssessmentResult();
+    showEligResult();
   });
-  assessmentForm.addEventListener('change', () => document.querySelector<HTMLElement>('#assessment-error')!.hidden = true);
-  document.querySelector('#assessment-back')?.addEventListener('click', () => {
-    const selected = new FormData(assessmentForm).get('intent') as string | null;
-    if (selected) answers[step] = selected;
-    step = Math.max(0, step - 1);
-    renderQuestion(true);
+  eligForm.addEventListener('input', hideEligError);
+  eligForm.addEventListener('change', hideEligError);
+  eligBack?.addEventListener('click', () => setEligStep(Math.max(0, eligStep - 1), true));
+  feetEl?.addEventListener('change', renderBmi);
+  inchesEl?.addEventListener('change', renderBmi);
+  weightEl?.addEventListener('input', renderBmi);
+  // "None of the above" and "I'm not sure" are exclusive with specific conditions
+  Array.from(document.querySelectorAll<HTMLInputElement>('input[name="condition"]')).forEach(box => {
+    box.addEventListener('change', () => {
+      if (!box.checked) return;
+      const boxes = Array.from(document.querySelectorAll<HTMLInputElement>('input[name="condition"]'));
+      if (box.value === 'none' || box.value === 'notsure') boxes.forEach(b => { if (b !== box) b.checked = false; });
+      else boxes.forEach(b => { if (b.value === 'none' || b.value === 'notsure') b.checked = false; });
+    });
   });
+  renderBmi();
 }
 
 function splitWords(element: HTMLElement) {
