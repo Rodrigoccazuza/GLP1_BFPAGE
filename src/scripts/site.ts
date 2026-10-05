@@ -86,8 +86,9 @@ if (booking && assessment) {
 }
 
 /* ---------- Eligibility questionnaire: 4-step pre-consultation screening ----------
-   Answers live only in memory and are cleared when the dialog closes.
-   Email delivery is not connected, so results are shown on screen. */
+   Health answers live only in memory and are cleared when the dialog closes;
+   they are never stored, transmitted, or synced anywhere. Contact details are
+   collected only with explicit consent. Results are shown on screen. */
 const eligForm = document.querySelector<HTMLFormElement>('#assessment-form');
 const eligResult = document.querySelector<HTMLElement>('#assessment-result');
 const eligPanels = Array.from(document.querySelectorAll<HTMLElement>('[data-apanel]'));
@@ -183,7 +184,7 @@ function validateEligStep(n: number): string | null {
   const name = nameEl?.value.trim() || '';
   if (name.length < 2) return 'Please enter your full name.';
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailEl?.value.trim() || '')) return 'Please enter a valid email address.';
-  if (!consentEl?.checked) return 'Please agree to receive your results to continue.';
+  if (!consentEl?.checked) return 'Please check the consent box to continue.';
   return null;
 }
 
@@ -248,7 +249,7 @@ function showEligResult() {
     <h3 tabindex="-1">${copy.title}</h3>
     ${copy.body.map(p => `<p>${p}</p>`).join('')}
     <div class="assessment-summary"><strong>Your screening snapshot</strong><p>Estimated BMI ${bmi === null ? '–' : bmi.toFixed(1)} · Answers recorded ${new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</p></div>
-    <p class="a-email-note" role="status">Email delivery isn't connected yet, so your preliminary result is shown here instead of in your inbox. Your name and email were not sent anywhere.</p>
+    <p class="a-email-note" role="status">Your preliminary result is shown here. With your consent, BodyFactory may contact you about next steps. Your health answers were never sent anywhere or stored.</p>
     <button class="action primary" type="button" id="elig-book">Book a consultation ${arrowSvg}</button>
     <a class="action outline" href="tel:+12122555655">Call us ${arrowSvg}</a>
     <button type="button" class="text-link" id="elig-restart">Start again</button>
@@ -617,7 +618,7 @@ if (!reduced.matches) {
   // M1 · Hero entrance: once per visit, establishes reading order.
   gsap.timeline({ defaults: { duration: .7, ease: 'power3.out' } })
     .from('[data-hero] .eyebrow', { y: 12, opacity: 0 })
-    .from('[data-hero] h1 .word', { yPercent: 100, opacity: 0, stagger: .03 }, '-=.5')
+    .from('[data-hero] h1', { y: 18, opacity: 0 }, '-=.5')
     .from('[data-hero] .hero-sub', { y: 12, opacity: 0 }, '-=.45')
     .from('[data-hero] .hero-actions > *', { y: 12, opacity: 0, stagger: .06 }, '-=.45');
   gsap.from('.hero-visual img', { opacity: 0, scale: 1.03, duration: 1.1, ease: 'power3.out', delay: .15 });
