@@ -26,7 +26,7 @@ const nav = [['#how', 'How it works'], ['#plans', 'Plans'], ['#care', 'Your care
     <section class="hero container" aria-labelledby="hero-title" data-hero-section>
       <div class="hero-copy" data-hero>
         <p class="eyebrow">Compounded GLP-1 &amp; GIP in New York</p>
-        <h1 id="hero-title" class="t-display" data-animate-words>Weight loss, <em>personalized.</em></h1>
+        <h1 id="hero-title" class="t-display">Weight loss, <em>personalized.</em></h1>
         <p class="hero-sub t-lead">A medically supervised program designed to help you eat less, feel fuller, and work toward sustainable, long-term results.</p>
         <div class="hero-actions">
           <button class="pill primary hero-primary" type="button" data-action="book">Schedule your consultation <ArrowIcon/></button>
@@ -73,6 +73,7 @@ const nav = [['#how', 'How it works'], ['#plans', 'Plans'], ['#care', 'Your care
                 <p class="plan-tier">{plan.tier}</p>
               </header>
               <p class="plan-price"><span class="plan-amount">${plan.price}</span><span>/month</span></p>
+              <p class="plan-meds">{plan.meds}</p>
               <p class="plan-therapy"><strong>{plan.therapy}</strong> ({plan.ingredient})</p>
               <p class="plan-summary">{plan.summary}</p>
               <p class="plan-intro">{plan.intro}</p>
@@ -164,23 +165,13 @@ const nav = [['#how', 'How it works'], ['#plans', 'Plans'], ['#care', 'Your care
     <section class="reviews section" aria-labelledby="reviews-title" data-reviews>
       <div class="container">
         <div class="section-head center" data-reveal><h2 id="reviews-title" class="t-h2">Inspiring Client Experiences</h2><p class="t-lead">Join us and become our next success story</p></div>
-        <div class="reviews-rail" data-reviews-rail>
+        <div class="reviews-rail reviews-rail-single">
           <article class="review-card review-rating">
             <div class="review-stars" role="img" aria-label="Rated 4.5 out of 5 stars"><i class="bi bi-star-fill" aria-hidden="true"></i><i class="bi bi-star-fill" aria-hidden="true"></i><i class="bi bi-star-fill" aria-hidden="true"></i><i class="bi bi-star-fill" aria-hidden="true"></i><i class="bi bi-star-half" aria-hidden="true"></i></div>
             <p class="review-score">4.5 Rating</p>
-            <div class="review-trust"><span class="review-avatars" aria-hidden="true"><span>Z</span><span>N</span><span>M</span></span><p><strong>80+</strong>Google reviews</p></div>
+            <div class="review-trust"><p><strong>80+</strong>Google reviews</p></div>
+            <p class="review-note">Individual results vary. Testimonials shown are from general BodyFactory clients.</p>
           </article>
-          {reviews.map(review => (
-            <article class="review-card">
-              <span class="review-quote" aria-hidden="true">&ldquo;</span>
-              <blockquote><p>{review.quote}</p></blockquote>
-              <footer><span class="review-avatar" aria-hidden="true">{review.initials ? review.initials : <i class="bi bi-person-fill"></i>}</span><div><strong>{review.name}</strong><span class="review-meta">{review.meta}</span></div></footer>
-            </article>
-          ))}
-        </div>
-        <div class="reviews-nav">
-          <button class="review-arrow" type="button" data-reviews-prev aria-label="Show previous reviews"><i class="bi bi-chevron-left" aria-hidden="true"></i></button>
-          <button class="review-arrow" type="button" data-reviews-next aria-label="Show next reviews"><i class="bi bi-chevron-right" aria-hidden="true"></i></button>
         </div>
       </div>
     </section>
@@ -192,7 +183,7 @@ const nav = [['#how', 'How it works'], ['#plans', 'Plans'], ['#care', 'Your care
 
     <section class="quick-test section" id="quick-test" aria-labelledby="test-title">
       <div class="container test-panel">
-        <div class="test-copy"><h2 id="test-title" class="t-h3">Not sure where to start?</h2><p>Answer a few quick questions to receive a preliminary eligibility result. This is not a medical screening, and your answers stay on your device.</p><button class="pill primary" type="button" data-action="assessment">Check my eligibility <ArrowIcon/></button></div>
+        <div class="test-copy"><h2 id="test-title" class="t-h3">Not sure where to start?</h2><p>Answer a few quick questions to receive a preliminary eligibility result. This is not a medical screening, and your health answers never leave your device.</p><button class="pill primary" type="button" data-action="assessment">Check my eligibility <ArrowIcon/></button></div>
         <div class="test-preview"><i class="bi bi-clipboard2-pulse" aria-hidden="true"></i><strong>Four quick steps.</strong><p>Measurements, health history, and safety questions — with your preliminary result at the end.</p></div>
       </div>
     </section>
@@ -211,7 +202,7 @@ const nav = [['#how', 'How it works'], ['#plans', 'Plans'], ['#care', 'Your care
       </div>
       <p class="footer-disclosure">{disclosure} This page is for general information and does not replace medical advice.</p>
       <a class="footer-brandmark" href={program.home} aria-label="Visit the BodyFactory Skin Care home page"><img src="assets/figma/footer-logo-huge.png" alt="" width="1160" height="372" loading="lazy"/></a>
-      <div class="footer-bottom"><span>© {new Date().getFullYear()} BodyFactory Skin Care. All rights reserved.</span><div><a href="https://www.bodyfactoryskincare.com/privacy-policy">Privacy</a><a href="https://www.bodyfactoryskincare.com/terms-and-conditions">Terms</a><a href="#top">Back to top</a></div></div>
+      <div class="footer-bottom"><span>© {new Date().getFullYear()} BodyFactory Skin Care. All rights reserved.</span><div><a href="https://www.bodyfactoryskincare.com/privacy-policy">Privacy</a><a href="https://www.bodyfactoryskincare.com/terms-and-conditions">Terms</a><a href="https://www.bodyfactoryskincare.com/hipaa-disclaimer">HIPAA Disclaimer</a><a href="https://www.bodyfactoryskincare.com/accessibility">Accessibility</a><a href="https://www.bodyfactoryskincare.com/cookie-policy">Cookie Settings</a><a href="#top">Back to top</a></div></div>
     </div>
   </footer>
 
