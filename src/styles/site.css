@@ -197,6 +197,8 @@ p { max-width: 65ch; text-wrap: pretty; }
 .plan-dark .plan-price { border-color: #2f3a38; color: var(--on-dark); }
 .plan-amount { font-size: clamp(2.75rem, 2rem + 2.6vw, 4rem); font-weight: 700; line-height: 1; letter-spacing: -.05em; color: var(--ink); font-variant-numeric: tabular-nums; }
 .plan-dark .plan-amount { color: #fff; }
+.plan-meds { margin-top: var(--s-3); font-size: var(--fs-small); font-weight: 600; color: var(--teal-ink); }
+.plan-dark .plan-meds { color: var(--teal); }
 .plan-therapy { margin-top: var(--s-5); }
 .plan-dark .plan-therapy strong { color: var(--teal); }
 .plan-therapy strong { color: var(--teal-ink); }
@@ -358,6 +360,9 @@ p { max-width: 65ch; text-wrap: pretty; }
 .review-trust p { font-size: var(--fs-small); color: rgb(255 255 255 / .92); line-height: 1.45; }
 .review-trust strong { display: block; font-size: var(--fs-h5); color: #fff; letter-spacing: -.01em; }
 .reviews-nav { display: flex; justify-content: center; gap: var(--s-3); }
+.reviews-rail-single { justify-content: center; overflow: visible; }
+.reviews-rail-single .review-card { max-width: 420px; }
+.review-note { font-size: var(--fs-xs, 12px); opacity: .85; line-height: 1.6; }
 .review-arrow { display: grid; place-items: center; width: 54px; height: 54px; border-radius: 50%; border: 1px solid var(--line); background: #fff; color: var(--ink); font-size: 1.15rem; transition: background-color var(--d-fast) ease, color var(--d-fast) ease, border-color var(--d-fast) ease, opacity var(--d-fast) ease; }
 @media (hover: hover) and (pointer: fine) {
   .review-arrow:hover:not(:disabled) { background: var(--ink); border-color: var(--ink); color: #fff; }
@@ -499,6 +504,7 @@ p { max-width: 65ch; text-wrap: pretty; }
 .a-result-badge { display: inline-block; margin: 0 0 var(--s-3); padding: 6px 14px; border-radius: var(--r-pill); background: var(--teal-ink); color: #fff; font-size: var(--fs-h6); font-weight: 700; letter-spacing: .1em; }
 #assessment-result > p:not(.a-result-badge):not(.a-email-note):not(.a-fineprint) { color: var(--muted); }
 .a-email-note { margin: var(--s-4) 0; padding: var(--s-4); border-radius: var(--r-sm); background: #fdf6ec; font-size: var(--fs-small); }
+.a-privacy { margin: var(--s-2) 0 0; color: var(--muted); font-size: var(--fs-xs, 12px); line-height: 1.6; }
 #assessment-result .action { margin-top: var(--s-2); }
 #assessment-result .text-link { margin-top: var(--s-4); }
 .a-fineprint { margin-top: var(--s-5); color: var(--muted); font-size: var(--fs-caption); }
