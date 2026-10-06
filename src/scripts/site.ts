@@ -85,6 +85,36 @@ if (booking && assessment) {
   }
 }
 
+/* ---------- Consented contact capture (Klaviyo) ----------
+   Sends ONLY name + email, and only after explicit consent. Health answers are
+   never included. Disabled until both env vars are set at build time. */
+const KLAVIYO_COMPANY_ID = import.meta.env.PUBLIC_KLAVIYO_COMPANY_ID as string | undefined;
+const KLAVIYO_LIST_ID = import.meta.env.PUBLIC_KLAVIYO_LIST_ID as string | undefined;
+
+function subscribeContact(email: string, fullName: string) {
+  if (!KLAVIYO_COMPANY_ID || !KLAVIYO_LIST_ID) return;
+  const [first_name, ...rest] = fullName.split(/\s+/).filter(Boolean);
+  const attributes: Record<string, string> = { email };
+  if (first_name) attributes.first_name = first_name;
+  if (rest.length) attributes.last_name = rest.join(' ');
+  fetch(`https://a.klaviyo.com/client/subscriptions?company_id=${encodeURIComponent(KLAVIYO_COMPANY_ID)}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/vnd.api+json', revision: '2024-10-15' },
+    body: JSON.stringify({ data: { type: 'subscription', attributes: {
+      custom_source: 'GLP-1 landing page',
+      profile: { data: { type: 'profile', attributes: { ...attributes, subscriptions: { email: { marketing: { consent: 'SUBSCRIBED' } } } } } },
+    }, relationships: { list: { data: { type: 'list', id: KLAVIYO_LIST_ID } } } } }),
+  }).catch(() => {});
+}
+
+/** Shares contact details if the visitor gave an email and consent. Returns true when shared. */
+function shareContact(): boolean {
+  const email = emailEl?.value.trim() || '';
+  if (!email || !consentEl?.checked) return false;
+  subscribeContact(email, nameEl?.value.trim() || '');
+  return Boolean(KLAVIYO_COMPANY_ID && KLAVIYO_LIST_ID);
+}
+
 /* ---------- Eligibility questionnaire: 4-step pre-consultation screening ----------
    Health answers live only in memory and are cleared when the dialog closes;
    they are never stored, transmitted, or synced anywhere. Contact details are
@@ -181,10 +211,11 @@ function validateEligStep(n: number): string | null {
     }
     return null;
   }
-  const name = nameEl?.value.trim() || '';
-  if (name.length < 2) return 'Please enter your full name.';
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailEl?.value.trim() || '')) return 'Please enter a valid email address.';
-  if (!consentEl?.checked) return 'Please check the consent box to continue.';
+  // Contact details are optional; when an email is given, explicit consent is required.
+  const email = emailEl?.value.trim() || '';
+  if (!email) return consentEl?.checked ? 'Please enter your email address, or uncheck the consent box.' : null;
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return 'Please enter a valid email address.';
+  if (!consentEl?.checked) return 'Please check the consent box so we can contact you, or clear your email to skip.';
   return null;
 }
 
@@ -238,6 +269,9 @@ function showEligResult() {
   const outcome = evaluateEligibility();
   const copy = ELIG_COPY[outcome];
   const bmi = eligBmi();
+  const contactNote = shareContact()
+    ? 'Thanks — BodyFactory will follow up by email about next steps. Only your name and email were shared; your health answers were never sent or stored.'
+    : 'Your preliminary result is shown only here. Your health answers were never sent or stored.';
   eligForm.hidden = true;
   if (eligIntro) eligIntro.hidden = true;
   if (eligDisclaimer) eligDisclaimer.hidden = true;
@@ -249,7 +283,7 @@ function showEligResult() {
     <h3 tabindex="-1">${copy.title}</h3>
     ${copy.body.map(p => `<p>${p}</p>`).join('')}
     <div class="assessment-summary"><strong>Your screening snapshot</strong><p>Estimated BMI ${bmi === null ? '–' : bmi.toFixed(1)} · Answers recorded ${new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</p></div>
-    <p class="a-email-note" role="status">Your preliminary result is shown here. With your consent, BodyFactory may contact you about next steps. Your health answers were never sent anywhere or stored.</p>
+    <p class="a-email-note" role="status">${contactNote}</p>
     <button class="action primary" type="button" id="elig-book">Book a consultation ${arrowSvg}</button>
     <a class="action outline" href="tel:+12122555655">Call us ${arrowSvg}</a>
     <button type="button" class="text-link" id="elig-restart">Start again</button>
@@ -585,31 +619,6 @@ function setupLifestyle() {
 
 setupLifestyle();
 
-/* ---------- Reviews: arrow-driven snap carousel ---------- */
-function setupReviews() {
-  const rail = document.querySelector<HTMLElement>('[data-reviews-rail]');
-  const prev = document.querySelector<HTMLButtonElement>('[data-reviews-prev]');
-  const next = document.querySelector<HTMLButtonElement>('[data-reviews-next]');
-  if (!rail || !prev || !next) return;
-  const step = () => {
-    const card = rail.querySelector<HTMLElement>('.review-card');
-    const gap = parseFloat(getComputedStyle(rail).columnGap || '24');
-    return (card?.offsetWidth || 320) + gap;
-  };
-  const update = () => {
-    prev.disabled = rail.scrollLeft <= 2;
-    next.disabled = rail.scrollLeft >= rail.scrollWidth - rail.clientWidth - 2;
-  };
-  const behavior = reduced.matches ? 'auto' : 'smooth';
-  prev.addEventListener('click', () => rail.scrollBy({ left: -step(), behavior }));
-  next.addEventListener('click', () => rail.scrollBy({ left: step(), behavior }));
-  rail.addEventListener('scroll', update, { passive: true });
-  addEventListener('resize', update);
-  update();
-}
-
-setupReviews();
-
 /* ---------- Motion vocabulary (skipped entirely with reduced motion) ---------- */
 if (!reduced.matches) {
 
@@ -625,12 +634,14 @@ if (!reduced.matches) {
 
   // M1b · Hero notifications pop in one by one as the photo scrolls into view, like incoming messages.
   //       Each enters with a small overshoot from below; scrolling back up tucks them away again.
+  const heroMobile = matchMedia('(max-width: 767px)').matches;
   gsap.utils.toArray<HTMLElement>('.hero-note').forEach((note, index) => {
     if (!note.offsetParent) return; // hidden on mobile (first-visit card)
     gsap.set(note, { opacity: 0, y: 18, scale: .86 });
     gsap.to(note, {
-      opacity: 1, y: 0, scale: 1, duration: .55, delay: index * .15, ease: 'back.out(1.8)', clearProps: 'transform',
-      scrollTrigger: { trigger: '[data-hero-visual]', start: `top ${82 - index * 9}%`, toggleActions: 'play none none reverse' },
+      opacity: 1, y: 0, scale: 1, duration: .55, delay: heroMobile ? .9 + [0, 2, 0, 1][index] * .18 : index * .15, // mobile: after the photo fades in ease: 'back.out(1.8)', clearProps: 'transform',
+      // Mobile: wait until 60% of the photo is in view, then enter as a staggered group.
+      scrollTrigger: { trigger: '[data-hero-visual]', start: heroMobile ? '60% bottom' : `top ${82 - index * 9}%`, toggleActions: 'play none none reverse' },
     });
   });
 
@@ -693,9 +704,6 @@ if (!reduced.matches) {
 
   // M10 · FAQ rows settle in sequence.
   gsap.from('.faq-list details', { y: 12, opacity: 0, stagger: .05, duration: .45, ease: 'power2.out', scrollTrigger: { trigger: '.faq-list', start: 'top 85%', once: true } });
-
-  // M11 · Review cards rise in as the rail arrives.
-  gsap.from('.review-card', { y: 24, opacity: 0, stagger: .08, duration: .6, ease: 'power3.out', clearProps: 'transform,opacity', scrollTrigger: { trigger: '[data-reviews-rail]', start: 'top 88%', once: true } });
 
   // M8 · Location cards unmask upward, one gesture for the group.
   gsap.from('.location-card', { clipPath: 'inset(12% 0 0 0 round 32px)', opacity: 0, stagger: .1, duration: .8, ease: 'power3.out', clearProps: 'clipPath', scrollTrigger: { trigger: '.location-grid', start: 'top 85%', once: true } });

@@ -157,10 +157,12 @@ p { max-width: 65ch; text-wrap: pretty; }
 }
 
 /* ---------- Approach statement ---------- */
+.supervision-line { display: flex; align-items: flex-start; gap: var(--s-3); max-width: 40rem; margin-top: var(--s-6); padding: var(--s-4) var(--s-5); border: 1px solid var(--line); border-radius: var(--r-lg); background: #fff; color: var(--muted); font-size: var(--fs-small); line-height: 1.55; text-align: left; }
+.supervision-line strong { color: var(--ink); font-weight: 600; }
+.supervision-line .bi { flex: none; margin-top: 1px; font-size: 1.25rem; color: var(--teal-ink); }
 .approach { display: grid; justify-items: center; text-align: center; }
 .statement { max-width: 28ch; margin-inline: auto; font-size: clamp(1.75rem, 1.2rem + 2.4vw, 3.5rem); font-weight: 500; line-height: 1.2; letter-spacing: -.045em; }
 .statement[data-highlight-words] .word { color: #d6dbd8; }
-.statement-note { margin-inline: auto; margin-top: var(--s-5); font-size: var(--fs-small); color: var(--muted); max-width: 44ch; }
 .word { display: inline-block; }
 
 /* ---------- Why (orbit around vial) ---------- */
@@ -338,39 +340,9 @@ p { max-width: 65ch; text-wrap: pretty; }
 .faq-answer { overflow: hidden; }
 .faq-answer p { padding: 0 var(--s-7) var(--s-5) 0; color: var(--muted); }
 
-/* ---------- Reviews ---------- */
-.reviews { background: var(--soft); }
-.reviews .section-head { margin-bottom: var(--s-7); }
-.reviews-rail { display: flex; gap: var(--gap); overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; padding: var(--s-2) 2px var(--s-5); }
-.reviews-rail::-webkit-scrollbar { display: none; }
-.review-card { position: relative; flex: 0 0 clamp(280px, 32vw, 360px); scroll-snap-align: start; display: flex; flex-direction: column; gap: var(--s-4); padding: var(--s-6) var(--s-5); background: #fff; border: 1px solid rgb(17 23 22 / .07); border-radius: var(--r-lg); }
-.review-quote { font-family: Georgia, 'Times New Roman', serif; font-size: 3.25rem; font-weight: 700; line-height: .6; height: .55em; color: var(--teal); }
-.review-card blockquote p { color: #3f4745; font-size: var(--fs-small); line-height: 1.65; }
-.review-card footer { margin-top: auto; display: flex; align-items: center; gap: var(--s-3); padding-top: var(--s-2); }
-.review-avatar { display: grid; place-items: center; flex: none; width: 46px; height: 46px; border-radius: 50%; background: #e7f5f2; color: var(--teal-ink); font-size: var(--fs-small); font-weight: 700; }
-.review-card footer strong { display: block; font-size: var(--fs-small); letter-spacing: -.01em; line-height: 1.4; }
-.review-meta { display: block; font-size: var(--fs-caption); color: var(--muted); }
-.review-rating { background: var(--teal); border: none; color: #fff; justify-content: center; gap: var(--s-5); }
-.review-stars { display: flex; gap: 6px; font-size: 1.3rem; }
-.review-score { font-size: var(--fs-h3); font-weight: 800; letter-spacing: -.03em; line-height: 1.1; }
-.review-trust { display: flex; align-items: center; gap: var(--s-4); }
-.review-avatars { display: flex; }
-.review-avatars span { display: grid; place-items: center; width: 38px; height: 38px; border-radius: 50%; background: rgb(255 255 255 / .28); border: 2px solid var(--teal); margin-left: -12px; font-size: var(--fs-caption); font-weight: 700; }
-.review-avatars span:first-child { margin-left: 0; }
-.review-trust p { font-size: var(--fs-small); color: rgb(255 255 255 / .92); line-height: 1.45; }
-.review-trust strong { display: block; font-size: var(--fs-h5); color: #fff; letter-spacing: -.01em; }
-.reviews-nav { display: flex; justify-content: center; gap: var(--s-3); }
-.reviews-rail-single { justify-content: center; overflow: visible; }
-.reviews-rail-single .review-card { max-width: 420px; }
-.review-note { font-size: var(--fs-xs, 12px); opacity: .85; line-height: 1.6; }
-.review-arrow { display: grid; place-items: center; width: 54px; height: 54px; border-radius: 50%; border: 1px solid var(--line); background: #fff; color: var(--ink); font-size: 1.15rem; transition: background-color var(--d-fast) ease, color var(--d-fast) ease, border-color var(--d-fast) ease, opacity var(--d-fast) ease; }
-@media (hover: hover) and (pointer: fine) {
-  .review-arrow:hover:not(:disabled) { background: var(--ink); border-color: var(--ink); color: #fff; }
-}
-.review-arrow:disabled { opacity: .3; cursor: default; }
-
 /* ---------- Locations ---------- */
-.locations { padding-top: 0; }
+.locations { padding-top: var(--s-6); }
+.locations .section-head .eyebrow { margin-bottom: calc(10px - var(--s-4)); }
 .location-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gap); }
 .location-card { position: relative; min-height: 480px; overflow: hidden; border-radius: var(--r-lg); background: #cfd4d1; color: #fff; text-decoration: none; isolation: isolate; }
 .location-card img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 900ms var(--ease-out); }
@@ -550,6 +522,12 @@ p { max-width: 65ch; text-wrap: pretty; }
   .plan { grid-column: span 12; }
   .plan-grid { grid-template-columns: 1fr; }
 
+  /* Hero notes: keep the nurse's face (approx. x 55–77%, y 12–48%) clear */
+  .hero-note.hero-card { left: 3%; top: 18%; }
+  .hero-note.hero-chip:nth-of-type(2) { left: auto; right: 3%; top: 56%; }
+  .hero-note.hero-chip:nth-of-type(3) { left: auto; right: 3%; top: 84%; }
+  .hero-note.hero-chip:nth-of-type(4) { left: 30%; top: 72%; }
+
   .process-left { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); column-gap: var(--gap); align-items: start; }
   .process-left h2 { grid-column: 1 / -1; }
   .process-photo { grid-column: 1 / 4; margin-top: var(--s-6); }
@@ -604,10 +582,13 @@ p { max-width: 65ch; text-wrap: pretty; }
   .hero-chip { font-size: 11px; font-weight: 600; padding: 6px 12px 6px 6px; gap: 7px; }
   .hero-chip .bi { display: inline-grid; place-items: center; width: 18px; height: 18px; flex: none; border-radius: 50%; background: var(--teal); color: #fff; font-size: 10px; }
   .hero-chip .bi::before { content: '\F26E'; }
-  /* Reference layout: alternating sides over the photo */
-  .hero-note.hero-chip:nth-of-type(2) { left: auto; right: 5%; top: 68%; }
-  .hero-note.hero-chip:nth-of-type(3) { left: auto; right: 5%; top: 14%; }
-  .hero-note.hero-chip:nth-of-type(4) { left: 5%; top: 42%; }
+  /* Reference layout: squarer crop on the nurse, staggered labelled chips clear of her face */
+  .hero-visual { border-radius: 22px; }
+  .hero-visual img { aspect-ratio: 8 / 7; object-fit: cover; object-position: 30% 50%; }
+  .hero-chip { padding: 8px 14px 8px 8px; background: rgb(255 255 255 / .9); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); font-size: 11.5px; }
+  .hero-note.hero-chip:nth-of-type(3) { left: 4%; right: auto; top: 21%; }
+  .hero-note.hero-chip:nth-of-type(4) { left: auto; right: 3%; top: 58%; }
+  .hero-note.hero-chip:nth-of-type(2) { left: 18%; right: auto; top: 80%; }
 
   .statement { max-width: none; }
 
@@ -643,7 +624,6 @@ p { max-width: 65ch; text-wrap: pretty; }
 
   .life-card { flex-basis: 82vw; height: 460px; }
 
-  .review-card { flex-basis: 82vw; }
 
   .faq-list summary { font-size: var(--fs-body); }
   .faq-answer p { padding-right: var(--s-2); }

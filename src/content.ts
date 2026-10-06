@@ -22,7 +22,7 @@ export const why = [
   ['bi-calendar-week', 'Once-weekly treatment', 'One injection a week, on a schedule your nurse practitioner sets with you.'],
   ['bi-egg-fried', 'Reduced appetite & cravings', 'GLP-1 and GIP therapies may help you eat less and feel fuller for longer.'],
   ['bi-activity', 'Metabolic health support', 'Care that looks at blood sugar, metabolism, and body composition, not only the scale.'],
-  ['bi-person-check', 'Personalized medical supervision', 'A nurse practitioner reviews your history, labs, and goals before anything is prescribed.'],
+  ['bi-person-check', 'Personalized supervision by an NP', 'A nurse practitioner reviews your history, labs, and goals before anything is prescribed.'],
   ['bi-clipboard2-pulse', 'Monthly NP check-ins', 'Each new month of treatment is authorized only after your nurse practitioner sees you.'],
   ['bi-sliders', 'A dose that fits you', 'Your NP adjusts your dose based on your response. Increases are never automatic.'],
 ];
@@ -39,7 +39,7 @@ export const plans = [
     fit: 'Perfect for patients beginning their weight loss journey.',
     intro: 'GLP-1 therapy may help you:',
     benefits: ['Reduce appetite', 'Control cravings', 'Increase feelings of fullness', 'Improve blood sugar regulation', 'Support consistent weight loss'],
-    summary: 'Uses GLP-1 therapy (semaglutide) to help you achieve sustainable weight loss with medical supervision.',
+    summary: 'Uses GLP-1 therapy (semaglutide) to help you achieve sustainable weight loss with medical supervision by an NP.',
   },
   {
     id: 'slimfit-plus',
@@ -62,7 +62,7 @@ export const inclusions: [string, boolean, boolean][] = [
   ['Comprehensive health evaluation', true, true],
   ['Baseline laboratory testing', true, true],
   ['Personalized treatment plan', true, true],
-  ['Ongoing provider supervision', true, true],
+  ['Ongoing supervision by an NP', true, true],
   ['Regular progress evaluations', true, true],
   ['Medication management', true, true],
   ['Dose adjustments as needed', true, true],
@@ -75,7 +75,7 @@ export const journey = [
   { title: 'Consultation', icon: 'bi-chat-heart', body: 'Meet with a BodyFactory nurse practitioner to discuss your goals, medical history, current medications, and eligibility.' },
   { title: 'Lab testing', icon: 'bi-droplet-half', body: 'Complete baseline laboratory testing so your NP can confirm treatment is safe and appropriate for you.' },
   { title: 'Personalized plan', icon: 'bi-clipboard2-check', body: 'Your NP reviews your results, selects your medication and starting dose, and walks you through side effects and injection instructions.' },
-  { title: 'Start your transformation', icon: 'bi-arrow-up-right-circle', body: 'Begin your once-weekly treatment, with ongoing medical supervision and a monthly NP visit before each new month is authorized.' },
+  { title: 'Start your transformation', icon: 'bi-arrow-up-right-circle', body: 'Begin your once-weekly treatment, with ongoing medical supervision by an NP and a monthly visit before each new month is authorized.' },
 ];
 
 export const care = [
@@ -234,4 +234,4 @@ export const results = {
   ],
 };
 
-export const disclosure = 'Compounded medications are not FDA-approved and have not been evaluated by the FDA for safety, effectiveness, or quality. Treatment requires an evaluation by a licensed nurse practitioner, who determines whether it is appropriate. Individual results vary.';
+export const disclosure = 'Compounded medications are not FDA-approved and have not been evaluated by the FDA for safety, effectiveness, or quality. All treatment is medically supervised by a licensed prescribing nurse practitioner (NP), who evaluates you and determines whether it is appropriate. Individual results vary.';

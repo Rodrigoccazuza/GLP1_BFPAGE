@@ -145,17 +145,17 @@ import ArrowIcon from './ArrowIcon.astro';
 
     <section class="a-panel" data-apanel="3" aria-label="Step 4 of 4: Get your results" hidden>
       <h3 class="a-step-title">Get your results</h3>
-      <p class="a-hint">Your preliminary result is ready. Share your contact details below so our team can follow up about next steps — only with your consent.</p>
+      <p class="a-hint">Your preliminary result is ready. If you'd like our team to follow up about next steps, add your contact details below. This is optional — you can see your result without them.</p>
       <div class="a-field">
-        <label class="a-label" for="a-name">Full name</label>
+        <label class="a-label" for="a-name">Full name <span class="a-opt">Optional</span></label>
         <input id="a-name" type="text" autocomplete="name" placeholder="First and last name" />
       </div>
       <div class="a-field">
-        <label class="a-label" for="a-email">Email address</label>
+        <label class="a-label" for="a-email">Email address <span class="a-opt">Optional</span></label>
         <input id="a-email" type="email" autocomplete="email" placeholder="you@example.com" />
       </div>
-      <label class="a-check a-consent"><input type="checkbox" id="a-consent" /><span>I consent to BodyFactory contacting me by email about my screening results and scheduling a consultation.</span></label>
-      <p class="a-privacy">Your privacy: your health answers stay on this device and are never stored, transmitted, or shared. Only the contact details you enter above are shared with BodyFactory, and only with your consent.</p>
+      <label class="a-check a-consent"><input type="checkbox" id="a-consent" /><span>Yes, BodyFactory may email me about scheduling a GLP-1 consultation and send occasional updates and offers. I understand only my name and email are sent — not my health answers — and I can unsubscribe at any time. Consent is not a condition of treatment.</span></label>
+      <p class="a-privacy"><strong>HIPAA &amp; privacy:</strong> this pre-screening is not a medical record and does not create a patient relationship. Your health answers are processed only in your browser, are cleared when you close this window, and are never stored, sent to BodyFactory, or shared with our email provider (Klaviyo). See our <a href="https://www.bodyfactoryskincare.com/privacy-policy" target="_blank" rel="noopener noreferrer">Privacy Policy</a> and <a href="https://www.bodyfactoryskincare.com/disclaimer" target="_blank" rel="noopener noreferrer">HIPAA Disclaimer</a>.</p>
     </section>
 
     <p id="assessment-error" class="form-error" role="alert" hidden></p>
