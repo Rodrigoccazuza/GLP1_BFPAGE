@@ -4,7 +4,9 @@
       "width": 320,
       "scrollWidth": 320,
       "overflow": [],
-      "smallText": [],
+      "smallText": [
+        "eyebrow"
+      ],
       "smallTargets": [],
       "pass": true
     },
@@ -12,7 +14,9 @@
       "width": 390,
       "scrollWidth": 390,
       "overflow": [],
-      "smallText": [],
+      "smallText": [
+        "eyebrow"
+      ],
       "smallTargets": [],
       "pass": true
     },
@@ -20,7 +24,12 @@
       "width": 768,
       "scrollWidth": 768,
       "overflow": [],
-      "smallText": [],
+      "smallText": [
+        "hero-card-tag",
+        "LI",
+        "LI",
+        "LI"
+      ],
       "smallTargets": [],
       "pass": true
     },
@@ -28,7 +37,12 @@
       "width": 1024,
       "scrollWidth": 1024,
       "overflow": [],
-      "smallText": [],
+      "smallText": [
+        "hero-card-tag",
+        "LI",
+        "LI",
+        "LI"
+      ],
       "smallTargets": [],
       "pass": true
     },
@@ -36,7 +50,12 @@
       "width": 1280,
       "scrollWidth": 1280,
       "overflow": [],
-      "smallText": [],
+      "smallText": [
+        "hero-card-tag",
+        "LI",
+        "LI",
+        "LI"
+      ],
       "smallTargets": [],
       "pass": true
     },
@@ -44,7 +63,12 @@
       "width": 1440,
       "scrollWidth": 1440,
       "overflow": [],
-      "smallText": [],
+      "smallText": [
+        "hero-card-tag",
+        "LI",
+        "LI",
+        "LI"
+      ],
       "smallTargets": [],
       "pass": true
     }
@@ -54,12 +78,12 @@
     "PASS Care guide tracks stacked panels (reduced motion)",
     "PASS FAQ opens and closes",
     "PASS Booking dialog opens from plan card and closes with Escape",
-    "PASS Assessment validates and completes",
-    "PASS Mobile menu opens, closes on link",
-    "PASS Sticky CTA appears past hero and hides at final CTA",
+    "FAIL Assessment validates and completes: locator.click: Timeout 30000ms exceeded.",
+    "FAIL Mobile menu opens, closes on link: locator.click: Timeout 30000ms exceeded.",
+    "FAIL Sticky CTA appears past hero and hides at final CTA: Expected values to be strictly equal:",
     "PASS Care stage pins on desktop and scroll advances panels",
     "PASS Journey line fills and steps light up on scroll",
-    "PASS Membership rows reveal on scroll"
+    "FAIL Membership rows reveal on scroll: locator.evaluate: Timeout 30000ms exceeded."
   ],
   "accessibility": [
     {
@@ -76,7 +100,7 @@
   ],
   "content": {
     "missing": [],
-    "emDashes": 0,
+    "emDashes": 5,
     "fdaApprovedClaim": false
   },
   "noJavaScript": {

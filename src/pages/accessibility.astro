@@ -1,0 +1,22 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ArrowIcon from '../components/ArrowIcon.astro';
+import { program } from '../content';
+
+const landingPage = import.meta.env.BASE_URL;
+---
+
+<Layout title="Accessibility | BodyFactory" description="BodyFactory's commitment to an accessible GLP-1 program website.">
+  <main class="legal container" id="main">
+    <a class="legal-brand" href={landingPage}><img src="../assets/logo.png" alt="BodyFactory Skin Care, back to the GLP-1 page" width="180" height="62"/></a>
+    <h1 class="t-h2">Accessibility statement</h1>
+    <p>BodyFactory Skin Care is committed to making this website usable by everyone, including people who use assistive technology.</p>
+    <h2 class="t-h5">Our standard</h2>
+    <p>We aim to meet the Web Content Accessibility Guidelines (WCAG) 2.2, Level AA. This page is built with semantic HTML, keyboard-operable controls, visible focus states, text alternatives for meaningful images, sufficient color contrast, and support for reduced-motion preferences.</p>
+    <h2 class="t-h5">Ongoing work</h2>
+    <p>We test this site with automated tools and keyboard navigation, and we review it as content changes. Some third-party services, such as our booking platform, are maintained by other providers and may not fully meet the same standard.</p>
+    <h2 class="t-h5">Feedback and assistance</h2>
+    <p>If you have trouble using any part of this website, or need information in a different format, email <a href={`mailto:${program.email}?subject=Accessibility%20feedback`}>{program.email}</a>. Tell us the page and the problem you ran into, and we will respond and help you book or get the information you need.</p>
+    <a class="pill primary" href={landingPage}>Back to the GLP-1 page <ArrowIcon/></a>
+  </main>
+</Layout>

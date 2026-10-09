@@ -131,7 +131,13 @@ p { max-width: 65ch; text-wrap: pretty; }
 .hero { padding-top: clamp(48px, 6vw, 88px); text-align: center; overflow-x: clip; }
 .hero-copy { display: grid; justify-items: center; gap: var(--s-5); }
 .hero-copy h1 { max-width: none; }
-.hero-sub { max-width: 36rem; }
+.hero-break { display: none; }
+/* Desktop: two balanced lines ("GLP-1 weight / loss, personalized.") that grow with the screen up to a capped size */
+@media (min-width: 1024px) {
+  .hero-break { display: inline; }
+  .hero-copy h1 { max-width: 11em; margin-inline: auto; font-size: clamp(4.75rem, 2rem + 4.4vw, 6.5rem); line-height: .98; }
+}
+.hero-sub { max-width: 36rem; color: var(--ink); }
 .hero-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--s-3); margin-top: var(--s-2); }
 .hero-visual { width: min(1120px, 100%); margin: clamp(40px, 5vw, 64px) auto 0; }
 .hero-visual { position: relative; container-type: inline-size; overflow: clip; }
@@ -190,6 +196,15 @@ p { max-width: 65ch; text-wrap: pretty; }
 
 /* ---------- Plans ---------- */
 .plans { background: var(--soft); }
+.plan-disclosure { display: flex; gap: var(--s-2); align-items: flex-start; max-width: 72ch; margin: var(--s-5) auto 0; font-size: var(--fs-caption); line-height: 1.55; color: var(--muted); }
+.plan-disclosure .bi { flex: none; margin-top: .1em; color: var(--teal-ink); }
+.legal { max-width: 760px; padding-block: var(--s-8) var(--s-9); }
+.legal-brand img { width: 160px; margin-bottom: var(--s-8); }
+.legal h1 { margin-bottom: var(--s-5); }
+.legal h2 { margin-top: var(--s-6); margin-bottom: var(--s-2); }
+.legal p { max-width: 65ch; line-height: 1.65; }
+.legal a:not(.pill) { color: var(--teal-ink); text-decoration: underline; }
+.legal .pill { margin-top: var(--s-8); }
 .plan-grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gap); row-gap: var(--gap); }
 .plan { grid-column: span 6; display: flex; flex-direction: column; padding: clamp(28px, 3.4vw, 48px); border-radius: var(--r-lg); background: var(--paper); border: 1px solid var(--line); }
 .plan-dark { background: var(--ink); border-color: var(--ink); color: #fff; }
@@ -217,6 +232,9 @@ p { max-width: 65ch; text-wrap: pretty; }
 .check-list.two-col { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--s-6); row-gap: var(--s-4); }
 
 .compare { margin-top: var(--s-8); }
+.compare-title { margin-bottom: var(--s-5); }
+.compare-list { padding-block: var(--s-5); border-block: 1px solid var(--line); }
+.compare-terms { margin-top: var(--s-4); font-size: var(--fs-small); color: var(--muted); }
 .compare table { width: 100%; border-collapse: collapse; }
 .compare caption { margin-bottom: var(--s-5); text-align: left; font-weight: 600; }
 .compare th, .compare td { padding: var(--s-4) var(--s-3); text-align: left; border-bottom: 1px solid var(--line); font-weight: 400; }
@@ -315,8 +333,12 @@ p { max-width: 65ch; text-wrap: pretty; }
 .lifestyle h2 { margin-top: var(--s-3); }
 .lifestyle .eyebrow { color: var(--teal); }
 .lifestyle-lead { margin-top: var(--s-4); color: var(--on-dark); }
-.lifestyle-viewport { margin-right: calc((100vw - min(calc(100vw - var(--margin) * 2), var(--container))) / -2); }
-.lifestyle-rail { display: flex; gap: var(--gap); width: max-content; padding: var(--s-8) var(--margin) var(--s-4) 0; will-change: transform; }
+.lifestyle-viewport { margin-right: calc((100vw - min(calc(100vw - var(--margin) * 2), var(--container))) / -2); overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; scrollbar-width: none; cursor: grab; }
+.lifestyle-viewport::-webkit-scrollbar { display: none; }
+.lifestyle-viewport.is-dragging { cursor: grabbing; scroll-snap-type: none; user-select: none; }
+.lifestyle-viewport.is-dragging .life-card { pointer-events: none; }
+.lifestyle-rail { display: flex; gap: var(--gap); width: max-content; padding: var(--s-8) var(--margin) var(--s-4) 0; }
+.life-card img { -webkit-user-drag: none; }
 .life-card { position: relative; flex: 0 0 clamp(280px, 30vw, 380px); height: 500px; overflow: hidden; border-radius: var(--r-lg); background: #dfe5e2; scroll-snap-align: start; }
 .life-card > img { width: 100%; height: 100%; object-fit: cover; transition: transform 700ms var(--ease-out); }
 @media (hover: hover) { .life-card:hover > img { transform: scale(1.04); } }
@@ -569,13 +591,13 @@ p { max-width: 65ch; text-wrap: pretty; }
   .brand img { width: 96px; }
   .nav-book { min-height: 44px; padding-inline: 16px; font-size: var(--fs-caption); }
 
-  /* Mobile hero: centered, order eyebrow > H1 > image > description > buttons */
+  /* Mobile hero: centered, order H1 > eyebrow > image > description > buttons; description spans the button width */
   .hero { display: flex; flex-direction: column; align-items: center; text-align: center; padding-top: var(--s-6); }
   .hero-copy { display: contents; }
-  .hero .eyebrow { order: 1; font-size: 11px; letter-spacing: .1em; }
-  .hero h1 { order: 2; margin-top: var(--s-3); font-size: min(11.5vw, 3.25rem); line-height: 1; }
+  .hero .eyebrow { order: 2; margin-top: var(--s-3); font-size: calc(11px * .85); letter-spacing: .1em; color: var(--ink); }
+  .hero h1 { order: 1; font-size: min(11.5vw, 3.25rem); line-height: 1; }
   .hero-visual { order: 3; margin-top: var(--s-5); }
-  .hero-sub { order: 4; margin-top: var(--s-5); font-size: 15px; line-height: 1.55; max-width: 32ch; }
+  .hero-sub { order: 4; width: 100%; max-width: none; margin-top: var(--s-5); font-size: 15px; line-height: 1.55; }
   .hero-actions { order: 5; display: grid; grid-template-columns: 1fr; width: 100%; margin-top: var(--s-5); }
   .hero-actions .pill { width: 100%; }
   .hero-card { display: none; }
@@ -584,7 +606,7 @@ p { max-width: 65ch; text-wrap: pretty; }
   .hero-chip .bi::before { content: '\F26E'; }
   /* Reference layout: squarer crop on the nurse, staggered labelled chips clear of her face */
   .hero-visual { border-radius: 22px; }
-  .hero-visual img { aspect-ratio: 8 / 7; object-fit: cover; object-position: 30% 50%; }
+  .hero-visual img { aspect-ratio: 4 / 3; object-fit: cover; object-position: 30% 50%; }
   .hero-chip { padding: 8px 14px 8px 8px; background: rgb(255 255 255 / .9); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); font-size: 11.5px; }
   .hero-note.hero-chip:nth-of-type(3) { left: 4%; right: auto; top: 21%; }
   .hero-note.hero-chip:nth-of-type(4) { left: auto; right: 3%; top: 58%; }
@@ -622,7 +644,9 @@ p { max-width: 65ch; text-wrap: pretty; }
   .care-media { aspect-ratio: 16 / 9; min-height: 0; }
   .care-body { padding: var(--s-5); }
 
-  .life-card { flex-basis: 82vw; height: 460px; }
+  .lifestyle-viewport { scroll-padding-inline: var(--margin); margin-inline: calc(var(--margin) * -1); }
+  .lifestyle-rail { padding: var(--s-6) var(--margin) var(--s-4); }
+  .life-card { flex-basis: 80vw; height: min(420px, 62svh); }
 
 
   .faq-list summary { font-size: var(--fs-body); }

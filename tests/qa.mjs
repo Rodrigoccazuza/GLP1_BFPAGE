@@ -44,7 +44,8 @@ report.accessibility = (await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag
 
 report.content = await page.evaluate(() => {
   const text = document.body.textContent.replace(/\s+/g, ' ');
-  const required = ['SlimFit™', 'SlimFit Plus™', '$299', '$399', 'Semaglutide', 'Tirzepatide', 'Baseline laboratory testing', 'Weekly GLP-1 + GIP injections', 'Advanced metabolic support', 'Lab testing', 'Start your transformation', 'Record your weight, height, BMI, and vital signs', 'Units are not interchangeable', 'Increases are not automatic', 'Significant or persistent vomiting', 'Pregnancy or suspected pregnancy', 'Pharmacy and formulation', 'not FDA-approved', 'Who is a candidate?', 'How do I get started?'];
+  // Copy that must match the final lander (BF-GLP1-Lander_V2.2-FINAL), which follows the flyer.
+  const required = ['SlimFit™', 'SlimFit Plus™', '$299', '$399', 'semaglutide', 'tirzepatide', 'Foundational Weight Loss Membership', 'Advanced Weight Loss Membership', 'Baseline laboratory testing review', 'Weekly injections', 'Ongoing provider supervision', 'Lab Testing', 'Start Your Transformation', 'Record weight, height, BMI and vital signs', 'Increases are not automatic', 'Significant or persistent vomiting', 'Pregnancy or suspected pregnancy', 'not FDA-approved', 'Who is a candidate?', 'How do I get started?', 'Memberships are self-pay'];
   return { missing: required.filter(item => !text.includes(item)), emDashes: (text.match(/[—–]/g) || []).length, fdaApprovedClaim: /FDA[- ]approved (science|weight|active)/i.test(text) };
 });
 

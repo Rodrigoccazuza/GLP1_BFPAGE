@@ -5,7 +5,7 @@
  * Null / approved:false means unconfirmed: those items are never rendered.
  */
 export const program = {
-  bookingUrl: null as string | null,
+  bookingUrl: 'https://book.bodyfactoryskincare.com/' as string | null,
   generalBookingUrl: 'https://www.bodyfactoryskincare.com/book',
   email: 'hello@bodyfactoryskincare.com',
   home: 'https://www.bodyfactoryskincare.com/',
@@ -15,44 +15,43 @@ export const facts = [
   { value: 'Once weekly', label: 'Injection schedule' },
   { value: 'Every month', label: 'NP visit before each new month of treatment' },
   { value: 'From $299', label: 'Per month with SlimFit™' },
-  { value: 'Baseline labs', label: 'Included in both memberships' },
+  { value: 'Baseline lab review', label: 'Included in both memberships' },
 ];
 
+/** Flyer's six benefits, titles verbatim (client-approved). Bodies qualify titles 1 and 6 against the compounded disclosure. */
 export const why = [
-  ['bi-calendar-week', 'Once-weekly treatment', 'One injection a week, on a schedule your nurse practitioner sets with you.'],
-  ['bi-egg-fried', 'Reduced appetite & cravings', 'GLP-1 and GIP therapies may help you eat less and feel fuller for longer.'],
-  ['bi-activity', 'Metabolic health support', 'Care that looks at blood sugar, metabolism, and body composition, not only the scale.'],
-  ['bi-person-check', 'Personalized supervision by an NP', 'A nurse practitioner reviews your history, labs, and goals before anything is prescribed.'],
-  ['bi-clipboard2-pulse', 'Monthly NP check-ins', 'Each new month of treatment is authorized only after your nurse practitioner sees you.'],
-  ['bi-sliders', 'A dose that fits you', 'Your NP adjusts your dose based on your response. Increases are never automatic.'],
+  ['bi-patch-check', 'FDA-Approved', 'Semaglutide and tirzepatide are the active ingredients in FDA-approved medicines. Compounded versions are not FDA-approved.'],
+  ['bi-calendar-week', 'Once-Weekly Treatment', 'One injection a week, on a schedule your nurse practitioner sets with you.'],
+  ['bi-egg-fried', 'Reduced Appetite & Cravings', 'Helps you feel fuller sooner and stay satisfied longer, so eating less feels natural.'],
+  ['bi-activity', 'Improved Metabolic Health', 'Supports blood sugar regulation and overall metabolic function alongside weight loss.'],
+  ['bi-person-check', 'Personalized Medical Supervision', 'A licensed nurse practitioner reviews your history, labs and goals before anything is prescribed.'],
+  ['bi-graph-down-arrow', 'Proven Weight Loss Results', 'Semaglutide and tirzepatide have been studied in large clinical trials. Individual results vary.'],
 ];
 
 export const plans = [
   {
     id: 'slimfit',
     name: 'SlimFit™',
-    tier: 'Foundational weight loss membership',
+    tier: 'Foundational Weight Loss Membership',
     therapy: 'GLP-1 therapy',
-    ingredient: 'Semaglutide',
+    ingredient: 'semaglutide',
     price: 299,
-    meds: 'Medication included in the monthly price: weekly GLP-1 injections (semaglutide).',
     fit: 'Perfect for patients beginning their weight loss journey.',
     intro: 'GLP-1 therapy may help you:',
     benefits: ['Reduce appetite', 'Control cravings', 'Increase feelings of fullness', 'Improve blood sugar regulation', 'Support consistent weight loss'],
-    summary: 'Uses GLP-1 therapy (semaglutide) to help you achieve sustainable weight loss with medical supervision by an NP.',
+    summary: 'Uses GLP-1 therapy to help you achieve sustainable weight loss with medical supervision.',
   },
   {
     id: 'slimfit-plus',
     name: 'SlimFit Plus™',
-    tier: 'Advanced weight loss membership',
+    tier: 'Advanced Weight Loss Membership',
     therapy: 'GLP-1 + GIP therapy',
-    ingredient: 'Tirzepatide',
+    ingredient: 'tirzepatide',
     price: 399,
-    meds: 'Medication included in the monthly price: weekly GLP-1 + GIP injections (tirzepatide).',
     fit: 'Ideal for patients looking for our most comprehensive weight loss program.',
     intro: 'GIP works alongside GLP-1 and may help you:',
     benefits: ['Enhance appetite control', 'Improve metabolic function', 'Support greater weight loss potential', 'Improve overall body composition', 'Optimize long-term results'],
-    summary: 'Combines GLP-1 and GIP therapy (tirzepatide) for advanced weight loss support.',
+    summary: 'Combines GLP-1 and GIP therapy for advanced weight loss support.',
   },
 ];
 
@@ -60,96 +59,87 @@ export const plans = [
 export const inclusions: [string, boolean, boolean][] = [
   ['Initial medical consultation', true, true],
   ['Comprehensive health evaluation', true, true],
-  ['Baseline laboratory testing', true, true],
+  ['Baseline laboratory testing review', true, true],
   ['Personalized treatment plan', true, true],
-  ['Ongoing supervision by an NP', true, true],
-  ['Regular progress evaluations', true, true],
-  ['Medication management', true, true],
-  ['Dose adjustments as needed', true, true],
-  ['Weekly GLP-1 injections', true, false],
-  ['Weekly GLP-1 + GIP injections', false, true],
-  ['Advanced metabolic support', false, true],
+  ['Weekly injections', true, true],
+  ['Ongoing provider supervision', true, true],
+  ['Monthly progress evaluations', true, true],
+  ['Medication management and dose adjustments as needed', true, true],
 ];
 
+export const membershipTerms = 'Membership is month to month and billed only after your nurse practitioner confirms you are a candidate.';
+
 export const journey = [
-  { title: 'Consultation', icon: 'bi-chat-heart', body: 'Meet with a BodyFactory nurse practitioner to discuss your goals, medical history, current medications, and eligibility.' },
-  { title: 'Lab testing', icon: 'bi-droplet-half', body: 'Complete baseline laboratory testing so your NP can confirm treatment is safe and appropriate for you.' },
-  { title: 'Personalized plan', icon: 'bi-clipboard2-check', body: 'Your NP reviews your results, selects your medication and starting dose, and walks you through side effects and injection instructions.' },
-  { title: 'Start your transformation', icon: 'bi-arrow-up-right-circle', body: 'Begin your once-weekly treatment, with ongoing medical supervision by an NP and a monthly visit before each new month is authorized.' },
+  { title: 'Consultation', icon: 'bi-chat-heart', body: 'Meet with a Body Factory nurse practitioner to discuss your goals, medical history and eligibility.' },
+  { title: 'Lab Testing', icon: 'bi-droplet-half', body: 'Complete baseline laboratory testing so your NP can confirm treatment is safe and appropriate for you.' },
+  { title: 'Personalized Plan', icon: 'bi-clipboard2-check', body: 'Your NP reviews your results, selects your medication and starting dose, and walks you through side effects and injection instructions.' },
+  { title: 'Start Your Transformation', icon: 'bi-arrow-up-right-circle', body: 'Begin your once-weekly treatment with ongoing supervision and a monthly NP visit before each new month is authorized.' },
 ];
 
 export const care = [
   {
     id: 'first-visit',
     image: { src: 'assets/brand/care-first-visit.webp', alt: 'A BodyFactory nurse practitioner reviews a tablet with a patient during her first visit', position: '46% 32%' },
-    tab: 'First visit',
+    tab: 'First Visit',
     title: 'A complete picture before anything is prescribed.',
-    intro: 'At your initial visit, your nurse practitioner will:',
+    intro: 'Your NP will:',
     items: [
       'Review your medical history and current medications',
-      'Record your weight, height, BMI, and vital signs',
+      'Record weight, height, BMI and vital signs',
       'Review contraindications and potential risks',
       'Discuss your weight loss goals',
-      'Order or review appropriate baseline labs',
-      'Determine whether treatment is appropriate for you',
-      'Select your medication and starting dose',
+      'Order or review baseline labs',
+      'Determine whether treatment is appropriate and select your medication and starting dose',
       'Review side effects and injection instructions',
     ],
   },
   {
     id: 'monthly',
     image: { src: 'assets/brand/care-monthly.webp', alt: 'A BodyFactory clinician smiles during a monthly check-in at the studio', position: '62% 30%' },
-    tab: 'Every month',
+    tab: 'Every Month',
     title: 'Each month of treatment starts with a visit.',
-    intro: 'Your NP evaluates you monthly before your next month of treatment is authorized. At each visit, your NP will:',
+    intro: 'Your NP will:',
     items: [
-      'Record your current weight',
-      'Review your weight loss progress',
+      'Record your current weight and review progress',
       'Ask about appetite and cravings',
       'Review side effects and how you tolerate the medication',
-      'Confirm your medication, concentration, and current dose',
-      'Review any new medications or changes in your health',
-      'Decide whether to maintain, increase, decrease, pause, or stop treatment',
+      'Confirm your medication, concentration and current dose',
+      'Review any new medications or health changes',
+      'Decide whether to maintain, increase, decrease, pause or stop treatment',
       'Document your plan for the next month',
     ],
-    record: ['Weight', 'Medication', 'Pharmacy and formulation', 'Concentration', 'Current dose', 'Side effects', 'Treatment response', 'New dose, if changed', 'Follow-up plan'],
   },
   {
     id: 'dosing',
     image: { src: 'assets/brand/care-dosing.webp', alt: 'A BodyFactory clinician walks a patient through her plan on a tablet', position: '54% 32%' },
-    tab: 'Your dose',
+    tab: 'Your Dose',
     title: 'Compounded dosing, set by your NP.',
-    intro: 'Before prescribing or changing your dose, your NP verifies:',
+    intro: 'Dosing is set by your prescribing NP, never by a schedule. Before any change, your NP verifies:',
     items: [
-      'The medication name',
-      'The compounding pharmacy',
-      'The concentration on your current prescription or vial',
-      'Your dose in milligrams',
-      'The injection volume or units for that specific concentration',
-      'Your tolerance and response so far',
+      'Medication and compounding pharmacy',
+      'Concentration on your current prescription',
+      'Dose in mg and the matching injection volume',
+      'Your tolerance and response',
     ],
     notes: [
-      ['Units are not interchangeable.', 'The same number of syringe units can be a different dose in a different compounded formulation. Always follow the instructions for your current vial.'],
-      ['Increases are not automatic.', 'You may stay at your current dose while it is working well, or while side effects settle.'],
+      ['Increases are not automatic.', 'Dose increases are not automatic each month. You may stay at your current dose when you are responding well or managing side effects.'],
     ],
   },
   {
     id: 'safety',
     image: { src: 'assets/brand/care-safety.webp', alt: 'A BodyFactory team member talks with a client in the studio', position: '70% 35%' },
-    tab: 'Safety pauses',
+    tab: 'Safety Pauses',
     title: 'We pause first, then evaluate.',
-    intro: 'Your NP will hold your medication and evaluate you if you experience:',
+    intro: 'Treatment is held and reviewed for:',
     items: [
-      'Significant or persistent vomiting',
-      'Severe or persistent abdominal pain',
+      'Significant or persistent vomiting or abdominal pain',
       'Significant dehydration',
       'Serious or unusual side effects',
       'Pregnancy or suspected pregnancy',
-      'A new medical condition that may affect treatment',
-      'Significant changes to your medications',
-      'Any other safety concern',
+      'New medical conditions or significant medication changes',
+      'Any other clinical safety concern',
     ],
-    urgent: 'If you have potentially serious symptoms, seek urgent or emergency medical care right away. In an emergency, call 911.',
+    urgent: 'Potentially serious symptoms are directed to urgent or emergency care. In an emergency, call 911.',
   },
 ];
 
@@ -201,16 +191,16 @@ export const reviews = [
 ];
 
 export const faqs = [
-  ['How do I get started?', 'Schedule your consultation with BodyFactory. Our medical team will guide you through every step of the process, starting with a visit with a nurse practitioner.'],
-  ['Who is a candidate?', 'Adults who are struggling with weight loss, appetite control, or metabolic health may qualify. A consultation with one of our nurse practitioners will determine whether treatment is appropriate for you.'],
-  ['Do I need lab work?', 'Yes. All patients complete baseline laboratory testing before beginning treatment to ensure safety and personalization of care. Baseline labs are included in both memberships.'],
-  ['How often do I take the medication?', 'Treatment is administered once weekly. Your NP reviews your progress every month and decides whether your dose should stay the same or change.'],
-  ['Will my dose increase every month?', 'Not necessarily. Dose increases are not automatic. Your NP may keep you at your current dose when you are responding well or experiencing side effects.'],
-  ['What is the difference between SlimFit™ and SlimFit Plus™?', 'SlimFit™ ($299/month) uses GLP-1 therapy (semaglutide). SlimFit Plus™ ($399/month) combines GLP-1 and GIP therapy (tirzepatide) and adds advanced metabolic support. Your NP helps determine which is appropriate for you.'],
-  ['Are these treatments safe?', 'Your treatment is prescribed and monitored by licensed medical professionals, and every patient undergoes a medical evaluation before starting. Compounded medications are not FDA-approved. Your NP will review potential risks and side effects with you.'],
-  ['What if I experience side effects?', 'Contact your care team. For significant vomiting, severe abdominal pain, dehydration, or other serious or unusual symptoms, your NP will pause treatment and evaluate you. If symptoms may be serious, seek urgent or emergency care.'],
-  ['How much weight can I lose?', 'Results vary by patient. Many patients experience significant weight loss while improving their relationship with food and their overall metabolic health.'],
-  ['Do you accept insurance?', 'Coverage varies. The BodyFactory team can explain membership costs, and you should confirm any medication or laboratory benefits directly with your insurer.'],
+  ['How do I get started?', 'Book a consultation at any Body Factory studio. Your first visit is with a nurse practitioner, who reviews your goals, medical history and eligibility and guides you through every step from there.'],
+  ['Who is a candidate?', 'Adults who are struggling with weight loss, appetite control or metabolic health may qualify. Your nurse practitioner determines whether treatment is appropriate for you after reviewing your history, vitals and baseline labs.'],
+  ['Do I need lab work?', 'Yes. Baseline laboratory testing is ordered or reviewed before treatment begins so your NP can confirm it is safe and appropriate for you.'],
+  ['How often do I take the medication?', 'Treatment is a once-weekly injection. Your NP sets the schedule with you and reviews it at every monthly visit.'],
+  ['Will my dose increase every month?', 'No. Dose changes are decided by your nurse practitioner based on your response and tolerance. Many patients stay at a dose that is working well for them.'],
+  ['What is the difference between SlimFit™ and SlimFit Plus™?', 'SlimFit™ uses GLP-1 therapy (semaglutide). SlimFit Plus™ combines GLP-1 and GIP therapy (tirzepatide) for our most comprehensive program. Your NP confirms which, if either, is right for you.'],
+  ['Are these treatments safe?', 'Your treatment is prescribed and monitored by a licensed nurse practitioner, with a medical evaluation before you start and at every monthly visit. As with any medication, side effects are possible; your NP reviews them with you and will pause treatment if there is any safety concern.'],
+  ['What if I experience side effects?', 'Tell your NP. Mild side effects are reviewed at each visit and may lead to holding your dose. Significant or persistent vomiting, abdominal pain, dehydration or any serious symptom means treatment is paused and you are evaluated, or directed to urgent care if needed.'],
+  ['How much weight can I lose?', 'Results vary from person to person and depend on your starting point, your response to treatment and the habits you build alongside it. Your NP tracks your progress every month and adjusts your plan with you.'],
+  ['Do you accept insurance?', 'Memberships are self-pay. We accept major credit cards, and you can pay over time with Affirm or Klarna.'],
 ];
 
 export const locations = [
@@ -233,5 +223,7 @@ export const results = {
     { change: '-45 lbs', period: 'in 20 weeks' },
   ],
 };
+
+export const disclosureShort = 'Compounded medications are not FDA-approved. Prescribed only if your NP determines treatment is appropriate. Individual results vary.';
 
 export const disclosure = 'Compounded medications are not FDA-approved and have not been evaluated by the FDA for safety, effectiveness, or quality. All treatment is medically supervised by a licensed prescribing nurse practitioner (NP), who evaluates you and determines whether it is appropriate. Individual results vary.';

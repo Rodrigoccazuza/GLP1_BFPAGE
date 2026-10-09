@@ -585,39 +585,58 @@ setupStepLine();
    reader's scroll. With reduced motion the rail stays a native horizontal
    scroller (see the reduced-motion CSS). */
 function setupLifestyle() {
-  const section = document.querySelector<HTMLElement>('[data-lifestyle]');
-  const rail = section?.querySelector<HTMLElement>('[data-lifestyle-rail]');
-  if (!section || !rail || reduced.matches) return;
+  const viewport = document.querySelector<HTMLElement>('[data-lifestyle-viewport]');
+  if (!viewport) return;
 
-  const distance = () => {
-    const start = rail.getBoundingClientRect().left - section.getBoundingClientRect().left;
-    return Math.max(0, start + rail.scrollWidth - section.clientWidth);
+  // Every screen size scrolls the rail natively (touch swipe, trackpad, shift+wheel, keyboard).
+  // Mouse users also get click-and-drag; snap is suspended mid-drag so the rail follows the pointer.
+  let startX = 0, startLeft = 0, moved = false, dragging = false;
+  viewport.addEventListener('pointerdown', event => {
+    if (event.pointerType !== 'mouse' || event.button !== 0) return;
+    dragging = true; moved = false;
+    startX = event.clientX; startLeft = viewport.scrollLeft;
+    viewport.classList.add('is-dragging');
+  });
+  window.addEventListener('pointermove', event => {
+    if (!dragging) return;
+    const dx = event.clientX - startX;
+    if (Math.abs(dx) > 4) moved = true;
+    viewport.scrollLeft = startLeft - dx;
+  });
+  const end = () => {
+    if (!dragging) return;
+    dragging = false;
+    const left = viewport.scrollLeft;
+    viewport.classList.remove('is-dragging');
+    viewport.scrollLeft = left; // restoring snap would jump; let it settle smoothly to the nearest card
+    const card = viewport.querySelector<HTMLElement>('.life-card');
+    if (card) {
+      const step = card.offsetWidth + parseFloat(getComputedStyle(card.parentElement!).columnGap || '0');
+      viewport.scrollTo({ left: Math.round(left / step) * step, behavior: reduced.matches ? 'auto' : 'smooth' });
+    }
   };
+  window.addEventListener('pointerup', end);
+  window.addEventListener('pointercancel', end);
+  // A drag should not count as a click on anything inside the rail.
+  viewport.addEventListener('click', event => { if (moved) { event.preventDefault(); event.stopPropagation(); moved = false; } }, true);
+  viewport.addEventListener('dragstart', event => event.preventDefault());
 
-  gsap.to(rail, {
-    x: () => -distance(),
-    ease: 'none',
-    scrollTrigger: {
-      trigger: section,
-      start: 'top top',
-      end: () => `+=${Math.max(1, distance())}`,
-      pin: true,
-      scrub: 1,
-      anticipatePin: 1,
-      invalidateOnRefresh: true,
-    },
-  });
-
-  // Entrance: cards drift in once as the section arrives, then the scrub takes over.
+  if (reduced.matches) return;
   gsap.from('.life-card', {
-    x: 60, opacity: 0, stagger: .08, duration: .6, ease: 'power3.out', clearProps: 'transform,opacity',
-    scrollTrigger: { trigger: section, start: 'top 85%', once: true },
+    x: 80, opacity: 0, rotate: 1.5, stagger: .09, duration: .8, ease: 'power3.out', clearProps: 'transform,opacity',
+    scrollTrigger: { trigger: viewport, start: 'top 85%', once: true },
   });
-
-  ScrollTrigger.refresh();
 }
 
 setupLifestyle();
+
+/* ---------- Cookie Settings: opens the Cookiebot banner when it is loaded, otherwise follows the link to the cookie policy ---------- */
+document.querySelector('[data-cookie-settings]')?.addEventListener('click', event => {
+  const cookiebot = (window as unknown as { Cookiebot?: { renew(): void } }).Cookiebot;
+  if (!cookiebot) return;
+  event.preventDefault();
+  cookiebot.renew();
+});
 
 /* ---------- Motion vocabulary (skipped entirely with reduced motion) ---------- */
 if (!reduced.matches) {
@@ -625,12 +644,14 @@ if (!reduced.matches) {
   document.querySelectorAll<HTMLElement>('[data-animate-words], [data-highlight-words]').forEach(splitWords);
 
   // M1 · Hero entrance: once per visit, establishes reading order.
-  gsap.timeline({ defaults: { duration: .7, ease: 'power3.out' } })
-    .from('[data-hero] .eyebrow', { y: 12, opacity: 0 })
-    .from('[data-hero] h1', { y: 18, opacity: 0 }, '-=.5')
-    .from('[data-hero] .hero-sub', { y: 12, opacity: 0 }, '-=.45')
-    .from('[data-hero] .hero-actions > *', { y: 12, opacity: 0, stagger: .06 }, '-=.45');
-  gsap.from('.hero-visual img', { opacity: 0, scale: 1.03, duration: 1.1, ease: 'power3.out', delay: .15 });
+  //      Motion only, no fade: the headline, photo and Book button render at full contrast from the first paint,
+  //      even when the animation frame rate is throttled (low-power mode, background tabs).
+  gsap.timeline({ defaults: { duration: .7, ease: 'power3.out', clearProps: 'transform' } })
+    .from('[data-hero] .eyebrow', { y: 12 })
+    .from('[data-hero] h1', { y: 18 }, '-=.5')
+    .from('[data-hero] .hero-sub', { y: 12 }, '-=.45')
+    .from('[data-hero] .hero-actions > *', { y: 12, stagger: .06 }, '-=.45');
+  gsap.from('.hero-visual img', { scale: 1.03, duration: 1.1, ease: 'power3.out', delay: .15 });
 
   // M1b · Hero notifications pop in one by one as the photo scrolls into view, like incoming messages.
   //       Each enters with a small overshoot from below; scrolling back up tucks them away again.
@@ -645,22 +666,29 @@ if (!reduced.matches) {
     });
   });
 
-  // M2 · Section heading reveal: short rise, headings only.
-  gsap.utils.toArray<HTMLElement>('[data-reveal]').forEach(element => {
-    gsap.from(element, { y: 16, opacity: 0, duration: .6, ease: 'power2.out', scrollTrigger: { trigger: element, start: 'top 88%', once: true } });
-  });
+  // Shared once-only reveal: content rises into place the first time its trigger enters the viewport.
+  const reveal = (targets: gsap.TweenTarget, trigger: gsap.DOMTarget, vars: gsap.TweenVars = {}) =>
+    gsap.from(targets, { y: 40, opacity: 0, duration: .9, ease: 'power3.out', stagger: .1, clearProps: 'transform,opacity', ...vars, scrollTrigger: { trigger, start: 'top 86%', once: true } });
 
-  // M3 · Statement read-through: scrubbed color follows the reader.
-  document.querySelectorAll<HTMLElement>('[data-highlight-words]').forEach(element => {
-    gsap.to(element.querySelectorAll('.word'), { color: '#111716', stagger: .08, ease: 'none', scrollTrigger: { trigger: element, start: 'top 80%', end: 'bottom 45%', scrub: .4 } });
+  // M2 · Section heads: a group (eyebrow, heading, lead) staggers in line by line; a single heading rises alone.
+  gsap.utils.toArray<HTMLElement>('[data-reveal]').forEach(element => {
+    const parts = element.children.length > 1 ? Array.from(element.children) : element;
+    reveal(parts, element, { stagger: .12 });
   });
+  for (const head of ['.lifestyle .container > :not(.lifestyle-viewport)', '.faq-head > :not([data-reveal])', '.final-cta .container > *', '.test-copy > *']) {
+    const items = gsap.utils.toArray<HTMLElement>(head);
+    if (items.length) reveal(items, items[0], { stagger: .1 });
+  }
+
+  // M3 · Statement and supervision note follow the hero with a softer, wider rise.
+  reveal('.supervision-line', '.supervision-line', { y: 24, scale: .97 });
 
   // M4 · Why cards arrive from the side they sit on, relating them to the vial.
   const wide = matchMedia('(min-width: 1024px)').matches;
   gsap.utils.toArray<HTMLElement>('.care-card').forEach((card, index) => {
-    gsap.from(card, { x: wide ? (index < 3 ? -24 : 24) : 0, y: wide ? 0 : 16, opacity: 0, duration: .6, ease: 'power3.out', clearProps: 'transform,opacity', scrollTrigger: { trigger: card, start: 'top 90%', once: true } });
+    gsap.from(card, { x: wide ? (index < 3 ? -60 : 60) : 0, y: wide ? 0 : 36, scale: .94, opacity: 0, duration: .8, delay: wide ? (index % 3) * .08 : 0, ease: 'power3.out', clearProps: 'transform,opacity', scrollTrigger: { trigger: card, start: 'top 90%', once: true } });
   });
-  gsap.from('.program-image-wrap img', { scale: .92, opacity: 0, duration: .9, ease: 'power3.out', scrollTrigger: { trigger: '.benefit-orbit', start: 'top 80%', once: true } });
+  gsap.from('.program-image-wrap img', { scale: .8, rotate: -8, y: 40, opacity: 0, duration: 1.2, ease: 'power3.out', scrollTrigger: { trigger: '.benefit-orbit', start: 'top 80%', once: true } });
 
   // M5 · Journey: a progress line draws from icon 1 to icon 4 behind the icons; each step lights up when reached.
   const steps = document.querySelector<HTMLElement>('[data-steps]');
@@ -679,31 +707,42 @@ if (!reduced.matches) {
         cards.forEach((card, i) => card.classList.toggle('is-reached', centers[i] <= reach + 1));
       },
     });
-    gsap.from(cards, { x: 24, opacity: 0, stagger: .12, duration: .6, ease: 'power3.out', clearProps: 'transform,opacity', scrollTrigger: { trigger: steps, start: 'top 80%', once: true } });
+    gsap.from(cards, { x: 48, opacity: 0, stagger: .15, duration: .8, ease: 'power3.out', clearProps: 'transform,opacity', scrollTrigger: { trigger: steps, start: 'top 80%', once: true } });
   }
 
-  // M6 · Membership table: rows rise in as they enter, then their checks pop to confirm inclusion.
-  const rows = gsap.utils.toArray<HTMLElement>('[data-row]');
-  gsap.set(rows, { opacity: 0, y: 14 });
-  gsap.set('[data-row] td .bi', { scale: .3, opacity: 0 });
-  ScrollTrigger.batch(rows, {
-    start: 'top 92%',
-    once: true,
-    onEnter: batch => {
-      gsap.to(batch, { opacity: 1, y: 0, stagger: .07, duration: .45, ease: 'power2.out' });
-      gsap.to(batch.flatMap(row => Array.from(row.querySelectorAll('td .bi'))), { scale: 1, opacity: 1, stagger: .05, duration: .4, delay: .15, ease: 'back.out(2.2)' });
-    },
-  });
+  // M6 · Membership inclusions tick in one by one; the disclosure and terms follow.
+  reveal('.compare-list li', '.compare-list', { y: 16, x: -12, stagger: .06, duration: .6 });
+  reveal(['.plan-disclosure', '.compare-terms'], '.plan-disclosure', { y: 16 });
 
-  // M7 · Plan cards arrive once, then stay still so prices read clearly.
-  gsap.from('.plan', { y: 32, opacity: 0, stagger: .12, duration: .7, ease: 'power3.out', scrollTrigger: { trigger: '.plan-grid', start: 'top 82%', once: true } });
+  // M7 · Plan cards arrive once, lifting from below with a slight tilt, then the price pops; they stay still after so prices read clearly.
+  gsap.from('.plan', { y: 70, rotateX: 8, transformPerspective: 900, opacity: 0, stagger: .15, duration: 1, ease: 'power3.out', clearProps: 'transform,opacity', scrollTrigger: { trigger: '.plan-grid', start: 'top 82%', once: true } });
+  gsap.from('.plan-amount', { scale: .6, opacity: 0, stagger: .15, duration: .7, delay: .35, ease: 'back.out(2)', clearProps: 'transform,opacity', scrollTrigger: { trigger: '.plan-grid', start: 'top 82%', once: true } });
+  gsap.from('.plan .check-list li', { x: -14, opacity: 0, stagger: .04, duration: .5, delay: .5, ease: 'power2.out', clearProps: 'transform,opacity', scrollTrigger: { trigger: '.plan-grid', start: 'top 82%', once: true } });
+
+  // M11 · Photos unmask: the journey team photo wipes up while settling from a slight zoom.
+  gsap.from('.process-photo', { clipPath: 'inset(100% 0 0 0 round 32px)', scale: 1.08, duration: 1.2, ease: 'power3.inOut', clearProps: 'clipPath,transform', scrollTrigger: { trigger: '.process-photo', start: 'top 85%', once: true } });
+  reveal('.process-intro', '.process-intro', { y: 24 });
+
+  // M12 · Care panels (stacked layout only; the pinned desktop layout has its own CSS transitions).
+  if (!document.querySelector('.care.is-pinned')) {
+    gsap.utils.toArray<HTMLElement>('.care-panel').forEach(panel => {
+      reveal(panel, panel, { y: 60, scale: .97 });
+      gsap.from(panel.querySelector('.care-media img'), { scale: 1.18, duration: 1.4, ease: 'power3.out', clearProps: 'transform', scrollTrigger: { trigger: panel, start: 'top 86%', once: true } });
+      reveal(panel.querySelectorAll('.care-body .check-list li'), panel.querySelector('.care-body')!, { y: 12, x: -10, stagger: .05, duration: .5 });
+    });
+  }
+
+  // M13 · Quick test and footer columns.
+  reveal('.test-panel', '.test-panel', { y: 50, scale: .96 });
+  reveal('.footer-top > *', '.footer-top', { y: 30, stagger: .12 });
+  gsap.from('.footer-brandmark img', { yPercent: 40, opacity: 0, duration: 1.2, ease: 'power3.out', clearProps: 'transform,opacity', scrollTrigger: { trigger: '.footer-brandmark', start: 'top 95%', once: true } });
 
   // M9 · Hero image drifts slightly slower than the page for depth; final vials settle into place.
   gsap.to('.hero-visual img', { yPercent: -5, ease: 'none', scrollTrigger: { trigger: '.hero-visual', start: 'top 60%', end: 'bottom top', scrub: true } });
   gsap.fromTo('.final-cta img', { y: 60, rotate: -6 }, { y: 0, rotate: 0, ease: 'none', scrollTrigger: { trigger: '.final-cta', start: 'top bottom', end: 'top 30%', scrub: true } });
 
   // M10 · FAQ rows settle in sequence.
-  gsap.from('.faq-list details', { y: 12, opacity: 0, stagger: .05, duration: .45, ease: 'power2.out', scrollTrigger: { trigger: '.faq-list', start: 'top 85%', once: true } });
+  gsap.from('.faq-list details', { y: 28, opacity: 0, stagger: .06, duration: .6, ease: 'power2.out', scrollTrigger: { trigger: '.faq-list', start: 'top 85%', once: true } });
 
   // M8 · Location cards unmask upward, one gesture for the group.
   gsap.from('.location-card', { clipPath: 'inset(12% 0 0 0 round 32px)', opacity: 0, stagger: .1, duration: .8, ease: 'power3.out', clearProps: 'clipPath', scrollTrigger: { trigger: '.location-grid', start: 'top 85%', once: true } });
