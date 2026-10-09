@@ -580,10 +580,8 @@ function setupStepLine() {
 
 setupStepLine();
 
-/* ---------- Lifestyle: vertical page scroll drives the cards horizontally ----------
-   The section pins while the rail translates; scrub keeps the motion glued to the
-   reader's scroll. With reduced motion the rail stays a native horizontal
-   scroller (see the reduced-motion CSS). */
+/* ---------- Lifestyle: a native horizontal scroller with scroll-snap on every screen size ----------
+   Touch, trackpad and keyboard scroll it natively; mouse users can also click and drag. */
 function setupLifestyle() {
   const viewport = document.querySelector<HTMLElement>('[data-lifestyle-viewport]');
   if (!viewport) return;
@@ -622,10 +620,8 @@ function setupLifestyle() {
   viewport.addEventListener('dragstart', event => event.preventDefault());
 
   if (reduced.matches) return;
-  gsap.from('.life-card', {
-    x: 80, opacity: 0, rotate: 1.5, stagger: .09, duration: .8, ease: 'power3.out', clearProps: 'transform,opacity',
-    scrollTrigger: { trigger: viewport, start: 'top 85%', once: true },
-  });
+  // Fade the rail in as one block: animating the cards themselves inside a scroll-snap container makes the first scroll jitter.
+  gsap.from(viewport, { y: 24, opacity: 0, duration: .8, ease: 'power2.out', clearProps: 'transform,opacity', scrollTrigger: { trigger: viewport, start: 'top 88%', once: true } });
 }
 
 setupLifestyle();
@@ -675,7 +671,7 @@ if (!reduced.matches) {
     const parts = element.children.length > 1 ? Array.from(element.children) : element;
     reveal(parts, element, { stagger: .12 });
   });
-  for (const head of ['.lifestyle .container > :not(.lifestyle-viewport)', '.faq-head > :not([data-reveal])', '.final-cta .container > *', '.test-copy > *']) {
+  for (const head of ['.lifestyle .container > :not(.lifestyle-viewport)', '.final-cta .container > :not(img)']) {
     const items = gsap.utils.toArray<HTMLElement>(head);
     if (items.length) reveal(items, items[0], { stagger: .1 });
   }
@@ -714,10 +710,8 @@ if (!reduced.matches) {
   reveal('.compare-list li', '.compare-list', { y: 16, x: -12, stagger: .06, duration: .6 });
   reveal(['.plan-disclosure', '.compare-terms'], '.plan-disclosure', { y: 16 });
 
-  // M7 · Plan cards arrive once, lifting from below with a slight tilt, then the price pops; they stay still after so prices read clearly.
-  gsap.from('.plan', { y: 70, rotateX: 8, transformPerspective: 900, opacity: 0, stagger: .15, duration: 1, ease: 'power3.out', clearProps: 'transform,opacity', scrollTrigger: { trigger: '.plan-grid', start: 'top 82%', once: true } });
-  gsap.from('.plan-amount', { scale: .6, opacity: 0, stagger: .15, duration: .7, delay: .35, ease: 'back.out(2)', clearProps: 'transform,opacity', scrollTrigger: { trigger: '.plan-grid', start: 'top 82%', once: true } });
-  gsap.from('.plan .check-list li', { x: -14, opacity: 0, stagger: .04, duration: .5, delay: .5, ease: 'power2.out', clearProps: 'transform,opacity', scrollTrigger: { trigger: '.plan-grid', start: 'top 82%', once: true } });
+  // M7 · Plan cards: a simple appear, each card triggered on its own so stacked mobile cards don't wait on each other.
+  gsap.utils.toArray<HTMLElement>('.plan').forEach(plan => reveal(plan, plan, { y: 24, duration: .7, ease: 'power2.out' }));
 
   // M11 · Photos unmask: the journey team photo wipes up while settling from a slight zoom.
   gsap.from('.process-photo', { clipPath: 'inset(100% 0 0 0 round 32px)', scale: 1.08, duration: 1.2, ease: 'power3.inOut', clearProps: 'clipPath,transform', scrollTrigger: { trigger: '.process-photo', start: 'top 85%', once: true } });
@@ -732,14 +726,14 @@ if (!reduced.matches) {
     });
   }
 
-  // M13 · Quick test and footer columns.
-  reveal('.test-panel', '.test-panel', { y: 50, scale: .96 });
+  // M13 · FAQ intro and quick-test card each appear as one block; footer columns follow. The footer wordmark stays still.
+  reveal('.faq-head', '.faq-head', { y: 24 });
+  reveal('.test-panel', '.test-panel', { y: 24 });
   reveal('.footer-top > *', '.footer-top', { y: 30, stagger: .12 });
-  gsap.from('.footer-brandmark img', { yPercent: 40, opacity: 0, duration: 1.2, ease: 'power3.out', clearProps: 'transform,opacity', scrollTrigger: { trigger: '.footer-brandmark', start: 'top 95%', once: true } });
 
-  // M9 · Hero image drifts slightly slower than the page for depth; final vials settle into place.
+  // M9 · Hero image drifts slightly slower than the page for depth; final vials fade up once.
   gsap.to('.hero-visual img', { yPercent: -5, ease: 'none', scrollTrigger: { trigger: '.hero-visual', start: 'top 60%', end: 'bottom top', scrub: true } });
-  gsap.fromTo('.final-cta img', { y: 60, rotate: -6 }, { y: 0, rotate: 0, ease: 'none', scrollTrigger: { trigger: '.final-cta', start: 'top bottom', end: 'top 30%', scrub: true } });
+  reveal('.final-cta img', '.final-cta', { y: 30, duration: 1, ease: 'power2.out' });
 
   // M10 · FAQ rows settle in sequence.
   gsap.from('.faq-list details', { y: 28, opacity: 0, stagger: .06, duration: .6, ease: 'power2.out', scrollTrigger: { trigger: '.faq-list', start: 'top 85%', once: true } });

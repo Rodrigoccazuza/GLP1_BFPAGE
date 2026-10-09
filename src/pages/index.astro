@@ -151,7 +151,7 @@ const nav = [['#how', 'How it works'], ['#plans', 'Plans'], ['#care', 'Your care
     </section>
 
     <section class="faq section container" id="faq" aria-labelledby="faq-title">
-      <div class="faq-head"><h2 id="faq-title" class="t-h2" data-reveal>Frequently asked questions</h2><p>Still deciding? Bring any question to your consultation.</p><button class="pill outline" type="button" data-action="book">Ask the team</button></div>
+      <div class="faq-head"><h2 id="faq-title" class="t-h2">Frequently asked questions</h2><p>Still deciding? Bring any question to your consultation.</p><button class="pill outline" type="button" data-action="book">Ask the team</button></div>
       <div class="faq-list" data-faq>{faqs.map(([question, answer], index) => <details open={index === 0}><summary><span>{question}</span><span class="faq-symbol" aria-hidden="true"></span></summary><div class="faq-answer"><p>{answer}</p></div></details>)}</div>
     </section>
 
