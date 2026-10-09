@@ -420,6 +420,9 @@ setupFaq();
    Otherwise panels stay stacked and a sticky guide tracks the one in view.
    Without JavaScript everything is simply stacked and readable. */
 gsap.registerPlugin(ScrollTrigger);
+// Phones resize the viewport when the address bar collapses on the first scroll. Refreshing every trigger
+// mid-gesture is what made the page jump, so ScrollTrigger ignores those height-only resizes.
+ScrollTrigger.config({ ignoreMobileResize: true });
 
 function setupCare() {
   const section = document.querySelector<HTMLElement>('[data-care]');
@@ -519,8 +522,15 @@ function setupCare() {
     scrollTo({ top: target, behavior: reduced.matches ? 'auto' : 'smooth' });
   }));
 
+  // Rebuild only when the width changes: height-only resizes come from the mobile address bar showing and hiding.
   let resizeTimer = 0;
-  addEventListener('resize', () => { clearTimeout(resizeTimer); resizeTimer = window.setTimeout(build, 200); });
+  let lastWidth = innerWidth;
+  addEventListener('resize', () => {
+    if (innerWidth === lastWidth) return;
+    lastWidth = innerWidth;
+    clearTimeout(resizeTimer);
+    resizeTimer = window.setTimeout(build, 200);
+  });
   reduced.addEventListener('change', build);
   build();
 }
@@ -626,6 +636,19 @@ function setupLifestyle() {
 
 setupLifestyle();
 
+/* ---------- In-page links glide to their section (CSS smooth scrolling is off because it fights ScrollTrigger) ---------- */
+document.addEventListener('click', event => {
+  const link = (event.target as Element).closest<HTMLAnchorElement>('a[href^="#"]');
+  const id = link?.getAttribute('href')!.slice(1);
+  const target = id ? document.getElementById(id) : null;
+  if (!link || !target || event.defaultPrevented || event.metaKey || event.ctrlKey) return;
+  event.preventDefault();
+  target.scrollIntoView({ behavior: reduced.matches ? 'auto' : 'smooth', block: 'start' });
+  history.replaceState(null, '', `#${id}`);
+  if (!target.matches('a, button, input, summary, [tabindex]')) target.setAttribute('tabindex', '-1');
+  target.focus({ preventScroll: true });
+});
+
 /* ---------- Cookie Settings: opens the Cookiebot banner when it is loaded, otherwise follows the link to the cookie policy ---------- */
 document.querySelector('[data-cookie-settings]')?.addEventListener('click', event => {
   const cookiebot = (window as unknown as { Cookiebot?: { renew(): void } }).Cookiebot;
@@ -663,8 +686,11 @@ if (!reduced.matches) {
   });
 
   // Shared once-only reveal: content rises into place the first time its trigger enters the viewport.
-  const reveal = (targets: gsap.TweenTarget, trigger: gsap.DOMTarget, vars: gsap.TweenVars = {}) =>
-    gsap.from(targets, { y: 40, opacity: 0, duration: .9, ease: 'power3.out', stagger: .1, clearProps: 'transform,opacity', ...vars, scrollTrigger: { trigger, start: 'top 86%', once: true } });
+  const phone = matchMedia('(max-width: 767px)').matches;
+  const reveal = (targets: gsap.TweenTarget, trigger: gsap.DOMTarget, vars: gsap.TweenVars = {}) => {
+    const y = typeof vars.y === 'number' ? vars.y : 32;
+    return gsap.from(targets, { opacity: 0, duration: phone ? .8 : .9, ease: 'power2.out', stagger: .1, clearProps: 'transform,opacity', ...vars, y: phone ? Math.min(y, 20) : y, scrollTrigger: { trigger, start: phone ? 'top 92%' : 'top 86%', once: true } });
+  };
 
   // M2 · Section heads: a group (eyebrow, heading, lead) staggers in line by line; a single heading rises alone.
   gsap.utils.toArray<HTMLElement>('[data-reveal]').forEach(element => {
@@ -682,7 +708,7 @@ if (!reduced.matches) {
   // M4 · Why cards arrive from the side they sit on, relating them to the vial.
   const wide = matchMedia('(min-width: 1024px)').matches;
   gsap.utils.toArray<HTMLElement>('.care-card').forEach((card, index) => {
-    gsap.from(card, { x: wide ? (index < 3 ? -60 : 60) : 0, y: wide ? 0 : 36, scale: .94, opacity: 0, duration: .8, delay: wide ? (index % 3) * .08 : 0, ease: 'power3.out', clearProps: 'transform,opacity', scrollTrigger: { trigger: card, start: 'top 90%', once: true } });
+    gsap.from(card, { x: wide ? (index < 3 ? -60 : 60) : 0, y: wide ? 0 : 20, scale: wide ? .94 : 1, opacity: 0, duration: .8, delay: wide ? (index % 3) * .08 : 0, ease: 'power3.out', clearProps: 'transform,opacity', scrollTrigger: { trigger: card, start: 'top 90%', once: true } });
   });
   gsap.from('.program-image-wrap img', { scale: .8, rotate: -8, y: 40, opacity: 0, duration: 1.2, ease: 'power3.out', scrollTrigger: { trigger: '.benefit-orbit', start: 'top 80%', once: true } });
 
@@ -707,22 +733,23 @@ if (!reduced.matches) {
   }
 
   // M6 · Membership inclusions tick in one by one; the disclosure and terms follow.
-  reveal('.compare-list li', '.compare-list', { y: 16, x: -12, stagger: .06, duration: .6 });
+  if (phone) reveal('.compare-list', '.compare-list', { y: 16 }); else reveal('.compare-list li', '.compare-list', { y: 16, x: -12, stagger: .06, duration: .6 });
   reveal(['.plan-disclosure', '.compare-terms'], '.plan-disclosure', { y: 16 });
 
   // M7 · Plan cards: a simple appear, each card triggered on its own so stacked mobile cards don't wait on each other.
   gsap.utils.toArray<HTMLElement>('.plan').forEach(plan => reveal(plan, plan, { y: 24, duration: .7, ease: 'power2.out' }));
 
   // M11 · Photos unmask: the journey team photo wipes up while settling from a slight zoom.
-  gsap.from('.process-photo', { clipPath: 'inset(100% 0 0 0 round 32px)', scale: 1.08, duration: 1.2, ease: 'power3.inOut', clearProps: 'clipPath,transform', scrollTrigger: { trigger: '.process-photo', start: 'top 85%', once: true } });
+  if (phone) reveal('.process-photo', '.process-photo', { y: 20 });
+  else gsap.from('.process-photo', { clipPath: 'inset(100% 0 0 0 round 32px)', scale: 1.08, duration: 1.2, ease: 'power3.inOut', clearProps: 'clipPath,transform', scrollTrigger: { trigger: '.process-photo', start: 'top 85%', once: true } });
   reveal('.process-intro', '.process-intro', { y: 24 });
 
   // M12 · Care panels (stacked layout only; the pinned desktop layout has its own CSS transitions).
   if (!document.querySelector('.care.is-pinned')) {
     gsap.utils.toArray<HTMLElement>('.care-panel').forEach(panel => {
-      reveal(panel, panel, { y: 60, scale: .97 });
-      gsap.from(panel.querySelector('.care-media img'), { scale: 1.18, duration: 1.4, ease: 'power3.out', clearProps: 'transform', scrollTrigger: { trigger: panel, start: 'top 86%', once: true } });
-      reveal(panel.querySelectorAll('.care-body .check-list li'), panel.querySelector('.care-body')!, { y: 12, x: -10, stagger: .05, duration: .5 });
+      reveal(panel, panel, { y: 40 });
+      if (phone) return;
+      gsap.from(panel.querySelector('.care-media img'), { scale: 1.12, duration: 1.4, ease: 'power2.out', clearProps: 'transform', scrollTrigger: { trigger: panel, start: 'top 86%', once: true } });
     });
   }
 
@@ -732,12 +759,13 @@ if (!reduced.matches) {
   reveal('.footer-top > *', '.footer-top', { y: 30, stagger: .12 });
 
   // M9 · Hero image drifts slightly slower than the page for depth; final vials fade up once.
-  gsap.to('.hero-visual img', { yPercent: -5, ease: 'none', scrollTrigger: { trigger: '.hero-visual', start: 'top 60%', end: 'bottom top', scrub: true } });
+  if (!phone) gsap.to('.hero-visual img', { yPercent: -5, ease: 'none', scrollTrigger: { trigger: '.hero-visual', start: 'top 60%', end: 'bottom top', scrub: true } });
   reveal('.final-cta img', '.final-cta', { y: 30, duration: 1, ease: 'power2.out' });
 
   // M10 · FAQ rows settle in sequence.
   gsap.from('.faq-list details', { y: 28, opacity: 0, stagger: .06, duration: .6, ease: 'power2.out', scrollTrigger: { trigger: '.faq-list', start: 'top 85%', once: true } });
 
   // M8 · Location cards unmask upward, one gesture for the group.
-  gsap.from('.location-card', { clipPath: 'inset(12% 0 0 0 round 32px)', opacity: 0, stagger: .1, duration: .8, ease: 'power3.out', clearProps: 'clipPath', scrollTrigger: { trigger: '.location-grid', start: 'top 85%', once: true } });
+  if (phone) gsap.utils.toArray<HTMLElement>('.location-card').forEach(card => reveal(card, card, { y: 20 }));
+  else gsap.from('.location-card', { clipPath: 'inset(12% 0 0 0 round 32px)', opacity: 0, stagger: .1, duration: .8, ease: 'power3.out', clearProps: 'clipPath', scrollTrigger: { trigger: '.location-grid', start: 'top 85%', once: true } });
 }

@@ -7,6 +7,11 @@ import '@fontsource/montserrat/latin-800.css';
 import '@fontsource/montserrat/latin-600-italic.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import '../styles/site.css';
+// Preload the weights used above the fold (body, headline, headline accent) so the hero renders in Montserrat
+// on first paint instead of reflowing when the font arrives, which shifted the page under a first scroll.
+import montserrat400 from '@fontsource/montserrat/files/montserrat-latin-400-normal.woff2?url';
+import montserrat500 from '@fontsource/montserrat/files/montserrat-latin-500-normal.woff2?url';
+import montserrat800 from '@fontsource/montserrat/files/montserrat-latin-800-normal.woff2?url';
 const site = import.meta.env.PUBLIC_SITE_URL;
 const canonical = site ? new URL('/', site).href : undefined;
 const ogImage = site ? new URL('assets/brand/hero-nurse.webp', site).href : undefined;
@@ -17,4 +22,4 @@ const {
   robots = import.meta.env.PUBLIC_LAUNCH_APPROVED === 'true' ? 'index,follow' : 'noindex,nofollow',
 } = Astro.props;
 ---
-<!doctype html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>{title}</title><meta name="description" content={description}/><meta name="theme-color" content="#3CBFB0"/>{canonical && <link rel="canonical" href={canonical}/>}<meta name="robots" content={robots}/><meta property="og:type" content="website"/><meta property="og:title" content={title}/><meta property="og:description" content={description}/>{canonical && <><meta property="og:url" content={canonical}/>{ogImage && <><meta property="og:image" content={ogImage}/><meta property="og:image:width" content="1314"/><meta property="og:image:height" content="883"/><meta property="og:image:alt" content={ogImageAlt}/><meta name="twitter:image" content={ogImage}/><meta name="twitter:image:alt" content={ogImageAlt}/></>}</>}<meta name="twitter:card" content="summary_large_image"/><link rel="icon" href="favicon.png"/></head><body><a class="skip-link" href="#main">Skip to content</a><slot/><script src="../scripts/site.ts"></script></body></html>
+<!doctype html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>{title}</title><meta name="description" content={description}/><meta name="theme-color" content="#3CBFB0"/>{[montserrat800, montserrat500, montserrat400].map(href => <link rel="preload" href={href} as="font" type="font/woff2" crossorigin/>)}{canonical && <link rel="canonical" href={canonical}/>}<meta name="robots" content={robots}/><meta property="og:type" content="website"/><meta property="og:title" content={title}/><meta property="og:description" content={description}/>{canonical && <><meta property="og:url" content={canonical}/>{ogImage && <><meta property="og:image" content={ogImage}/><meta property="og:image:width" content="1314"/><meta property="og:image:height" content="883"/><meta property="og:image:alt" content={ogImageAlt}/><meta name="twitter:image" content={ogImage}/><meta name="twitter:image:alt" content={ogImageAlt}/></>}</>}<meta name="twitter:card" content="summary_large_image"/><link rel="icon" href="favicon.png"/></head><body><a class="skip-link" href="#main">Skip to content</a><slot/><script src="../scripts/site.ts"></script></body></html>

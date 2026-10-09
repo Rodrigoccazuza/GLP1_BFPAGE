@@ -2,6 +2,9 @@
    BodyFactory GLP-1 & GIP · design tokens
    Brand: Montserrat, BodyFactory aqua, warm paper, dark green-black.
    ========================================================= */
+/* Arial scaled to Montserrat's metrics: if the web font arrives late, text keeps the same size and line breaks. */
+@font-face { font-family: 'Montserrat Fallback'; src: local('Arial'), local('ArialMT'); size-adjust: 113.39%; ascent-override: 85.79%; descent-override: 22.25%; line-gap-override: 0%; }
+
 :root {
   /* Color */
   --teal: #3cbfb0;
@@ -19,7 +22,7 @@
   --on-dark: #c9d2cf;       /* supporting text on dark surfaces */
 
   /* Type: one family, roles separated by size, weight and tracking */
-  --font: 'Montserrat', Helvetica, Arial, sans-serif;
+  --font: 'Montserrat', 'Montserrat Fallback', Helvetica, Arial, sans-serif;
   --fs-display: clamp(2.5rem, 1.55rem + 3.9vw, 4.75rem);
   --fs-h2: clamp(2rem, 1.4rem + 2.5vw, 3.5rem);
   --fs-h3: clamp(1.5rem, 1.3rem + .8vw, 2rem);
@@ -61,7 +64,7 @@
 
 /* ---------- Base ---------- */
 *, *::before, *::after { box-sizing: border-box; }
-html { scroll-behavior: smooth; scroll-padding-top: 88px; -webkit-text-size-adjust: 100%; overflow-x: clip; }
+html { scroll-padding-top: 88px; -webkit-text-size-adjust: 100%; overflow-x: clip; }
 body { margin: 0; background: var(--paper); color: var(--ink); font: 400 var(--fs-body)/1.6 var(--font); -webkit-font-smoothing: antialiased; overflow-x: clip; }
 img { display: block; max-width: 100%; height: auto; }
 a { color: inherit; text-underline-offset: 4px; }
@@ -561,7 +564,7 @@ p { max-width: 65ch; text-wrap: pretty; }
   .care-intro > p { margin-top: var(--s-4); }
   .care-panels { grid-column: 1 / -1; }
   /* Guide becomes a sticky progress strip above the stacked panels */
-  .care-guide { grid-column: 1 / -1; position: sticky; z-index: 5; top: 76px; margin: var(--s-5) calc(var(--margin) * -1); padding: var(--s-3) var(--margin); background: rgb(245 241 239 / .94); backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
+  .care-guide { grid-column: 1 / -1; position: sticky; z-index: 5; top: 76px; margin: var(--s-5) calc(var(--margin) * -1); padding: var(--s-3) var(--margin); background: rgb(245 241 239 / .98); border-bottom: 1px solid var(--line); }
   .care-guide ol { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--s-3); }
   .care-guide a { grid-template-columns: 28px 1fr; column-gap: var(--s-2); min-height: 44px; padding: 0; }
   .care-guide-num { grid-row: 1; width: 28px; height: 28px; font-size: 12px; }
@@ -607,7 +610,8 @@ p { max-width: 65ch; text-wrap: pretty; }
   /* Reference layout: squarer crop on the nurse, staggered labelled chips clear of her face */
   .hero-visual { border-radius: 22px; }
   .hero-visual img { aspect-ratio: 4 / 3; object-fit: cover; object-position: 30% 50%; }
-  .hero-chip { padding: 8px 14px 8px 8px; background: rgb(255 255 255 / .9); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); font-size: 11.5px; }
+  .hero-chip { padding: 8px 14px 8px 8px; background: rgb(255 255 255 / .95); font-size: 11.5px; }
+  .site-header { background: rgb(255 253 252 / .98); backdrop-filter: none; }
   .hero-note.hero-chip:nth-of-type(3) { left: 4%; right: auto; top: 21%; }
   .hero-note.hero-chip:nth-of-type(4) { left: auto; right: 3%; top: 58%; }
   .hero-note.hero-chip:nth-of-type(2) { left: 18%; right: auto; top: 80%; }
